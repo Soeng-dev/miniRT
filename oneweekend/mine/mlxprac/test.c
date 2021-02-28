@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "mlx.h"
 
 typedef struct	s_data {
@@ -32,10 +33,19 @@ typedef struct	s_vars
 	void	*win;
 }				t_vars;
 
-int				key_hook(int keycode, t_vars *vars)
+int		key_hook(int keycode, t_vars *vars)
 {
-	printf("key hooaaaaaaaaaak\n");
+	if (keycode == )
+	else if (keycode == '\n')
+		printf("\n");
+	else 
+		printf ("%c", keycode);
 	return (keycode);
+}
+
+int		close(int keycode, t_vars *vars)
+{
+	mlx_destroy_window(vars->mlx, vars->win);
 }
 
 int main()
@@ -44,13 +54,14 @@ int main()
 
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "hello \n");
-	//mlx_loop(mlx);
-	t_data	img;
-	img.img = mlx_new_image(vars.mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.linelen, &img.endian);
-	int xr[] = {100, 1800}, yr[] ={100, 900};
-	put_sq(&img,xr, yr, 0x00FF0000);
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-	mlx_key_hook(vars.win, key_hook,&vars);
+//	mlx_loop(mlx);
+//	t_data	img;
+//	img.img = mlx_new_image(vars.mlx, 1920, 1080);
+//	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.linelen, &img.endian);
+//	int xr[] = {100, 1800}, yr[] ={100, 900};
+//	put_sq(&img,xr, yr, 0x00FF0000);
+//	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+//	mlx_key_hook(vars.win, key_hook,&vars);
+	
 	mlx_loop(vars.mlx);
 }
