@@ -1,7 +1,7 @@
 
-#include <mlx.h>
 #include <stdio.h>
 #include <math.h>
+#include <mlx.h>
 
 typedef struct	s_vars 
 {
