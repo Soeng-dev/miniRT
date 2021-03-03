@@ -25,8 +25,8 @@ void			pixput(t_data *img, int x, int y, int color)
 
 typedef struct	direction
 {
-	int x,y,z
-}				t_dir
+	int x,y,z;
+}				t_dir;
 
 typedef struct	s_ray
 {
@@ -34,42 +34,29 @@ typedef struct	s_ray
 	t_dir	curr;
 	t_dir	dir;
 }				t_ray;
+
 void		initray(t_ray *r, t_dir orig, t_dir dir)
 {
 	r->orig = orig;
-	
+	r->curr = orig;
 	r->dir = dir;
 }
 
 void			cast(t_ray *r, double t)
 {
-	r->curr
+	r->curr.x += (r->dir.x * t);
+	r->curr.y += (r->dir.y * t);
+	r->curr.z += (r->dir.z * t);
+}
 
 int main()
 {
 	t_vars	ex;
 	t_data	img;
 	const int imgwidth = 256, imgheight = 256;
-// ch 2
- //	ex.mlx = mlx_init();
- //	ex.win = mlx_new_window(ex.mlx, 300, 300, "ex");
- //	img.img = mlx_new_image(ex.mlx, 256, 256);
- //	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.linelen, &img.endian);
- //	for (int x = imgwidth - 1; x >= 0; --x)
- //	{
- //		for (int y = 0; y < imgheight; ++y)
- //		{
- //			int r = (int)floor(((double)x / (imgwidth - 1)) * (double)255 + 0.5);
- //			int g = (int)floor(((double)y / (imgheight - 1)) * (double)255 + 0.5);
- //			int b = (int)floor(0.25 * (double)255 + 0.5);
- //			int color = 0;
- //			color = (r << 16) | (g << 8) | (b);
- //			pixput(&img, x, y, color);
- //		}
- //	}
- //	ch 4
-	
+ 
+	//	ch 4
 	mlx_put_image_to_window(ex.mlx, ex.win, img.img, 25, 25);
 	mlx_loop(ex.mlx);
-
+	
 }
