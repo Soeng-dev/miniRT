@@ -74,7 +74,8 @@ int main()
 	initvec(&origin, 0, 0, 0);
 	initvec(&horizontal, view.width, 0, 0);
 	initvec(&vertical, 0, view.height, 0);
-	lowerleft = minus(origin,add(multi(horizontal, 0.5)
+	lowerleft = minus(origin, multi(add(horizontal, vertical), 0.5));
+	lowerleft.z = origin.z - focallen;
 
 	mlx_put_image_to_window(ex.mlx, ex.win, img.img, 25, 25);
 	mlx_loop(ex.mlx);
