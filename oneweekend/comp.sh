@@ -1,2 +1,2 @@
 #!/bin/bash
-gcc -lmlx -framework OpenGL -framework AppKit $1 $2
+gcc -lmlx -framework OpenGL -framework AppKit $1

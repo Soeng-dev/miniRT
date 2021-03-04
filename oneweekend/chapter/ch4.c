@@ -63,11 +63,11 @@ int		ray_color(const t_ray *ray)
 	int		r, g, b;
 
 	ratio = 0.5 * (ray->dir.y + 1.0);
-	printf("%g\n", ray->dir.y);
+	//printf("%g\n", ray->dir.y);
 	r = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.5);
 	g = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.7);
 	b = 255;
-	printf("%d %d %d\n", r, g,b);
+	//printf("%d %d %d\n", r, g,b);
 	return (get_color(r, g, b));
 }
 
@@ -100,7 +100,7 @@ int main()
 	initvec(&horizontal, view.width, 0, 0);
 	initvec(&vertical, 0, view.height, 0);
 
-	lowerleft = minusvec(origin, multivec(addvec(horizontal, vertical), 0.5));
+	lowerleft = minus(origin, multi(add(horizontal, vertical), 0.5));
 	lowerleft.z = origin.z - focallen;
 
 	for (int j = scr.height - 1; j >= 0; --j)
@@ -110,8 +110,8 @@ int main()
 			t_ray ray;
 			double u = (double)i / (scr.width - 1);
 			double v = (double)j / (scr.height - 1);
-			t_vec castdir = addvec(multivec(horizontal, u), multivec(vertical, v));
-			initray(&ray, origin, minusvec(addvec(lowerleft, castdir), origin));
+			t_vec castdir = add(multi(horizontal, u), multi(vertical, v));
+			initray(&ray, origin, minus(add(lowerleft, castdir), origin));
 			int color = ray_color(&ray);
 			pixput(&img, i, j, color);
 		}
