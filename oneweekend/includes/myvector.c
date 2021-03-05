@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 21:20:47 by soekim            #+#    #+#             */
-/*   Updated: 2021/03/04 21:31:35 by soekim           ###   ########.fr       */
+/*   Updated: 2021/03/05 18:13:26 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@ void			initvec(t_vec *v, double x, double y, double z)
 	v->x = x;
 	v->y = y;
 	v->z = z;
+}
+
+t_vec		getvec(double x, double y, double z)
+{
+	t_vec vec;
+
+	initvec(&vec, x, y, z);
+	return (vec);
 }
 
 t_vec		multi(t_vec v, double n)
@@ -39,14 +47,14 @@ t_vec		div(t_vec v, double n)
 
 t_vec		normalize(t_vec v)
 {
-	t_vec	result;
 	double	norm;
 
 	norm = sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2));
-	result.x /= norm;
-	result.y /= norm;
-	result.z /= norm;
-	return (result);
+	printf("%f\n", norm);
+	v.x /= norm;
+	v.y /= norm;
+	v.z /= norm;
+	return (v);
 }
 
 t_vec		add(t_vec v1, t_vec v2)

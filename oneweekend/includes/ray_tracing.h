@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 21:25:21 by soekim            #+#    #+#             */
-/*   Updated: 2021/03/04 21:30:54 by soekim           ###   ########.fr       */
+/*   Updated: 2021/03/05 17:31:16 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_vector	t_vec;
 struct	s_ray
 {
 	t_vec		orig;
-	t_vec		curr;
 	t_vec		dir;
 };
 typedef struct s_ray	t_ray;
@@ -66,8 +65,9 @@ t_vec		minus(t_vec v1, t_vec v2);
 double		dot(t_vec v1, t_vec v2);
 //ray
 void		initray(t_ray *ray, t_vec orig, t_vec dir);
-void		cast(t_ray *ray, double t);
-int			hitsp(const t_sp *sp, const t_ray *ray);
+t_vec		getvec(double x, double y, double z);
+t_ray		cast(t_ray ray, double t);
+double		hitsp(const t_sp *sp, const t_ray *ray);
 int			ray_color(const t_ray *ray, const t_sp *sp);
 
 #endif

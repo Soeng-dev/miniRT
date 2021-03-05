@@ -36,6 +36,8 @@ int main()
 	lowerleft = minus(origin, multi(add(horizontal, vertical), 0.5));
 	lowerleft.z = origin.z - focallen;
 
+	t_sp sp;
+	initsp(&sp, getvec(0, 0, -1), 0.5);
 	for (int j = scr.height - 1; j >= 0; --j)
 	{
 		for (int i = 0; i < scr.width; ++i)
@@ -45,11 +47,10 @@ int main()
 			double v = (double)j / (scr.height - 1);
 			t_vec castdir = add(multi(horizontal, u), multi(vertical, v));
 			initray(&ray, origin, minus(add(lowerleft, castdir), origin));
-			int color = ray_color(&ray);
+			int color = ray_color(&ray, &sp);
 			pixput(&img, i, j, color);
 		}
 	}
-
 	mlx_put_image_to_window(ex.mlx, ex.win, img.img, 0, 0);
 	mlx_loop(ex.mlx);
 }
