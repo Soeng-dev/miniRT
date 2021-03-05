@@ -50,7 +50,6 @@ t_vec		normalize(t_vec v)
 	double	norm;
 
 	norm = sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2));
-	printf("%f\n", norm);
 	v.x /= norm;
 	v.y /= norm;
 	v.z /= norm;

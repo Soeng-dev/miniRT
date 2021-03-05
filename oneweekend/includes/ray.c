@@ -56,7 +56,6 @@ int		ray_color(const t_ray *ray, const t_sp *sp)
 	{
 		t_vec color = normalize(minus(cast(*ray, t).orig, getvec(0, 0, -1)));
 		color = multi(add(color, getvec(1.0, 1.0, 1.0)), 0.5 * 255.0);
-		printf("%d %d %d\n", (int)color.x, (int)color.y, (int)color.z);
 		return (get_color(color.x, color.y, color.z));
 	}
 	ratio = 0.5 * (ray->dir.y + 1.0);
