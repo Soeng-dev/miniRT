@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ray_tracing.h"
+#include "../miniRT.h"
 
 void			initvec(t_vec *v, double x, double y, double z)
 {

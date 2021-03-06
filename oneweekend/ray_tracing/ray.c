@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./ray_tracing.h"
+#include "../miniRT.h"
 
 void	initray(t_ray *ray, t_vec orig, t_vec dir)
 {
@@ -34,13 +34,13 @@ double	hitsp(const t_sp *sp, const t_ray *ray)
 	double	discriminant;
 
 	a = dot(ray->dir, ray->dir);
-	b = 2.0 * dot(ray->dir, minus(ray->orig, sp->ctr));
+	b = dot(ray->dir, minus(ray->orig, sp->ctr));
 	c = dot(minus(ray->orig, sp->ctr), minus(ray->orig, sp->ctr)) - pow(sp->r, 2);
-	discriminant = b * b - 4 * a * c;
+	discriminant = b * b - a * c;
 	if (discriminant < 0)
 		return (-1);
 	else
-		return ((-b - sqrt(discriminant)) / (2.0 * a));
+		return ((-b - sqrt(discriminant)) / a);
 }
 
 int		ray_color(const t_ray *ray, const t_sp *sp)
