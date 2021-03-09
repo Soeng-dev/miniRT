@@ -28,7 +28,7 @@ int main()
 	view.width = scrratio * view.height;
 	double	focallen = 1.0;
 
-	t_vec origin, horizontal, vertical, lowerleft;
+	t_vector origin, horizontal, vertical, lowerleft;
 	initvec(&origin, 0, 0, 0);
 	initvec(&horizontal, view.width, 0, 0);
 	initvec(&vertical, 0, view.height, 0);
@@ -36,8 +36,10 @@ int main()
 	lowerleft = minus(origin, multi(add(horizontal, vertical), 0.5));
 	lowerleft.z = origin.z - focallen;
 
-	t_sp sp;
-	initsp(&sp, getvec(0, 0, -1), 0.5);
+	t_sphere *sp;
+	sp = (t_sphere *)malloc(sizeof(t_sphere));
+	init_sphere(sp, getvec(0,0,-1), 0.5);
+	ft_lstadd_front(&g_figures[SPHERE], ft_lstnew((void*)sp));
 	for (int j = scr.height - 1; j >= 0; --j)
 	{
 		for (int i = 0; i < scr.width; ++i)
@@ -45,9 +47,9 @@ int main()
 			t_ray ray;
 			double u = (double)i / (scr.width - 1);
 			double v = (double)j / (scr.height - 1);
-			t_vec castdir = add(multi(horizontal, u), multi(vertical, v));
+			t_vector castdir = add(multi(horizontal, u), multi(vertical, v));
 			initray(&ray, origin, minus(add(lowerleft, castdir), origin));
-			int color = ray_color(&ray, &sp);
+			int color = ray_color(&ray);
 			pixput(&img, i, j, color);
 		}
 	}

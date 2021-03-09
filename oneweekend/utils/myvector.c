@@ -12,40 +12,40 @@
 
 #include "../miniRT.h"
 
-void			initvec(t_vec *v, double x, double y, double z)
+void			initvec(t_vector *v, double x, double y, double z)
 {
 	v->x = x;
 	v->y = y;
 	v->z = z;
 }
 
-t_vec		getvec(double x, double y, double z)
+t_vector		getvec(double x, double y, double z)
 {
-	t_vec vec;
+	t_vector vec;
 
 	initvec(&vec, x, y, z);
 	return (vec);
 }
 
-t_vec		multi(t_vec v, double n)
+t_vector		multi(t_vector v, double n)
 {
-	t_vec result;
+	t_vector result;
 	result.x = v.x * n;
 	result.y = v.y * n;
 	result.z = v.z * n;
 	return (result);
 }
 
-t_vec		div(t_vec v, double n)
+t_vector		divide(t_vector v, double n)
 {
-	t_vec result;
+	t_vector result;
 	result.x = v.x / n;
 	result.y = v.y / n;
 	result.z = v.z / n;
 	return (result);
 }
 
-t_vec		normalize(t_vec v)
+t_vector		normalize(t_vector v)
 {
 	double	norm;
 
@@ -56,9 +56,9 @@ t_vec		normalize(t_vec v)
 	return (v);
 }
 
-t_vec		add(t_vec v1, t_vec v2)
+t_vector		add(t_vector v1, t_vector v2)
 {
-	t_vec result;
+	t_vector result;
 
 	result.x = v1.x + v2.x;
 	result.y = v1.y + v2.y;
@@ -66,9 +66,9 @@ t_vec		add(t_vec v1, t_vec v2)
 	return (result);
 }
 
-t_vec		minus(t_vec v1, t_vec v2)
+t_vector		minus(t_vector v1, t_vector v2)
 {
-	t_vec result;
+	t_vector result;
 
 	result.x = v1.x - v2.x;
 	result.y = v1.y - v2.y;
@@ -76,7 +76,7 @@ t_vec		minus(t_vec v1, t_vec v2)
 	return (result);
 }
 
-double	dot(t_vec v1, t_vec v2)
+double	dot(t_vector v1, t_vector v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }

@@ -12,55 +12,102 @@
 
 #include "../miniRT.h"
 
-void	initray(t_ray *ray, t_vec orig, t_vec dir)
+double		min(double a, double b)
 {
-	ray->orig = orig;
+	if (a < b)
+		return (a);
+	else
+		return (b);
+}
+
+double		max(double a, double b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
+//figure
+void			init_sphere(t_sphere *sp, t_vector center, double r)
+{
+	sp->ctr = center;
+	sp->r = r;
+}
+
+//ray
+void	initray(t_ray *ray, t_vector orig, t_vector dir)
+{
+	ray->pos = orig;
 	ray->dir = dir;
 }
 
-t_ray	cast(t_ray ray, double t)
+t_vector	pos_at_t(t_ray ray, double t)
 {
-	ray.orig.x += (ray.dir.x * t);
-	ray.orig.y += (ray.dir.y * t);
-	ray.orig.z += (ray.dir.z * t);
-	return (ray);
+	ray.pos = add(ray.pos, multi(ray.dir, t));
+	return (ray.pos);
 }
 
-double	hitsp(const t_sp *sp, const t_ray *ray)
+void	hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
 {
-	double	a;
-	double	b;
-	double	c;
-	double	discriminant;
+	double		a;
+	double		b;
+	double		c;
+	double		discriminant;
+	t_sphere	*sp;
 
+	sp = (t_sphere *)sphere;
 	a = dot(ray->dir, ray->dir);
-	b = dot(ray->dir, minus(ray->orig, sp->ctr));
-	c = dot(minus(ray->orig, sp->ctr), minus(ray->orig, sp->ctr)) - pow(sp->r, 2);
+	b = dot(ray->dir, minus(ray->pos, sp->ctr));
+	c = dot(minus(ray->pos, sp->ctr), minus(ray->pos, sp->ctr)) - pow(sp->r, 2);
 	discriminant = b * b - a * c;
-	if (discriminant < 0)
-		return (-1);
-	else
-		return ((-b - sqrt(discriminant)) / a);
+	if (discriminant > 0)
+		hitted->time = min(hitted->time, (-b -sqrt(discriminant)) / a);
+	return ;
 }
 
-int		ray_color(const t_ray *ray, const t_sp *sp)
+void	record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_ray *, t_hit_record *), const t_ray *ray, t_hit_record *hitted)
+{
+	while (same_kind_figures)
+	{
+		hit(same_kind_figures->content, ray, hitted);
+		same_kind_figures = same_kind_figures->next;
+	}
+	return ;
+}
+
+void	raycast(const t_ray *ray, t_hit_record *hitted)
+{
+	hitted->time = NOT_HIT;
+	record_hitted(g_figures[SPHERE], hit_sphere, ray, hitted);
+	return ;
+}
+
+void		init_hit_record(t_hit_record *hitted)
+{
+	ft_memset(hitted, 0, sizeof(t_hit_record));
+	hitted->time = NOT_HIT;
+}
+
+int		ray_color(const t_ray *ray)
 {
 	double	ratio;
 	int		r;
 	int		g;
 	int		b;
-	double	t;
+	t_hit_record	hitted;
+	t_vector	color;
 
-	t = hitsp(sp, ray);
-	if (t > 0.0)
+	init_hit_record(&hitted);
+	raycast(ray, &hitted);
+	if (hitted.time == NOT_HIT)
 	{
-		t_vec color = normalize(minus(cast(*ray, t).orig, getvec(0, 0, -1)));
-		color = multi(add(color, getvec(1.0, 1.0, 1.0)), 0.5 * 255.0);
-		return (get_color(color.x, color.y, color.z));
+		ratio = 0.5 * (ray->dir.y + 1.0);
+		r = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.5);
+		g = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.7);
+		b = 255;
+		return (get_color(r, g, b));
 	}
-	ratio = 0.5 * (ray->dir.y + 1.0);
-	r = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.5);
-	g = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.7);
-	b = 255;
-	return (get_color(r, g, b));
+	color = normalize(minus(pos_at_t(*ray, hitted.time), getvec(0, 0, -1)));
+	color = multi(add(color, getvec(1.0, 1.0, 1.0)), 0.5 * 255.0);
+	return (get_color(color.x, color.y, color.z));
 }
