@@ -29,18 +29,20 @@ struct	s_hit_record
 	t_vector	pos;
 	t_vector	normal;
 	double		time;
+	int		is_front_face;
 };
 typedef struct s_sphere		t_sphere;
 typedef struct s_ray		t_ray;
 typedef struct s_hit_record	t_hit_record;
 t_list		*g_figures[NUM_OF_FIGS];
-void		initray(t_ray *ray, t_vector orig, t_vector dir);
+void		init_ray(t_ray *ray, t_vector orig, t_vector dir);
 void		init_sphere(t_sphere *sp, t_vector center, double r);
-t_vector		getvec(double x, double y, double z);
-t_vector	pos_at_t(t_ray ray, double t);
+t_vector	raypos_at_t(t_ray ray, double t);
 void		hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted);
 int 		ray_color(const t_ray *ray);
 double		min(double a, double b);
 double		max(double a, double b);
 void		init_hit_record(t_hit_record *hitted);
+int	is_front_face(const t_ray *ray, const t_vector * outward_normal);
+void		make_sphere(t_vector center, double radius);
 #endif

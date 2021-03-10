@@ -29,17 +29,15 @@ int main()
 	double	focallen = 1.0;
 
 	t_vector origin, horizontal, vertical, lowerleft;
-	initvec(&origin, 0, 0, 0);
-	initvec(&horizontal, view.width, 0, 0);
-	initvec(&vertical, 0, view.height, 0);
+	init_vector(&origin, 0, 0, 0);
+	init_vector(&horizontal, view.width, 0, 0);
+	init_vector(&vertical, 0, view.height, 0);
 
 	lowerleft = minus(origin, multi(add(horizontal, vertical), 0.5));
 	lowerleft.z = origin.z - focallen;
 
-	t_sphere *sp;
-	sp = (t_sphere *)malloc(sizeof(t_sphere));
-	init_sphere(sp, getvec(0,0,-1), 0.5);
-	ft_lstadd_front(&g_figures[SPHERE], ft_lstnew((void*)sp));
+	make_sphere(get_vector(0, 0, -1), 0.5);
+	//make_sphere(get_vector(0, -100.5, -1), 100);
 	for (int j = scr.height - 1; j >= 0; --j)
 	{
 		for (int i = 0; i < scr.width; ++i)
@@ -48,7 +46,7 @@ int main()
 			double u = (double)i / (scr.width - 1);
 			double v = (double)j / (scr.height - 1);
 			t_vector castdir = add(multi(horizontal, u), multi(vertical, v));
-			initray(&ray, origin, minus(add(lowerleft, castdir), origin));
+			init_ray(&ray, origin, minus(add(lowerleft, castdir), origin));
 			int color = ray_color(&ray);
 			pixput(&img, i, j, color);
 		}

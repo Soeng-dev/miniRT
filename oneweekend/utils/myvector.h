@@ -7,8 +7,8 @@ struct	s_vector
 	double x,y,z;
 };
 typedef struct s_vector	t_vector;
-void        initvec(t_vector *v, double x, double y, double z);
-t_vector		getvec(double x, double y, double z);
+void        init_vector(t_vector *v, double x, double y, double z);
+t_vector		get_vector(double x, double y, double z);
 t_vector		multi(t_vector v, double n);
 t_vector		divide(t_vector v, double n);
 t_vector		normalize(t_vector v);

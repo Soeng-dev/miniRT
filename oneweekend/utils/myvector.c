@@ -12,18 +12,18 @@
 
 #include "../miniRT.h"
 
-void			initvec(t_vector *v, double x, double y, double z)
+void			init_vector(t_vector *v, double x, double y, double z)
 {
 	v->x = x;
 	v->y = y;
 	v->z = z;
 }
 
-t_vector		getvec(double x, double y, double z)
+t_vector		get_vector(double x, double y, double z)
 {
 	t_vector vec;
 
-	initvec(&vec, x, y, z);
+	init_vector(&vec, x, y, z);
 	return (vec);
 }
 
