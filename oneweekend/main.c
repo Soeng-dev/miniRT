@@ -36,21 +36,25 @@ int main()
 	lowerleft = minus(origin, multi(add(horizontal, vertical), 0.5));
 	lowerleft.z = origin.z - focallen;
 
+	// add figures
 	make_sphere(get_vector(0, 0, -1), 0.5);
-	//make_sphere(get_vector(0, -100.5, -1), 100);
+	make_sphere(get_vector(0, -100.5, -1), 100);
 	for (int j = scr.height - 1; j >= 0; --j)
 	{
 		for (int i = 0; i < scr.width; ++i)
 		{
-			t_ray ray;
+			t_ray	ray;
 			double u = (double)i / (scr.width - 1);
 			double v = (double)j / (scr.height - 1);
 			t_vector castdir = add(multi(horizontal, u), multi(vertical, v));
 			init_ray(&ray, origin, minus(add(lowerleft, castdir), origin));
 			int color = ray_color(&ray);
-			pixput(&img, i, j, color);
+			pixput(&img, (scr.width - 1) - i, (scr.height - 1) - j, color);
 		}
 	}
+	//delete
+	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
+		ft_lstclear(&g_figures[i], free);
 	mlx_put_image_to_window(ex.mlx, ex.win, img.img, 0, 0);
 	mlx_loop(ex.mlx);
 }
