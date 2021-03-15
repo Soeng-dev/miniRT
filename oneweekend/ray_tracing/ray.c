@@ -31,6 +31,9 @@ int		check_front_face(const t_ray *ray, const t_vector *outward_normal)
 
 void	hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
 {
+	double		a;
+	double		b;
+	double		c;
 	double		time;
 	double		discriminant;
 	t_sphere	*sp;
@@ -38,7 +41,7 @@ void	hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
 
 	sp = (t_sphere *)sphere;
 	a = dot(ray->dir, ray->dir);
-	b = dot(ray->dir, minus(ray->pos, sp->ctr))
+	b = dot(ray->dir, minus(ray->pos, sp->ctr));
 	c = dot(minus(ray->pos, sp->ctr), minus(ray->pos, sp->ctr)) - pow(sp->r, 2);
 	discriminant = b * b - a * c;
 	if (discriminant > 0)
@@ -77,12 +80,9 @@ void		init_hit_record(t_hit_record *hitted)
 	hitted->time = NOT_HIT;
 }
 
-int		ray_color(const t_ray *ray)
+t_vector	ray_color(const t_ray *ray)
 {
 	double	ratio;
-	int		r;
-	int		g;
-	int		b;
 	t_hit_record	hitted;
 	t_vector	color;
 
@@ -91,12 +91,35 @@ int		ray_color(const t_ray *ray)
 	if (hitted.time == NOT_HIT)
 	{
 		ratio = 0.5 * (ray->dir.y + 1.0);
-		r = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.5);
-		g = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.7);
-		b = 255;
-		return (get_color(r, g, b));
+		color.x = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.5);
+		color.y = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.7);
+		color.z = 255;
+		return (color);
 	}
 	color = normalize(minus(raypos_at_t(*ray, hitted.time), get_vector(0, 0, -1)));
 	color = multi(add(color, get_vector(1.0, 1.0, 1.0)), 0.5 * 255.0);
-	return (get_color(color.x, color.y, color.z));
+	return (color);
+}
+
+t_vector	get_diffused_ray(
+
+t_vector	ray_color_of_diffuse(const t_ray *ray, int max_depth)
+{
+	double	ratio;
+	t_hit_record	hitted;
+	t_vector	color;
+
+	init_hit_record(&hitted);
+	raycast(ray, &hitted);
+	if (hitted.time == NOT_HIT)
+	{
+		ratio = 0.5 * (ray->dir.y + 1.0);
+		color.x = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.5);
+		color.y = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.7);
+		color.z = 255;
+		return (color);
+	}
+	color = normalize(minus(raypos_at_t(*ray, hitted.time), get_vector(0, 0, -1)));
+	color = multi(add(color, get_vector(1.0, 1.0, 1.0)), 0.5 * 255.0);
+	return (color);
 }

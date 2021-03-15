@@ -38,11 +38,10 @@ t_vector		multi(t_vector v, double n)
 
 t_vector		divide(t_vector v, double n)
 {
-	t_vector result;
-	result.x = v.x / n;
-	result.y = v.y / n;
-	result.z = v.z / n;
-	return (result);
+	v.x /= (n);
+	v.y /= (n);
+	v.z /= (n);
+	return (v);
 }
 
 t_vector		normalize(t_vector v)
