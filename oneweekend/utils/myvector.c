@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 21:20:47 by soekim            #+#    #+#             */
-/*   Updated: 2021/03/05 18:13:26 by soekim           ###   ########.fr       */
+/*   Updated: 2021/03/15 21:06:06 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,14 @@ t_vector		minus(t_vector v1, t_vector v2)
 	result.y = v1.y - v2.y;
 	result.z = v1.z - v2.z;
 	return (result);
+}
+
+t_vector		power(t_vector v, double n)
+{
+	v.x = pow(v.x, n);
+	v.y = pow(v.y, n);
+	v.z = pow(v.z, n);
+	return (v);
 }
 
 double	dot(t_vector v1, t_vector v2)

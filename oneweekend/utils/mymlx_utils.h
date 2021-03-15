@@ -1,6 +1,8 @@
 
 #ifndef MYMLX_UTILS_H
 # define MYMLX_UTILS_H
+# include "myvector.h"
+
 struct	s_vars 
 {
 	void	*mlx;
@@ -20,5 +22,5 @@ struct	s_data
 };
 typedef struct s_data	t_data;
 void	pixput(t_data *img, int x, int y, int color);
-int		get_color(int r, int g, int b);
+int		get_color(t_vector colvec, double gamma);
 #endif

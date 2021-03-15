@@ -60,10 +60,10 @@ int main()
 				color = add(color, ray_color_of_diffuse(&ray, 50));
 			}
 			color = divide(color, SAMPLES_PER_PIXEL);
-			printf("%f %f %f \n", color.x, color.y, color.z);
-			pixput(&img, (scr.width - 1) - i, (scr.height - 1) - j, get_color(color.x, color.y, color.z));
+			pixput(&img, (scr.width - 1) - i, (scr.height - 1) - j, get_color(color, 2));
 		}
 	}
+
 	//delete
 	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
 		ft_lstclear(&g_figures[i], free);

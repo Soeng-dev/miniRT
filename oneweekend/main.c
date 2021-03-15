@@ -45,11 +45,6 @@ int main()
 		for (int i = 0; i < scr.width; ++i)
 		{
 			ft_memset(&color, 0, sizeof(t_vector));
-			t_ray	ray;
-			double u = ((double)i) / (scr.width - 1);
-			double v = ((double)j) / (scr.height - 1);
-			t_vector castdir = add(multi(horizontal, u), multi(vertical, v));
-			init_ray(&ray, origin, minus(add(lowerleft, castdir), origin));
 			for (int s = 0; s < (int)SAMPLES_PER_PIXEL; ++s)
 			{
 				t_ray	ray;
@@ -57,12 +52,12 @@ int main()
 				double v = ((double)j + ((double)s / SAMPLES_PER_PIXEL)) / (scr.height - 1);
 				t_vector castdir = add(multi(horizontal, u), multi(vertical, v));
 				init_ray(&ray, origin, minus(add(lowerleft, castdir), origin));
-				color = add(color, ray_color_of_diffuse(&ray, 50));
+				color = add(color, ray_color(&ray));
 			}
 			//printf("before : %lf %lf %lf\n", color.x, color.y, color.z);
 			color = divide(color, SAMPLES_PER_PIXEL);
 			//printf("after : %lf %lf %lf\n", color.x, color.y, color.z);
-			pixput(&img, (scr.width - 1) - i, (scr.height - 1) - j, get_color(color.x, color.y, color.z));
+			pixput(&img, (scr.width - 1) - i, (scr.height - 1) - j, get_color(color, 2));
 		}
 	}
 	//delete

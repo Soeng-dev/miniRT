@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 21:27:54 by soekim            #+#    #+#             */
-/*   Updated: 2021/03/04 21:31:18 by soekim           ###   ########.fr       */
+/*   Updated: 2021/03/15 21:03:57 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ void			pixput(t_data *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int		get_color(int r, int g, int b)
+int		get_color(t_vector colorvec, double gamma)
 {
-	return ((r << 16) | (g << 8) | (b));
+	int		color;
+
+	colorvec = power(colorvec, 1.0 / gamma);
+	color = (((int)colorvec.x << 16) | ((int)colorvec.y << 8) | ((int)colorvec.z));
+	printf("%d\n", color);
+	return (color);
 }

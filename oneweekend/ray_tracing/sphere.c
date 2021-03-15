@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 16:17:17 by soekim            #+#    #+#             */
-/*   Updated: 2021/03/15 17:43:53 by soekim           ###   ########.fr       */
+/*   Updated: 2021/03/15 19:55:33 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
 		hitted->pos = raypos_at_t(*ray, hitted->time);
 		outward_normal = divide(minus(hitted->pos, sp->ctr), sp->r);
 		hitted->is_front_face = check_front_face(ray, &outward_normal);
-		hitted->normal = outward_normal;
+		if (hitted->is_front_face)
+			hitted->normal = outward_normal;
+		else
+			hitted->normal = multi(outward_normal, -1);
 	}
 	return ;
 }
