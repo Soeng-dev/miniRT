@@ -26,6 +26,5 @@ int		get_color(t_vector colorvec, double gamma)
 
 	colorvec = power(colorvec, 1.0 / gamma);
 	color = (((int)colorvec.x << 16) | ((int)colorvec.y << 8) | ((int)colorvec.z));
-	printf("%d\n", color);
 	return (color);
 }

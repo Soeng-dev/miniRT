@@ -6,6 +6,8 @@
 
 int main()
 {
+
+	srand(time(NULL));
 	t_vars	ex;
 	t_data	img;
  

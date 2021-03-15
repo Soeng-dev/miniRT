@@ -77,9 +77,11 @@ t_vector		minus(t_vector v1, t_vector v2)
 
 t_vector		power(t_vector v, double n)
 {
-	v.x = pow(v.x, n);
-	v.y = pow(v.y, n);
-	v.z = pow(v.z, n);
+//	v.x = sqrt(v.x);//pow(v.x, n);
+//	v.y =  sqrt(v.x);//pow(v.y, n);
+//	v.z =  sqrt(v.x);//pow(v.z, n);
+	v =v;
+	n = n;
 	return (v);
 }
 
