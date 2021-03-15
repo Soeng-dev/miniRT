@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 16:17:17 by soekim            #+#    #+#             */
-/*   Updated: 2021/03/10 17:16:41 by soekim           ###   ########.fr       */
+/*   Updated: 2021/03/15 17:43:53 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,40 @@ double	get_sphere_hitted_time(double a, double b, double sqrt_dis)
 	double time;
 
 	time = (-b - sqrt_dis) / a;
-	if (T_MIN < time && time < T_MAX)
+	if (time_is_valid(time))
 		return (time);
 	time = (-b + sqrt_dis) / a;
-	if (T_MIN < time && time < T_MAX)
+	if (time_is_valid(time))
 		return (time);
 	else
 		return (NOT_HIT);
+}
+
+void	hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
+{
+	double		a;
+	double		b;
+	double		c;
+	double		time;
+	double		discriminant;
+	t_sphere	*sp;
+	t_vector	outward_normal;
+
+	sp = (t_sphere *)sphere;
+	a = dot(ray->dir, ray->dir);
+	b = dot(ray->dir, minus(ray->pos, sp->ctr));
+	c = dot(minus(ray->pos, sp->ctr), minus(ray->pos, sp->ctr)) - pow(sp->r, 2);
+	discriminant = b * b - a * c;
+	if (discriminant > 0)
+	{
+		time = get_sphere_hitted_time(a, b, sqrt(discriminant));
+		if (time == NOT_HIT)
+			return ;
+		hitted->time = min(hitted->time, time);
+		hitted->pos = raypos_at_t(*ray, hitted->time);
+		outward_normal = divide(minus(hitted->pos, sp->ctr), sp->r);
+		hitted->is_front_face = check_front_face(ray, &outward_normal);
+		hitted->normal = outward_normal;
+	}
+	return ;
 }
