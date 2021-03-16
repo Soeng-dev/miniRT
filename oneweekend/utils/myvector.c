@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 21:20:47 by soekim            #+#    #+#             */
-/*   Updated: 2021/03/15 21:06:06 by soekim           ###   ########.fr       */
+/*   Updated: 2021/03/16 12:56:58 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,17 @@ t_vector		minus(t_vector v1, t_vector v2)
 
 t_vector		power(t_vector v, double n)
 {
-//	v.x = sqrt(v.x);//pow(v.x, n);
-//	v.y =  sqrt(v.x);//pow(v.y, n);
-//	v.z =  sqrt(v.x);//pow(v.z, n);
-	v =v;
-	n = n;
+	v.x = (double)powl((long double)v.x, (long double)n);
+	v.y = (double)powl((long double)v.y, (long double)n);
+	v.z = (double)powl((long double)v.z, (long double)n);
+	return (v);
+}
+
+t_vector		vec_clamp(t_vector v, double min, double max)
+{
+	v.x = clamp(v.x, min, max);
+	v.y = clamp(v.y, min, max);
+	v.z = clamp(v.z, min, max);
 	return (v);
 }
 

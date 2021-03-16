@@ -57,7 +57,7 @@ int main()
 			//printf("before : %lf %lf %lf\n", color.x, color.y, color.z);
 			color = divide(color, SAMPLES_PER_PIXEL);
 			//printf("after : %lf %lf %lf\n", color.x, color.y, color.z);
-			pixput(&img, (scr.width - 1) - i, (scr.height - 1) - j, get_color(color, 2));
+			pixput(&img, (scr.width - 1) - i, (scr.height - 1) - j, get_color(color, 1));
 		}
 	}
 	//delete

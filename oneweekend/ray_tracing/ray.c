@@ -6,7 +6,7 @@
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 21:29:17 by soekim            #+#    #+#             */
-/*   Updated: 2021/03/15 20:54:18 by soekim           ###   ########.fr       */
+/*   Updated: 2021/03/16 12:48:22 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ t_vector	ray_color_of_diffuse(const t_ray *ray, int depth)
 		return (color);
 	}
 	diffused_ray.pos = hitted.pos;
-	diffused_ray.dir = add(hitted.normal, get_hemisphere_dir(&(hitted.normal)));
+	diffused_ray.dir = get_hemisphere_dir(&(hitted.normal));
 	return (multi(ray_color_of_diffuse(&diffused_ray, depth - 1), 0.5));
 }

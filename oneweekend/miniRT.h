@@ -2,7 +2,7 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 # define _USE_MATH_DEFINES
-# define SAMPLES_PER_PIXEL 20.0
+# define SAMPLES_PER_PIXEL 100.0
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
