@@ -24,5 +24,5 @@ void		init_hit_record(t_hit_record *hitted)
 
 int		check_front_face(const t_ray *ray, const t_vector *outward_normal)
 {
-	return (dot(ray->pos, *outward_normal) < 0);
+	return (dot(ray->dir, *outward_normal) < 0);
 }

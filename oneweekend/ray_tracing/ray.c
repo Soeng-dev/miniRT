@@ -60,10 +60,10 @@ t_vector	get_hemisphere_dir(const t_vector *normal)
 	dir.y = 2 * (((double)(rand() % 10000)) / 10000) - 1;
 	dir.z = 2 * (((double)(rand() % 10000)) / 10000) - 1;
 
-	//if (dot(dir, *normal) > 0)
-		return (normalize(dir));
-//	else
-//		return (multi(normalize(dir), -1));
+	if (dot(dir, *normal) > 0)
+		return (dir);
+	else
+		return (multi(dir, -1));
 }
 
 t_vector	ray_color_of_diffuse(const t_ray *ray, int depth)
