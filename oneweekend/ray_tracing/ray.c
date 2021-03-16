@@ -52,7 +52,7 @@ t_vector	ray_color(const t_ray *ray)
 	return (color);
 }
 
-t_vector	get_hemisphere_dir(const t_vector *normal)
+t_vector	get_reflected_dir(const t_vector *normal)
 {
 	t_vector	dir;
 
