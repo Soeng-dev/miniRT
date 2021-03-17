@@ -12,13 +12,14 @@
 
 #include "../miniRT.h"
 
-void			init_sphere(t_sphere *sp, t_vector center, double r)
+void			init_sphere(t_sphere *sp, t_vector center, double r, t_material material)
 {
 	sp->ctr = center;
 	sp->r = r;
+	sp->material = material;
 }
 
-void	make_sphere(t_vector center, double radius)
+void	make_sphere(t_vector center, double radius, t_material material)
 {
 	t_list	*sphere_node;
 
@@ -28,7 +29,7 @@ void	make_sphere(t_vector center, double radius)
 	sphere_node->content = malloc(sizeof(t_sphere));
 	if (!(sphere_node->content))
 		return ;
-	init_sphere((t_sphere *)(sphere_node->content), center, radius);
+	init_sphere((t_sphere *)(sphere_node->content), center, radius, material);
 	ft_lstadd_front(&g_figures[SPHERE], sphere_node);
 	return ;
 }
@@ -69,6 +70,7 @@ void	hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
 			return ;
 		hitted->time = min(hitted->time, time);
 		hitted->pos = raypos_at_t(*ray, hitted->time);
+		hitted->material = sp->material;
 		outward_normal = divide(minus(hitted->pos, sp->ctr), sp->r);
 		hitted->is_front_face = check_front_face(ray, &outward_normal);
 		if (hitted->is_front_face)

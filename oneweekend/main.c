@@ -37,9 +37,21 @@ int main()
 	lowerleft = minus(origin, multi(add(horizontal, vertical), 0.5));
 	lowerleft.z = origin.z - focallen;
 
-	// add figures
-	make_sphere(get_vector(0, 0, -1), 0.5);
-	make_sphere(get_vector(0, -100.5, -1), 100);
+	// make figures
+	t_material	mat_ground;
+	t_material	mat_center;
+	t_material	mat_left;
+	t_material	mat_right;
+
+	init_material(&mat_ground, get_vector(0.8 * 255, 0.8 * 255, 0), lambertian);
+	init_material(&mat_center, get_vector(0.7 * 255, 0.3 * 255, 0.3 * 255), lambertian);
+	init_material(&mat_left, get_vector(0.8 * 255, 0.8 * 255, 0.8 * 255), metal);
+	init_material(&mat_ground, get_vector(0.8 * 255, 0.6 * 255, 0.6 * 255), metal);
+	make_sphere(get_vector(0, -100.5, -1), 100, mat_ground);
+	make_sphere(get_vector(0, 0, -1), 0.5, mat_center);
+	make_sphere(get_vector(-1, 0, -1), 0.5, mat_left);
+make_sphere(get_vector(1.0, 0, -1), 0.5, mat_right);
+
 	for (int j = scr.height - 1; j >= 0; --j)
 	{
 		for (int i = 0; i < scr.width; ++i)
@@ -52,7 +64,13 @@ int main()
 				double v = ((double)j + ((double)s / SAMPLES_PER_PIXEL)) / (scr.height - 1);
 				t_vector castdir = add(multi(horizontal, u), multi(vertical, v));
 				init_ray(&ray, origin, minus(add(lowerleft, castdir), origin));
-				color = add(color, ray_color(&ray));
+				color = add(color, ray_color(&ray, 20));
+//				if (temp.x > 255.0 || temp.x < 0)
+//					printf("x : %f\n",temp.x);
+//				if (temp.y > 255.0 || temp.y < 0)
+//					printf("y : %f\n",temp.y);
+//				if (temp.z > 255.0 || temp.z < 0)
+//					printf("z : %f\n",temp.z);
 			}
 			//printf("before : %lf %lf %lf\n", color.x, color.y, color.z);
 			color = divide(color, SAMPLES_PER_PIXEL);
