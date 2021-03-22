@@ -63,27 +63,15 @@ t_vector	ray_color(const t_ray *ray, int depth)
 	raycast(ray, &hitted);
 	if (hitted.time == NOT_HIT)
 		return (get_background_color(ray));
-	if (hitted.material.scatter(ray, (void*)&hitted, &scattered))
+	if (hitted.material->scatter(ray, (void*)&hitted, &scattered))
 	{
 		attenuation = ray_color(&scattered, depth - 1);
-		attenuation.x *= hitted.material.albedo.x;
-		attenuation.y *= hitted.material.albedo.y;
-		attenuation.z *= hitted.material.albedo.z;
+		attenuation.x *= hitted.material->albedo.x;
+		attenuation.y *= hitted.material->albedo.y;
+		attenuation.z *= hitted.material->albedo.z;
 		return (attenuation);
 	}
 	return (get_vector(0, 0, 0));
 }
 
-t_vector	get_scattered_dir(const t_vector *normal)
-{
-	t_vector	dir;
 
-	dir.x = 2 * (((double)(rand() % 10000)) / 10000) - 1;
-	dir.y = 2 * (((double)(rand() % 10000)) / 10000) - 1;
-	dir.z = 2 * (((double)(rand() % 10000)) / 10000) - 1;
-
-	if (dot(dir, *normal) > 0)
-		return (dir);
-	else
-		return (multi(dir, -1));
-}

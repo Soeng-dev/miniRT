@@ -43,15 +43,15 @@ int main()
 	t_material	mat_left;
 	t_material	mat_right;
 
-	init_material(&mat_ground, get_vector(0.8, 0.8, 0), lambertian);
-	init_material(&mat_center, get_vector(0.7, 0.3, 0.3), lambertian);
-	init_material(&mat_left, get_vector(0.8, 0.8, 0.8), metal);
-	init_material(&mat_right, get_vector(0.8, 0.6, 0.2), metal);
+	init_material(&mat_ground, get_vector(0.8, 0.8, 0), 0, metal);
+	init_material(&mat_center, get_vector(0.7, 0.3, 0.3), 0, lambertian);
+	init_material(&mat_left, get_vector(0.8, 0.8, 0.8), 0.8, metal);
+	init_material(&mat_right, get_vector(0.8, 0.6, 0.2), 0.3, metal);
 
-	make_sphere(get_vector(0, -100.5, -1), 100, mat_ground);
-	make_sphere(get_vector(0, 0, -1), 0.5, mat_center);
-	make_sphere(get_vector(-1, 0, -1), 0.5, mat_left);
-	make_sphere(get_vector(1.0, 0, -1), 0.5, mat_right);
+	make_sphere(get_vector(0, -100.5, -1), 100, &mat_ground);
+	make_sphere(get_vector(0, 0, -1), 0.5, &mat_center);
+	make_sphere(get_vector(-1, 0, -1), 0.5, &mat_left);
+	make_sphere(get_vector(1.0, 0, -1), 0.5, &mat_right);
 
 	for (int j = scr.height - 1; j >= 0; --j)
 	{
