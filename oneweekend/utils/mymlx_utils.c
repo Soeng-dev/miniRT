@@ -24,7 +24,6 @@ int		get_color(t_vector colorvec, double gamma)
 {
 	int		color;
 
-	colorvec = divide(colorvec, 255);
 	colorvec = power(colorvec, 1.0 / gamma);
 	colorvec = multi(vec_clamp(colorvec, 0, 1), 255);
 	color = (((int)colorvec.x << 16) | ((int)colorvec.y << 8) | ((int)colorvec.z));

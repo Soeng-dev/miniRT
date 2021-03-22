@@ -44,10 +44,10 @@ t_vector	get_background_color(const t_ray *ray)
 	t_vector	background_color;
 	double		ratio;
 
-	ratio = 0.5 * (ray->dir.y + 1.0);
-	background_color.x = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.5);
-	background_color.y = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.7);
-	background_color.z = 255;
+	ratio = 0.5 * (normalize(ray->dir).y + 1.0);
+	background_color.x = (1.0 - ratio)+ ratio * 0.5;
+	background_color.y = (1.0 - ratio)+ ratio * 0.7;
+	background_color.z = 1.0;
 	return (background_color);
 }
 
@@ -87,27 +87,3 @@ t_vector	get_scattered_dir(const t_vector *normal)
 	else
 		return (multi(dir, -1));
 }
-
-//t_vector	ray_color_of_diffuse(const t_ray *ray, int depth)
-//{
-//	double			ratio;
-//	t_hit_record	hitted;
-//	t_vector		color;
-//	t_ray			diffused_ray;
-//
-//	if (depth <= 0)
-//		return (get_vector(0, 0, 0));
-//	init_hit_record(&hitted);
-//	raycast(ray, &hitted);
-//	if (hitted.time == NOT_HIT)
-//	{
-//		ratio = 0.5 * (ray->dir.y + 1.0);
-//		color.x = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.5);
-//		color.y = (int)((1.0 - ratio) * 255.0 + ratio * 255.0 * 0.7);
-//		color.z = 255;
-//		return (color);
-//	}
-//	diffused_ray.pos = hitted.pos;
-//	diffused_ray.dir = get_scattered_dir(&(hitted.normal));
-//	return (multi(ray_color_of_diffuse(&diffused_ray, depth - 1), 0.5));
-//}

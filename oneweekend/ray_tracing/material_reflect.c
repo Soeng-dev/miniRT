@@ -4,7 +4,7 @@
 void		init_material(t_material *material, t_vector color,\
 												int (*scatter)(const t_ray*, void *, t_ray *))
 {
-	material->albedo = divide(color, 255);
+	material->albedo = color;
 	material->scatter = scatter;
 }
 

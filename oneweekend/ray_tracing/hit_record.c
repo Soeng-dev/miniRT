@@ -8,9 +8,14 @@ int		time_is_valid(long double time)
 
 void	record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_ray *, t_hit_record *), const t_ray *ray, t_hit_record *hitted)
 {
+	t_hit_record	new_hitted;
+
+	init_hit_record(&new_hitted);
 	while (same_kind_figures)
 	{
-		hit((t_sphere*)same_kind_figures->content, ray, hitted);
+		hit((t_sphere*)same_kind_figures->content, ray, &new_hitted);
+		if (new_hitted.time < hitted->time)
+			*hitted = new_hitted;
 		same_kind_figures = same_kind_figures->next;
 	}
 	return ;
