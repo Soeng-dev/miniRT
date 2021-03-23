@@ -19,5 +19,6 @@ double			dot(t_vector v1, t_vector v2);
 t_vector		vec_clamp(t_vector v, double min, double max);
 t_vector		minus(t_vector v1, t_vector v2);
 int				vector_is_same(t_vector v1, t_vector v2);
+t_vector	cross(t_vector v1, t_vector v2);
 
 #endif

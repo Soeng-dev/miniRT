@@ -32,8 +32,9 @@ void	init_camera(t_camera *cam, t_campos *campos, t_camview *camview)
 	cam->origin = campos->origin;
 	cam->horizontal = multi(u, view_width);
 	cam->vertical = multi(v, view_height);
-	cam->lowerleft = add(divide(horizontal, 2.0), divide(vertical, 2.0));
+	cam->lowerleft = add(divide(cam->horizontal, 2.0), \
+				divide(cam->vertical, 2.0));
 	cam->lowerleft = add(cam->lowerleft,\
 						multi(w, camview->focallen));
-	cam->lowerleft = minus(origin, cam->lowerleft);
+	cam->lowerleft = minus(cam->origin, cam->lowerleft);
 }

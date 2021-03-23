@@ -58,8 +58,6 @@ double		max(double a, double b);
 void		init_hit_record(t_hit_record *hitted);
 int			check_front_face(const t_ray *ray, const t_vector * outward_normal);
 void		make_sphere(t_vector center, double radius, t_material *material);
-double		get_sphere_hitted_time(double a, double b, double sqrt_dis);
-t_vector	ray_color_of_diffuse(const t_ray *ray, int depth);
 int			time_is_valid(long double time);
 void	record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_ray *, t_hit_record *), const t_ray *ray, t_hit_record *hitted);
 void	raycast(const t_ray *ray, t_hit_record *hitted);
