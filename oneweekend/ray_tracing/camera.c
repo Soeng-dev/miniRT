@@ -10,7 +10,7 @@ void	init_campos (t_campos *campos, t_vector origin, t_vector lookat, t_vector u
 
 void	init_camview(t_camview *camview, double angle, double ratio, double focallen)
 {
-	camview->focallen = facallen;
+	camview->focallen = focallen;
 	camview->angle = angle;
 	camview->ratio = ratio;
 }

@@ -8,7 +8,7 @@ struct	s_camera
 	t_vector	vertical;
 	t_vector	lowerleft;
 };
-typedef s_camera	t_camera;
+typedef struct s_camera	t_camera;
 
 struct	s_campos
 {
@@ -16,7 +16,7 @@ struct	s_campos
 	t_vector	lookat;
 	t_vector	upward;
 };
-typedef s_campos	t_campos;
+typedef struct s_campos	t_campos;
 
 struct	s_camview
 {
@@ -24,7 +24,7 @@ struct	s_camview
 	double		ratio;
 	double		focallen;
 };
-typedef s_camview	t_camview;
+typedef struct s_camview	t_camview;
 
 void	init_campos (t_campos *campos, t_vector origin, t_vector lookat, t_vector upward);
 void	init_camview(t_camview *camview, double angle, double ratio, double focallen);
