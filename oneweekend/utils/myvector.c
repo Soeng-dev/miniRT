@@ -57,22 +57,18 @@ t_vector		normalize(t_vector v)
 
 t_vector		add(t_vector v1, t_vector v2)
 {
-	t_vector result;
-
-	result.x = v1.x + v2.x;
-	result.y = v1.y + v2.y;
-	result.z = v1.z + v2.z;
-	return (result);
+	v1.x += v2.x;
+	v1.y += v2.y;
+	v1.z += v2.z;
+	return (v1);
 }
 
 t_vector		minus(t_vector v1, t_vector v2)
 {
-	t_vector result;
-
-	result.x = v1.x - v2.x;
-	result.y = v1.y - v2.y;
-	result.z = v1.z - v2.z;
-	return (result);
+	v1.x -= v2.x;
+	v1.y -= v2.y;
+	v1.z -= v2.z;
+	return (v1);
 }
 
 t_vector		power(t_vector v, double n)
@@ -89,6 +85,16 @@ t_vector		vec_clamp(t_vector v, double min, double max)
 	v.y = clamp(v.y, min, max);
 	v.z = clamp(v.z, min, max);
 	return (v);
+}
+
+int				vector_is_same(t_vector v1, t_vector v2)
+{
+	if (v1.x == v2.x && \
+		v1.y == v2.y && \
+		v1.z == v2.z)
+		return (TRUE);
+	else
+		return (FALSE);
 }
 
 double	dot(t_vector v1, t_vector v2)

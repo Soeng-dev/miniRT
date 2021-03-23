@@ -4,7 +4,6 @@
 # define _USE_MATH_DEFINES
 # define SAMPLES_PER_PIXEL 30
 # include <math.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include "libft/libft.h"
 # include "utils/mymlx_utils.h"

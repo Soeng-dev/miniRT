@@ -4,6 +4,7 @@
 # include <float.h>
 # include "../libft/libft.h"
 # include "../utils/myvector.h"
+# include "camera.h"
 # define NOT_HIT DBL_MAX 
 # define T_MAX DBL_MAX
 # define T_MIN 0.001
