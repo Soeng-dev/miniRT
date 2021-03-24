@@ -39,7 +39,7 @@ void	raycast(const t_ray *ray, t_hit_record *hitted)
 	return ;
 }
 
-t_vector	get_background_color(const t_ray *ray)
+t_vector	get_background_color(const t_ray *ray, double ambience)
 {
 	t_vector	background_color;
 	double		ratio;
@@ -48,10 +48,11 @@ t_vector	get_background_color(const t_ray *ray)
 	background_color.x = (1.0 - ratio)+ ratio * 0.5;
 	background_color.y = (1.0 - ratio)+ ratio * 0.7;
 	background_color.z = 1.0;
+	background_color = multi(background_color, ambience);
 	return (background_color);
 }
 
-t_vector	ray_color(const t_ray *ray, int depth)
+t_vector	ray_color(const t_ray *ray, double ambience, int depth)
 {
 	t_hit_record	hitted;
 	t_vector		attenuation;
@@ -62,13 +63,14 @@ t_vector	ray_color(const t_ray *ray, int depth)
 	init_hit_record(&hitted);
 	raycast(ray, &hitted);
 	if (hitted.time == NOT_HIT)
-		return (get_background_color(ray));
+		return (get_background_color(ray, ambience));
 	if (hitted.material->scatter(ray, (void*)&hitted, &scattered))
 	{
-		attenuation = ray_color(&scattered, depth - 1);
+		attenuation = ray_color(&scattered, ambience, depth - 1);
 		attenuation.x *= hitted.material->albedo.x;
 		attenuation.y *= hitted.material->albedo.y;
 		attenuation.z *= hitted.material->albedo.z;
+		attenuation = multi(attenuation, 1 + hitted.spot_bright);
 		return (attenuation);
 	}
 	return (get_vector(0, 0, 0));
