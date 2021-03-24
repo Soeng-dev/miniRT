@@ -9,9 +9,6 @@ int		time_is_valid(long double time)
 void	record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_ray *, t_hit_record *), const t_ray *ray, t_hit_record *hitted)
 {
 	t_hit_record	new_hitted;
-	t_light			*light;
-	t_vector		light_dir;
-	int				i;
 
 	init_hit_record(&new_hitted);
 	while (same_kind_figures)
@@ -20,16 +17,6 @@ void	record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_
 		if (new_hitted.time < hitted->time)
 			*hitted = new_hitted;
 		same_kind_figures = same_kind_figures->next;
-	}
-	light = g_light_data.light_arr;
-	if (!light)
-		return ;
-	i = -1;
-	while (++i < g_light_data.count)
-	{
-		light_dir = normalize(minus(light->pos, hitted->pos));
-		hitted->spot_bright = light->bright * dot(light_dir, hitted->normal);
-		++light;
 	}
 	return ;
 }

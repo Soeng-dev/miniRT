@@ -55,7 +55,7 @@ t_vector	get_background_color(const t_ray *ray, double ambience)
 t_vector	ray_color(const t_ray *ray, double ambience, int depth)
 {
 	t_hit_record	hitted;
-	t_vector		attenuation;
+	t_vector		color;
 	t_ray			scattered;
 
 	if (depth <= 0)
@@ -63,17 +63,43 @@ t_vector	ray_color(const t_ray *ray, double ambience, int depth)
 	init_hit_record(&hitted);
 	raycast(ray, &hitted);
 	if (hitted.time == NOT_HIT)
-		return (get_background_color(ray, ambience));
-	if (hitted.material->scatter(ray, (void*)&hitted, &scattered))
+		color  = get_background_color(ray, ambience);
+	else if (hitted.material->scatter(ray, (void*)&hitted, &scattered))
 	{
-		attenuation = ray_color(&scattered, ambience, depth - 1);
-		attenuation.x *= hitted.material->albedo.x;
-		attenuation.y *= hitted.material->albedo.y;
-		attenuation.z *= hitted.material->albedo.z;
-		attenuation = multi(attenuation, 1 + hitted.spot_bright);
-		return (attenuation);
+		color = ray_color(&scattered, ambience, depth - 1);
+		color = multi_corresponds(hitted.material->albedo, color);
+
+
+		//light
+		t_light			*light;
+		t_vector		light_dir;
+		int			i;
+		t_vector		spot_color = get_vector(0,0,0);
+		t_vector		color_by_light;
+		double			spot_bright = 0;
+
+		light = g_light_data.light_arr;
+		if (!light)
+			return (color);
+		i = -1;
+		while (++i < g_light_data.count)
+		{
+			light_dir = normalize(minus(light->pos, hitted.pos));
+			spot_bright = light->bright * \
+				      dot(light_dir, hitted.normal);
+			color_by_light = multi(color_by_light, spot_bright);
+			spot_color = add(spot_color, color_by_light);
+			++light;
+		}
+		//light end
+
+		
+		color = multi_corresponds(spot_color, color);
+		return (color);
 	}
-	return (get_vector(0, 0, 0));
+	else
+		color = get_vector(0, 0, 0);
+	return (color);
 }
 
 

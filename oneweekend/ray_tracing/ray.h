@@ -27,7 +27,7 @@ typedef struct s_ray	t_ray;
 struct	s_material
 {
 	t_vector	albedo;
-	double		fuzz;
+	double	fuzz;
 	int			(*scatter)(const t_ray*, void *, t_ray *);
 };
 typedef struct s_material	t_material;
@@ -36,7 +36,6 @@ struct s_hit_record
 	t_vector	pos;
 	t_vector	normal;
 	double		time;
-	double		spot_bright;
 	int			is_front_face;
 	t_material	*material;
 };

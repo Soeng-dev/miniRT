@@ -53,7 +53,8 @@ int main()
 
 
 	// make lights
-	make_light(get_vector(0,0.4,-0.3), 1);
+	g_light_data.light_arr = NULL;
+	make_light(get_vector(0,0.4,-0.3), get_vector(1,1,1),1);
 
 	//calculate and print image
 	for (int j = scr.height - 1; j >= 0; --j)

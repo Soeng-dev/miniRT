@@ -87,6 +87,14 @@ t_vector		vec_clamp(t_vector v, double min, double max)
 	return (v);
 }
 
+t_vector	multi_corresponds(t_vector v1, t_vector v2)
+{
+	v1.x *= v2.x;
+	v1.y *= v2.y;
+	v1.z *= v2.z;
+	return (v1);
+}
+
 int				vector_is_same(t_vector v1, t_vector v2)
 {
 	if (v1.x == v2.x && \

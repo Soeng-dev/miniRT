@@ -36,10 +36,10 @@ t_vector	get_scattered_dir(const t_vector *normal)
 
 int			lambertian(const t_ray *r_in, void *hitted_record, t_ray *scattered)
 {
-	t_hit_record	*hitted;
+	const t_hit_record	*hitted;
 	t_vector		scattered_dir;
 
-	hitted = (t_hit_record *)hitted_record;
+	hitted = (const t_hit_record *)hitted_record;
 	scattered_dir = get_scattered_dir(&hitted->normal);
 	*scattered = get_ray(hitted->pos, scattered_dir);
 	return (TRUE);
@@ -52,10 +52,10 @@ t_vector	get_reflected(const t_vector *v, const t_vector *n)
 
 int			metal(const t_ray *r_in, void *hitted_record, t_ray *scattered)
 {
-	t_hit_record	*hitted;
+	const t_hit_record	*hitted;
 	t_vector		dir;
 
-	hitted = (t_hit_record *)hitted_record;
+	hitted = (const t_hit_record *)hitted_record;
 	dir = get_rand_in_unitsphere();
 	dir = multi(dir, hitted->material->fuzz);
 	dir = add(get_reflected(&r_in->dir, &hitted->normal), dir);
