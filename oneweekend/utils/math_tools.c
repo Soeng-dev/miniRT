@@ -35,3 +35,11 @@ double		clamp(double n, double min, double max)
 	else
 		return (n);
 }
+
+int			myrand(void)
+{
+	static int	r = 13;
+
+	r = (109 * r+ 1021) % 32768;
+	return (r);
+}

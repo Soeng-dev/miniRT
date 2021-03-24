@@ -10,6 +10,4 @@
 # include "utils/myvector.h"
 # include "utils/math_tools.h"
 # include "ray_tracing/ray.h"
-
-		#include <time.h>
 #endif

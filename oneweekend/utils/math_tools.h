@@ -15,4 +15,5 @@
 double		min(double a, double b);
 double		max(double a, double b);
 double		clamp(double n, double min, double max);
+int			myrand(void);
 #endif
