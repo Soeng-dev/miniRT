@@ -9,11 +9,13 @@ struct	s_vars
 	void	*win;
 };
 typedef struct s_vars	t_vars;
-struct	s_plane
+struct	s_screen
 {
-	double width, height;
+	double	width;
+	double	height;
+	double	ratio;
 };
-typedef struct s_plane	t_plane;
+typedef struct s_screen	t_screen;
 struct	s_data
 {
 	void *img;

@@ -15,23 +15,22 @@ void	init_camview(t_camview *camview, double angle, double ratio, double focalle
 	camview->ratio = ratio;
 }
 
-void	init_camera(t_camera *cam, t_campos *campos, t_camview *camview)
+void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview)
 {
 	t_vector	w;
 	t_vector	u;
 	t_vector	v;
-	double		view_height;
-	double		view_width;
+	t_screen	view;
 
 	w = normalize(minus(campos->origin, campos->lookat));
 	u = normalize(cross(campos->upward, w));
 	v = cross(w, u);
-	view_height = 2.0 * camview->focallen * tan(camview->angle / 2.0);
-	view_width = camview->ratio * view_height;
+	view.height = 2.0 * camview->focallen * tan(camview->angle / 2.0);
+	view.width = camview->ratio * view.height;
 
 	cam->origin = campos->origin;
-	cam->horizontal = multi(u, view_width);
-	cam->vertical = multi(v, view_height);
+	cam->horizontal = multi(u, view.width);
+	cam->vertical = multi(v, view.height);
 	cam->lowerleft = add(divide(cam->horizontal, 2.0), \
 				divide(cam->vertical, 2.0));
 	cam->lowerleft = add(cam->lowerleft,\

@@ -6,8 +6,9 @@
 
 int main()
 {
-	t_vars	ex;
-	t_data	img;
+	t_vars		ex;
+	t_data		img;
+	t_vector	color;
  
 	//  make image with mlx
 	ex.mlx = mlx_init();
@@ -17,25 +18,19 @@ int main()
 
 	//	ch 4
 	//	image
-	const double scrratio = 16.0/9.0;
-	t_plane	scr;
+	t_screen	scr;
+	scr.ratio = 16.0/9.0;
 	scr.width = 1000;
-	scr.height = scr.width / scrratio;
+	scr.height = scr.width / scr.ratio;
 
 	//camera
-	t_plane	view;
-	view.height = 2.0;
-	view.width = scrratio * view.height;
-	double	focallen = 1.0;
-	t_vector	color;
+	t_campos	campos;
+	t_camview	camview;
+	t_camera	cam;
 
-	t_vector origin, horizontal, vertical, lowerleft;
-	init_vector(&origin, 0, 0, 0);
-	init_vector(&horizontal, view.width, 0, 0);
-	init_vector(&vertical, 0, view.height, 0);
-
-	lowerleft = minus(origin, multi(add(horizontal, vertical), 0.5));
-	lowerleft.z = origin.z - focallen;
+	init_campos(&campos, get_vector(0, 0, 0), get_vector(0, 0, -1), get_vector(0, 1, 0));
+	init_camview(&camview, M_PI / 2, scr.ratio, 1.0);
+	init_camera(&cam, &campos, &camview);
 
 	// make figures
 	t_material	mat_ground;
@@ -63,8 +58,8 @@ int main()
 				t_ray	ray;
 				double u = ((double)i + ((double)s / SAMPLES_PER_PIXEL)) / (scr.width - 1);
 				double v = ((double)j + ((double)s / SAMPLES_PER_PIXEL)) / (scr.height - 1);
-				t_vector castdir = add(multi(horizontal, u), multi(vertical, v));
-				init_ray(&ray, origin, minus(add(lowerleft, castdir), origin));
+				t_vector offset = add(multi(cam.horizontal, u), multi(cam.vertical, v));
+				init_ray(&ray, cam.origin, minus(add(cam.lowerleft, offset), cam.origin));
 				color = add(color, ray_color(&ray, 20));
 			}
 			color = divide(color, SAMPLES_PER_PIXEL);
