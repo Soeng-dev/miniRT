@@ -73,7 +73,7 @@ t_vector	ray_color(const t_ray *ray, double ambience, int depth)
 		//light
 		t_light			*light;
 		t_vector		light_dir;
-		int			i;
+		int				i;
 		t_vector		spot_color = get_vector(0,0,0);
 		t_vector		color_by_light;
 		double			spot_bright = 0;
@@ -85,16 +85,17 @@ t_vector	ray_color(const t_ray *ray, double ambience, int depth)
 		while (++i < g_light_data.count)
 		{
 			light_dir = normalize(minus(light->pos, hitted.pos));
-			spot_bright = light->bright * \
-				      dot(light_dir, hitted.normal);
-			color_by_light = multi(color_by_light, spot_bright);
+			spot_bright = 1 + light->bright * \
+								dot(light_dir, hitted.normal);
+			color_by_light = multi(light->color, spot_bright);
 			spot_color = add(spot_color, color_by_light);
 			++light;
 		}
 		//light end
 
-		
+
 		color = multi_corresponds(spot_color, color);
+		color = vec_clamp(color, 0.0001, 1);
 		return (color);
 	}
 	else

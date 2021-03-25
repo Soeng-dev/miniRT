@@ -53,8 +53,8 @@ int main()
 
 
 	// make lights
-	g_light_data.light_arr = NULL;
-	make_light(get_vector(0,0.4,-0.3), get_vector(1,1,1),1);
+	//g_light_data.light_arr = NULL;
+	make_light(get_vector(0,0.4,-0.3), get_vector(0.7,0.3,0.3),1);
 
 	//calculate and print image
 	for (int j = scr.height - 1; j >= 0; --j)
@@ -75,9 +75,11 @@ int main()
 			pixput(&img, i, (scr.height - 1) - j, get_color(color, 2));
 		}
 	}
+	printf("print image done\n");
 	//delete
 	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
 		ft_lstclear(&g_figures[i], free);
+	free(g_light_data.light_arr);
 	mlx_put_image_to_window(ex.mlx, ex.win, img.img, 0, 0);
 	mlx_loop(ex.mlx);
 }

@@ -27,7 +27,7 @@ typedef struct s_ray	t_ray;
 struct	s_material
 {
 	t_vector	albedo;
-	double	fuzz;
+	double		fuzz;
 	int			(*scatter)(const t_ray*, void *, t_ray *);
 };
 typedef struct s_material	t_material;
