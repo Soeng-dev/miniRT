@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <mlx.h>
-#include <stdio.h>
 #include "miniRT.h"
 
 int main()
@@ -31,9 +30,10 @@ int main()
 	t_camview	camview;
 	t_camera	cam;
 
-	init_campos(&campos, get_vector(2, 2, 0), get_vector(0, 0, -1), get_vector(0, 1, 0));
+	init_campos(&campos, get_vector(0, 0, 0), get_vector(0, 0, -1), get_vector(0, 1, 0));
 	init_camview(&camview, M_PI / 2, scr.ratio, 1.0);
 	init_camera(&cam, &campos, &camview);
+
 
 	// make figures
 	t_material	mat_ground;
@@ -48,12 +48,13 @@ int main()
 
 	make_sphere(get_vector(0, -100.5, -1), 100, &mat_ground);
 	make_sphere(get_vector(0, 0, -1), 0.5, &mat_center);
-	make_sphere(get_vector(-0.3, 0, -1), 0.5, &mat_left);
-	make_sphere(get_vector(0.3, 0, -1), 0.5, &mat_right);
+	make_sphere(get_vector(-1, 0, -1), 0.5, &mat_left);
+	make_sphere(get_vector(1.0, 0, -1), 0.5, &mat_right);
 
 
 	// make lights
-	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),1);
+	//g_light_data.light_arr = NULL;
+	make_light(get_vector(0,0.4,-0.3), get_vector(0.7,0.7,0.7),0.4);
 
 	//calculate and print image
 	for (int j = scr.height - 1; j >= 0; --j)

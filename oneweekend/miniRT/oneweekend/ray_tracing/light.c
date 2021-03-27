@@ -24,8 +24,6 @@ void	make_light(t_vector pos, t_vector color, double bright)
 	g_light_data.light_arr = light;
 	light = g_light_data.light_arr + g_light_data.count;
 	init_light(light, pos, color, bright);
-	++light;
-	light = (t_light*)NULL;
 	g_light_data.count++;
 }
 
@@ -38,37 +36,36 @@ void	delete_light(void)
 
 void	light_hitted(const t_hit_record *hitted, t_vector *color)
 {
-	t_ray			hitted_to_light;
 	t_light			*light;
 	t_vector		light_dir;
-	t_vector		spot_color;
-	t_vector		color_by_light;
+	t_ray			hitted_to_light;
 	t_hit_record	blocked;
-	double			spot_bright;
+	int				i;
+	t_vector		spot_color = get_vector(0,0,0);
+	t_vector		color_by_light;
+	double			spot_bright = 0;
 
-	if (!g_light_data.light_arr)
-		return ;
-	spot_color = get_vector(0, 0, 0);
 	light = g_light_data.light_arr;
-	while (light)
+	if (!light)
+		return ;
+	i = -1;
+	while (++i < g_light_data.count)
 	{
-		init_hit_record(&blocked);
-		light_dir = minus(light->pos, hitted->pos);
+		light_dir = normalize(minus(light->pos, hitted->pos));
 		hitted_to_light = get_ray(hitted->pos, light_dir);
 		raycast(&hitted_to_light, &blocked);
 		if (blocked.time == NOT_HIT)
 		{
 			spot_bright = 1 + light->bright * \
-							dot(normalize(light_dir), hitted->normal);
+							dot(light_dir, hitted->normal);
 			color_by_light = multi(light->color, spot_bright);
 		}
-//		else
-//		{
-//			spot_bright = 1.0 - light->bright;
-//			color_by_light = minus(get_vector(1, 1, 1), light->color);
-//			color_by_light = multi(color_by_light, spot_bright);
-//		}
-
+		else
+		{
+			spot_bright = 1.0 - light->bright;
+			color_by_light = minus(get_vector(1, 1, 1), light->color);
+			color_by_light = multi(color_by_light, spot_bright);
+		}
 		spot_color = add(spot_color, color_by_light);
 		++light;
 	}

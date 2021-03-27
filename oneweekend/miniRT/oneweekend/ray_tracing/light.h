@@ -17,4 +17,8 @@ struct	s_lightdata
 };
 typedef struct s_lightdata	t_lightdata;
 
+void		init_light(t_light *light, t_vector pos, t_vector color, double bright);
+void		make_light(t_vector pos, t_vector color, double bright);
+void		delete_light(void);
+
 #endif
