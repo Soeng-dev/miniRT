@@ -31,7 +31,7 @@ int main()
 	t_camview	camview;
 	t_camera	cam;
 
-	init_campos(&campos, get_vector(2, 2, 0), get_vector(0, 0, -1), get_vector(0, 1, 0));
+	init_campos(&campos, get_vector(0, 0, 0), get_vector(0, 0, -1), get_vector(0, 1, 0));
 	init_camview(&camview, M_PI / 2, scr.ratio, 1.0);
 	init_camera(&cam, &campos, &camview);
 
@@ -43,17 +43,21 @@ int main()
 
 	init_material(&mat_ground, get_vector(0.8, 0.8, 0), 0, lambertian);
 	init_material(&mat_center, get_vector(0.7, 0.3, 0.3), 0, lambertian);
-	init_material(&mat_left, get_vector(0.8, 0.8, 0.8), 0.8, metal);
-	init_material(&mat_right, get_vector(0.8, 0.6, 0.2), 0.3, metal);
+	init_material(&mat_left, get_vector(0.8, 0.8, 0.8), 0.8, lambertian);
+	init_material(&mat_right, get_vector(0.8, 0.6, 0.2), 0.3, lambertian);
 
 	make_sphere(get_vector(0, -100.5, -1), 100, &mat_ground);
-	make_sphere(get_vector(0, 0, -1), 0.5, &mat_center);
-	make_sphere(get_vector(-0.3, 0, -1), 0.5, &mat_left);
-	make_sphere(get_vector(0.3, 0, -1), 0.5, &mat_right);
+	//make_sphere(get_vector(0, 0, -1), 0.5, &mat_center);
+	make_sphere(get_vector(-2, 0, -1), 0.5, &mat_left);
+	make_sphere(get_vector(2, 0, -1), 0.5, &mat_right);
 
 
 	// make lights
-	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),1);
+//	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),1);
+	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),0.8);
+//	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),0.8);
+	for(int i = 0 ; i < g_light_data.count; ++i)
+		printf("%lf %lf %lf\n", g_light_data.light_arr[i].pos.x, g_light_data.light_arr[i].pos.y, g_light_data.light_arr[i].pos.z);
 
 	//calculate and print image
 	for (int j = scr.height - 1; j >= 0; --j)
