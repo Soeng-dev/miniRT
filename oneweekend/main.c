@@ -48,14 +48,14 @@ int main()
 
 	make_sphere(get_vector(0, -100.5, -1), 100, &mat_ground);
 	//make_sphere(get_vector(0, 0, -1), 0.5, &mat_center);
-	make_sphere(get_vector(-2, 0, -1), 0.5, &mat_left);
-	make_sphere(get_vector(2, 0, -1), 0.5, &mat_right);
+	make_sphere(get_vector(-1, 0, -1), 0.5, &mat_left);
+	make_sphere(get_vector(1, 0, -1), 0.5, &mat_right);
 
 
 	// make lights
-//	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),1);
-	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),0.8);
-//	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),0.8);
+//	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),0.9);
+	make_light(get_vector(-2,0.4,-0.3), get_vector(0.3,0.5,0.9),0.6);
+	make_light(get_vector(2,0.4,-0.3), get_vector(0.9,0.5,0.3),0.6);
 	for(int i = 0 ; i < g_light_data.count; ++i)
 		printf("%lf %lf %lf\n", g_light_data.light_arr[i].pos.x, g_light_data.light_arr[i].pos.y, g_light_data.light_arr[i].pos.z);
 
