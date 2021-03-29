@@ -7,31 +7,32 @@
 
 int main()
 {
-	t_vars		ex;
-	t_data		img;
+	t_mlx_vars	minirt;
+	t_mlx_data	img;
 	t_vector	color;
  
-
-	//  make image with mlx
-	ex.mlx = mlx_init();
- 	ex.win = mlx_new_window(ex.mlx, 1500, 1000, "ex");
- 	img.img = mlx_new_image(ex.mlx, 1500, 1000);
- 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.linelen, &img.endian);
-
-
 	//	image
 	t_screen	scr;
 	scr.ratio = 16.0/9.0;
 	scr.width = 1000;
 	scr.height = scr.width / scr.ratio;
 
+	//  make image with mlx
+	minirt.mlx = mlx_init();
+ 	minirt.win = mlx_new_window(minirt.mlx, (int)scr.width + 1, (int)scr.height + 1, "miniRT");
+ 	img.img = mlx_new_image(minirt.mlx, (int)scr.width + 1, (int)scr.height + 1);
+ 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.linelen, &img.endian);
+
+	//key and mouse
+	mlx_key_hook(minirt.win, key_check, &minirt);
+	//mlx_mouse_hook(mlx_vars.win, mouse_check, mlx_vars.win);
 
 	//camera
 	t_campos	campos;
 	t_camview	camview;
 	t_camera	cam;
 
-	init_campos(&campos, get_vector(0, 0, 0), get_vector(0, 0, -1), get_vector(0, 1, 0));
+	init_campos(&campos, get_vector(0, 0, 3), get_vector(0, 0, -1), get_vector(0, 1, 0));
 	init_camview(&camview, M_PI / 2, scr.ratio, 1.0);
 	init_camera(&cam, &campos, &camview);
 
@@ -55,7 +56,7 @@ int main()
 	// make lights
 //	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),0.9);
 	make_light(get_vector(-2,0.4,-0.3), get_vector(0.3,0.5,0.9),0.6);
-	make_light(get_vector(2,0.4,-0.3), get_vector(0.9,0.5,0.3),0.6);
+//	make_light(get_vector(2,0.4,-0.3), get_vector(0.9,0.5,0.3),0.6);
 	for(int i = 0 ; i < g_light_data.count; ++i)
 		printf("%lf %lf %lf\n", g_light_data.light_arr[i].pos.x, g_light_data.light_arr[i].pos.y, g_light_data.light_arr[i].pos.z);
 
@@ -83,6 +84,6 @@ int main()
 	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
 		ft_lstclear(&g_figures[i], free);
 	free(g_light_data.light_arr);
-	mlx_put_image_to_window(ex.mlx, ex.win, img.img, 0, 0);
-	mlx_loop(ex.mlx);
+	mlx_put_image_to_window(minirt.mlx, minirt.win, img.img, 0, 0);
+	mlx_loop(minirt.mlx);
 }

@@ -12,7 +12,7 @@
 
 #include "../miniRT.h"
 
-void			pixput(t_data *img, int x, int y, int color)
+void			pixput(t_mlx_data *img, int x, int y, int color)
 {
 	char	*dst;
 
@@ -28,4 +28,11 @@ int		get_color(t_vector colorvec, double gamma)
 	colorvec = multi(vec_clamp(colorvec, 0, 1), 255);
 	color = (((int)colorvec.x << 16) | ((int)colorvec.y << 8) | ((int)colorvec.z));
 	return (color);
+}
+
+int		key_check(int key)
+{
+	if (key == ESC)
+		exit(0);
+	return (0);
 }
