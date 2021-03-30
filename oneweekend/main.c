@@ -1,6 +1,5 @@
 
 #include <stdio.h>
-#include <math.h>
 #include <mlx.h>
 #include <stdio.h>
 #include "miniRT.h"
@@ -23,16 +22,19 @@ int main()
  	img.img = mlx_new_image(minirt.mlx, (int)scr.width + 1, (int)scr.height + 1);
  	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.linelen, &img.endian);
 
-	//key and mouse
-	mlx_key_hook(minirt.win, key_check, &minirt);
-	//mlx_mouse_hook(mlx_vars.win, mouse_check, mlx_vars.win);
+	//hook
+	mlx_hook(minirt.win, MLX_KEY_PRESS, 0, key_check, &minirt);
+	mlx_hook(minirt.win, MLX_BUTTON_PRESS, 0, mouse_check, &minirt);
+	mlx_hook(minirt.win, MLX_RED_CROSS, 0, (int (*)())exit, &minirt);
+
+
 
 	//camera
 	t_campos	campos;
 	t_camview	camview;
 	t_camera	cam;
 
-	init_campos(&campos, get_vector(0, 0, 3), get_vector(0, 0, -1), get_vector(0, 1, 0));
+	init_campos(&campos, get_vector(0, 0, -0.7), get_vector(0, 0, -1), get_vector(0, 1, 0));
 	init_camview(&camview, M_PI / 2, scr.ratio, 1.0);
 	init_camera(&cam, &campos, &camview);
 
@@ -57,29 +59,9 @@ int main()
 //	make_light(get_vector(0,0.4,-0.3), get_vector(0.8,0.8,0.8),0.9);
 	make_light(get_vector(-2,0.4,-0.3), get_vector(0.3,0.5,0.9),0.6);
 //	make_light(get_vector(2,0.4,-0.3), get_vector(0.9,0.5,0.3),0.6);
-	for(int i = 0 ; i < g_light_data.count; ++i)
-		printf("%lf %lf %lf\n", g_light_data.light_arr[i].pos.x, g_light_data.light_arr[i].pos.y, g_light_data.light_arr[i].pos.z);
 
-	//calculate and print image
-	for (int j = scr.height - 1; j >= 0; --j)
-	{
-		for (int i = 0; i < scr.width; ++i)
-		{
-			ft_memset(&color, 0, sizeof(t_vector));
-			for (int s = 0; s < (int)SAMPLES_PER_PIXEL; ++s)
-			{
-				t_ray	ray;
-				double u = ((double)i + ((double)s / SAMPLES_PER_PIXEL)) / (scr.width - 1);
-				double v = ((double)j + ((double)s / SAMPLES_PER_PIXEL)) / (scr.height - 1);
-				t_vector offset = add(multi(cam.horizontal, u), multi(cam.vertical, v));
-				init_ray(&ray, cam.origin, minus(add(cam.lowerleft, offset), cam.origin));
-				color = add(color, ray_color(&ray, 1.0, 20));
-			}
-			color = divide(color, SAMPLES_PER_PIXEL);
-			pixput(&img, i, (scr.height - 1) - j, get_color(color, 2));
-		}
-	}
-	printf("print image done\n");
+	render_img(&img, &scr, &cam);
+
 	//delete
 	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
 		ft_lstclear(&g_figures[i], free);

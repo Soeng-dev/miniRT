@@ -1,5 +1,7 @@
 
-#include "../utils/myvector.h"
+#ifndef CAMERA_H
+# define CAMERA_H
+# include "../utils/myvector.h"
 
 struct	s_camera
 {
@@ -29,3 +31,5 @@ typedef struct s_camview	t_camview;
 void	init_campos (t_campos *campos, t_vector origin, t_vector lookat, t_vector upward);
 void	init_camview(t_camview *camview, double angle, double ratio, double focallen);
 void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview);
+
+#endif

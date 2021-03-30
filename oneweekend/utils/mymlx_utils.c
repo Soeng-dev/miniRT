@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#		include <stdio.h>
 #include "../miniRT.h"
 
-void			pixput(t_mlx_data *img, int x, int y, int color)
+void			pixput(const t_mlx_data *img, int x, int y, int color)
 {
 	char	*dst;
 
@@ -25,14 +26,60 @@ int		get_color(t_vector colorvec, double gamma)
 	int		color;
 
 	colorvec = power(colorvec, 1.0 / gamma);
-	colorvec = multi(vec_clamp(colorvec, 0, 1), 255);
+	colorvec = multi(colorvec, 255);
 	color = (((int)colorvec.x << 16) | ((int)colorvec.y << 8) | ((int)colorvec.z));
 	return (color);
 }
 
-int		key_check(int key)
+int		key_check(int key, t_camera * cam)
 {
-	if (key == ESC)
+	printf ("%d\n", key);
+	if (key == KEY_ESC)
 		exit(0);
+	
 	return (0);
+}
+
+int		red_cross_exit(void)
+{
+	exit(0);
+}
+
+int		mouse_check(int mouse, int x, int y)
+{
+	printf("%d	%d	%d\n", mouse, x,y);
+	return (0);
+}
+
+void	render_img(const t_mlx_data *img, const t_screen *scr, const t_camera *cam) 
+{
+	t_vector	color;
+	for (int j = scr->height - 1; j >= 0; --j)
+	{
+		for (int i = 0; i < scr->width; ++i)
+		{
+			ft_memset(&color, 0, sizeof(t_vector));
+			//anti alias
+//			for (int s = 0; s < (int)SAMPLES_PER_PIXEL; ++s)
+//			{
+//				t_ray	ray;
+//				double u = ((double)i + ((double)s / SAMPLES_PER_PIXEL)) / (scr->width - 1);
+//				double v = ((double)j + ((double)s / SAMPLES_PER_PIXEL)) / (scr->height - 1);
+//				t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
+//				init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
+//				color = add(color, ray_color(&ray, 1.0, 20));
+//			}
+			//color = divide(color, SAMPLES_PER_PIXEL);
+
+			//no AA
+			t_ray	ray;
+			double u = (double)i / (scr->width - 1);
+			double v = (double)j / (scr->height - 1);
+			t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
+			init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
+			color = ray_color(&ray, 1.0, 20);
+			pixput(img, i, (scr->height - 1) - j, get_color(color, 2));
+		}
+	}
+	printf("print image done\n");
 }

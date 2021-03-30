@@ -9,6 +9,5 @@
 # include "utils/mymlx_utils.h"
 # include "utils/myvector.h"
 # include "utils/math_tools.h"
-# include "utils/ft_realloc.h"
 # include "ray_tracing/ray.h"
 #endif

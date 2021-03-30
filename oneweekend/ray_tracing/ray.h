@@ -20,8 +20,8 @@
 
 struct	s_ray
 {
-	t_vector		pos;
-	t_vector		dir;
+	t_vector	pos;
+	t_vector	dir;
 };
 typedef struct s_ray	t_ray;
 struct	s_material
@@ -47,11 +47,9 @@ struct	s_sphere
 	double		r;
 	t_material	*material;
 };
-typedef struct s_sphere		t_sphere;
-
+typedef struct s_sphere	t_sphere;
 t_list		*g_figures[NUM_OF_FIGTYPES];
 t_lightdata	g_light_data;
-
 void		init_ray(t_ray *ray, t_vector pos, t_vector dir);
 void		init_sphere(t_sphere *sp, t_vector center, double r, t_material *material);
 t_vector	raypos_at_t(t_ray ray, double t);
@@ -73,5 +71,4 @@ void		init_light(t_light *light, t_vector pos, t_vector color, double bright);
 void		make_light(t_vector pos, t_vector color, double bright);
 void		delete_light(void);
 void		light_hitted(const t_hit_record *hitted, t_vector *color);
-
 #endif
