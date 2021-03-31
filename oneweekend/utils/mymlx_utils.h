@@ -4,13 +4,19 @@
 # define MLX_KEY_PRESS 2
 # define MLX_BUTTON_PRESS 4
 # define MLX_RED_CROSS 17
-# define KEY_RIGHT 124
-# define KEY_LEFT 123
-# define KEY_UP 126
-# define KEY_DOWN 125
+//# define KEY_RIGHT 124
+//# define KEY_LEFT 123
+//# define KEY_UP 126
+//# define KEY_DOWN 125
 # define KEY_ESC 53
-# include "myvector.h"
+# define KEY_TAB 48
+# define BUTTON_RIGHT 2
+# include <stdio.h>
+# include <stdlib.h>
+# include "../get_next_line/get_next_line.h"
 # include "../ray_tracing/ray.h"
+# include "fd_flush.h"
+# include "myvector.h"
 
 struct	s_mlx_vars 
 {
@@ -35,8 +41,7 @@ typedef struct s_mlx_data	t_mlx_data;
 void	pixput(const t_mlx_data *img, int x, int y, int color);
 int		get_color(t_vector colvec, double gamma);
 int		key_check(int key, t_camera *cam);
-int		mouse_check(int mouse, int x, int y);
+int		mouse_check(int button, int x, int y);
 void	render_img(const t_mlx_data *img, const t_screen *scr, const t_camera *cam);
-int		red_cross_exit(void);
 
 #endif

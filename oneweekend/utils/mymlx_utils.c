@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#		include <stdio.h>
-#include "../miniRT.h"
+# include "../miniRT.h"
 
 void			pixput(const t_mlx_data *img, int x, int y, int color)
 {
@@ -33,21 +32,27 @@ int		get_color(t_vector colorvec, double gamma)
 
 int		key_check(int key, t_camera * cam)
 {
-	printf ("%d\n", key);
+	char	*s;
+
+	//printf("%d\n", key);
 	if (key == KEY_ESC)
 		exit(0);
-	
+	if (key == KEY_TAB)
+	{
+		get_next_line(STDIN, &s);
+		//command(s);
+		free(s);
+		s = NULL;
+	}
 	return (0);
 }
 
-int		red_cross_exit(void)
+int		mouse_check(int button, int x, int y)
 {
-	exit(0);
-}
+	char *str;
 
-int		mouse_check(int mouse, int x, int y)
-{
-	printf("%d	%d	%d\n", mouse, x,y);
+	str = NULL;
+	printf("%d	%d	%d\n", button, x,y);
 	return (0);
 }
 

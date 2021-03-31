@@ -65,10 +65,9 @@ void	hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
 	discriminant = b * b - a * c;
 	if (discriminant > 0)
 	{
-		time = get_sphere_hitted_time(a, b, sqrt(discriminant));
-		if (time == NOT_HIT)
+		hitted->time = get_sphere_hitted_time(a, b, sqrt(discriminant));
+		if (hitted->time == NOT_HIT)
 			return ;
-		hitted->time = min(hitted->time, time);
 		hitted->pos = raypos_at_t(*ray, hitted->time);
 		hitted->material = sp->material;
 		outward_normal = divide(minus(hitted->pos, sp->ctr), sp->r);

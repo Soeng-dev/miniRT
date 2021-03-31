@@ -3,6 +3,7 @@
 # define MINIRT_H
 # define _USE_MATH_DEFINES
 # define SAMPLES_PER_PIXEL 30
+# define STDIN 0
 # include <math.h>
 # include <stdlib.h>
 # include "libft/libft.h"

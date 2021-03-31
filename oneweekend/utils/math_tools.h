@@ -12,8 +12,6 @@
 
 #ifndef MATH_TOOLS_H
 # define MATH_TOOLS_H
-double		min(double a, double b);
-double		max(double a, double b);
 double		clamp(double n, double min, double max);
 int			myrand(void);
 #endif

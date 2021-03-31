@@ -69,7 +69,7 @@ t_vector	ray_color(const t_ray *ray, double ambience, int depth)
 		color = ray_color(&scattered, ambience, depth - 1);
 		color = multi_corresponds(hitted.material->albedo, color);
 		light_hitted(&hitted, &color);
-		color = vec_clamp(color, 0.0001, 1);
+		color = vec_clamp(color, 0.03, 1);
 		return (color);
 	}
 	else

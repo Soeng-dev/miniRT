@@ -4,8 +4,35 @@
 #include <stdio.h>
 #include "miniRT.h"
 
-int main()
+int		open_rtfile(char *name)
 {
+	char	*extension;
+	int		fd;
+
+	extension = name;
+	while (extension)
+		++extension;
+	extension -= 3;
+	if (!ft_strcmp(extension, ".rt"))
+	{
+		fd = open(name, O_RDONLY);
+		if (fd == ERROR)
+			return (ERROR);
+		else
+			return (fd);
+	}
+	else
+		return (ERROR);
+}
+
+int		main(int argc, char *argv[])
+{
+	int		rtfile;
+	if (argc >= 2)
+	{
+		rtfile = open_rtfile(argv[1]);
+		
+
 	t_mlx_vars	minirt;
 	t_mlx_data	img;
 	t_vector	color;
@@ -61,7 +88,6 @@ int main()
 //	make_light(get_vector(2,0.4,-0.3), get_vector(0.9,0.5,0.3),0.6);
 
 	render_img(&img, &scr, &cam);
-
 	//delete
 	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
 		ft_lstclear(&g_figures[i], free);

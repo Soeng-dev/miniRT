@@ -1,2 +1,2 @@
 #!/bin/bash
-rm *.gch */*.gch
+rm *.gch */*.gch 
