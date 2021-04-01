@@ -1,9 +1,9 @@
 
 #include "../miniRT.h"
 
-void	init_campos (t_campos *campos, t_vector origin, t_vector lookat, t_vector upward)
+void	init_campos (t_campos *campos, t_vector origin, t_vector dir, t_vector upward)
 {
-	campos->lookat = lookat;
+	campos->dir= dir;
 	campos->origin = origin;
 	campos->upward = upward;
 }
@@ -37,3 +37,28 @@ void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview
 						multi(w, camview->focallen));
 	cam->lowerleft = minus(cam->origin, cam->lowerleft);
 }
+
+void	make_camera(t_camlist *camlist, const t_campos *campos, const t_camview *camview)
+{
+	if (camlist)
+	{
+		camlist->next = (t_camlist *)malloc(sizeof(t_camlist));
+		if (!camlist->next)
+			return ;
+		camlist->next->prev = camlist;
+		camlist->next->next = NULL;
+		camlist->next->cam = (t_camera *)malloc(sizeof(t_camera));
+		init_camera(camlist->next->cam, campos, camview);
+	}
+	else
+	{
+		camlist = (t_camlist *)malloc(sizeof(t_camlist));
+		if (!camlist)
+			return ;
+		camlist->prev = NULL;
+		camlist->next = NULL;
+		camlist->cam = (t_camera *)malloc(sizeof(t_camera));
+		init_camera(camlist->cam, campos, camview);
+	}
+}
+

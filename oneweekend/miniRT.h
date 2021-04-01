@@ -10,5 +10,5 @@
 # include "utils/mymlx_utils.h"
 # include "utils/myvector.h"
 # include "utils/math_tools.h"
-# include "ray_tracing/ray.h"
+# include "ray_tracing/ray_tracing.h"
 #endif

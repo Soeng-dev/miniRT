@@ -18,12 +18,6 @@
 # include "fd_flush.h"
 # include "myvector.h"
 
-struct	s_mlx_vars 
-{
-	void	*mlx;
-	void	*win;
-};
-typedef struct s_mlx_vars	t_mlx_vars;
 struct	s_screen
 {
 	double	width;
@@ -31,13 +25,31 @@ struct	s_screen
 	double	ratio;
 };
 typedef struct s_screen	t_screen;
-struct	s_mlx_data
+struct	s_mlx_vars 
 {
-	void *img;
-	char *addr;
-	int bpp, linelen, endian;
+	void	*mlx;
+	void	*win;
 };
-typedef struct s_mlx_data	t_mlx_data;
+typedef struct s_mlx_vars	t_mlx_vars;
+struct	s_img_data
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		linelen;
+	int		endian;
+};
+typedef struct s_img_data	t_img_data;
+
+struct	s_setup
+{
+	t_mlx_vars	mlx_vars;
+	t_img_data	img;
+	t_screen	scr;
+};
+typedef struct s_setup	t_setup;
+
+
 void	pixput(const t_mlx_data *img, int x, int y, int color);
 int		get_color(t_vector colvec, double gamma);
 int		key_check(int key, t_camera *cam);

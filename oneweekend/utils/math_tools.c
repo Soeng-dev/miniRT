@@ -10,6 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+double		dbl_min(double a, double b)
+{
+	if (a < b)
+		return (a);
+	else
+		return (b);
+}
+
+double		dbl_max(double a, double b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
+
 double		clamp(double n, double min, double max)
 {
 	if (n < min)

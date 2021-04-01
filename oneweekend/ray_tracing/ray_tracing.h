@@ -1,6 +1,6 @@
 
-#ifndef RAY_H
-# define RAY_H
+#ifndef RAY_TRACING_H
+# define RAY_TRACING_H
 # include <float.h>
 # include "../libft/libft.h"
 # include "../utils/myvector.h"
@@ -48,8 +48,10 @@ struct	s_sphere
 	t_material	*material;
 };
 typedef struct s_sphere	t_sphere;
+
 t_list		*g_figures[NUM_OF_FIGTYPES];
 t_lightdata	g_light_data;
+
 void		init_ray(t_ray *ray, t_vector pos, t_vector dir);
 void		init_sphere(t_sphere *sp, t_vector center, double r, t_material *material);
 t_vector	raypos_at_t(t_ray ray, double t);

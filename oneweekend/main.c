@@ -27,14 +27,19 @@ int		open_rtfile(char *name)
 
 int		main(int argc, char *argv[])
 {
+	char	*s;
 	int		rtfile;
+
+	s = NULL;
 	if (argc >= 2)
 	{
 		rtfile = open_rtfile(argv[1]);
-		
-
-	t_mlx_vars	minirt;
-	t_mlx_data	img;
+		while (get_next_line(rtfile, s) > 0)
+			command(s);
+		free(s);
+	}
+	t_camllist	*camlist;
+	camlist = NULL;
 	t_vector	color;
  
 	//	image
@@ -53,8 +58,6 @@ int		main(int argc, char *argv[])
 	mlx_hook(minirt.win, MLX_KEY_PRESS, 0, key_check, &minirt);
 	mlx_hook(minirt.win, MLX_BUTTON_PRESS, 0, mouse_check, &minirt);
 	mlx_hook(minirt.win, MLX_RED_CROSS, 0, (int (*)())exit, &minirt);
-
-
 
 	//camera
 	t_campos	campos;

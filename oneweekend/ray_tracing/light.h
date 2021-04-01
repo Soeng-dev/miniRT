@@ -12,8 +12,9 @@ struct	s_light
 typedef struct s_light	t_light;
 struct	s_lightdata
 {
-	t_light	*light_arr;
-	int		count;
+	t_light		*light_arr;
+	t_vector	ambient;
+	int			count;
 };
 typedef struct s_lightdata	t_lightdata;
 
