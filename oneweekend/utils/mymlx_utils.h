@@ -25,12 +25,14 @@ struct	s_screen
 	double	ratio;
 };
 typedef struct s_screen	t_screen;
+
 struct	s_mlx_vars 
 {
 	void	*mlx;
 	void	*win;
 };
 typedef struct s_mlx_vars	t_mlx_vars;
+
 struct	s_img_data
 {
 	void	*img;
@@ -48,7 +50,6 @@ struct	s_setup
 	t_screen	scr;
 };
 typedef struct s_setup	t_setup;
-
 
 void	pixput(const t_mlx_data *img, int x, int y, int color);
 int		get_color(t_vector colvec, double gamma);

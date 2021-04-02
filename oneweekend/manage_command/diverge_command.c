@@ -2,62 +2,36 @@
 # include <stdio.h>
 # include "manage_command.h"
 
-int		ft_strcmp(char *s1, char *s2)
+void	command(char *s, void *target, void *param)
 {
-	if (!s1 || !s2)
-		return (0);
-	while (*s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
-}
+	char	*id;
+	int		is_error
 
-void	pass_charset(char **str, const char *set)
-{
-	int		setlen;
-	int		i;
-
-	if (!str || !(*str))
-		return ;
-	i = setlen;
-	setlen = ft_strlen(set);
-	while (**str)
-	{
-		i = -1;
-		while (++i < setlen && **str != set[i]);
-		if (i == setlen)
-			(*str)++;
-		else
-			return ;
-	}
-	return ;
-}
-
-void	command(char *s, void *target)
-{
-	//need to trim before strcmp
-	//need to pass incremented char_ptr s 
+	is_error = 0;
 	pass_charset(&s, " \t\n\v\f\r");
-	if (!ft_strcmp("R", s))
-		set_mlx_resolution(++s, (t_setup *)target);
-	else if (!ft_strcmp("A", s))
+	id = ft_strtrim(s, " \t\n\v\f\r");
+	if (!ft_strcmp("R", id))
+		set_mlx_resolution(++s, (t_setup *)target, &is_error);
+	else if (!ft_strcmp("A", id))
 		set_ambient(++s);
-	else if (!ft_strcmp("c", s))
-
-	else if (!ft_strcmp("l", s))
+	else if (!ft_strcmp("c", id))
+		set_camera(++s, (t_camlist *)target, (double *)param, &is_error);
+	else if (!ft_strcmp("l", id))
+		set_light(++s, &is_error);
+	else if (!ft_strcmp("sp", id))
+		set_sphere(s + 2, &is_error);
+	else if (!ft_strcmp("pl", id))
 	{}
-	else if (!ft_strcmp("sp", s))
+	else if (!ft_strcmp("sq", id))
 	{}
-	else if (!ft_strcmp("pl",s))
+	else if (!ft_strcmp("cy", id))
 	{}
-	else if (!ft_strcmp("sq", s))
+	else if (!ft_strcmp("tr", id))
 	{}
-	else if (!ft_strcmp("cy", s))
-	{}
-	else if (!ft_strcmp("tr", s))
-	{}
+	else
+		is_error = 1;
+	free (id);
+	if (is_error)
+		error_exit();
 	return ;
 }
-

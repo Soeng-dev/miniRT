@@ -12,7 +12,7 @@
 
 #include "../miniRT.h"
 
-void			init_sphere(t_sphere *sp, t_vector center, double r, t_material *material)
+void	init_sphere(t_sphere *sp, t_vector center, double r, t_material *material)
 {
 	sp->ctr = center;
 	sp->r = r;

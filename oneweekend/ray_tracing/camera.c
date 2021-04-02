@@ -1,7 +1,7 @@
 
 #include "../miniRT.h"
 
-void	init_campos (t_campos *campos, t_vector origin, t_vector dir, t_vector upward)
+void	init_campos(t_campos *campos, t_vector origin, t_vector dir, t_vector upward)
 {
 	campos->dir= dir;
 	campos->origin = origin;
@@ -22,7 +22,8 @@ void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview
 	t_vector	v;
 	t_screen	view;
 
-	w = normalize(minus(campos->origin, campos->lookat));
+	//check w if camera doesn't work
+	w = compos->dir;
 	u = normalize(cross(campos->upward, w));
 	v = cross(w, u);
 	view.height = 2.0 * camview->focallen * tan(camview->angle / 2.0);
@@ -31,8 +32,8 @@ void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview
 	cam->origin = campos->origin;
 	cam->horizontal = multi(u, view.width);
 	cam->vertical = multi(v, view.height);
-	cam->lowerleft = add(divide(cam->horizontal, 2.0), \
-				divide(cam->vertical, 2.0));
+	cam->lowerleft = add(divide(cam->horizontal, 2.0),\
+						divide(cam->vertical, 2.0));
 	cam->lowerleft = add(cam->lowerleft,\
 						multi(w, camview->focallen));
 	cam->lowerleft = minus(cam->origin, cam->lowerleft);

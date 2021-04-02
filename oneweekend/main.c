@@ -6,9 +6,11 @@
 
 int		open_rtfile(char *name)
 {
-	char	*extension;
-	int		fd;
+	char		*extension;
+	int			fd;
+	t_camllist	*camlist;
 
+	camlist = NULL;
 	extension = name;
 	while (extension)
 		++extension;
@@ -38,8 +40,6 @@ int		main(int argc, char *argv[])
 			command(s);
 		free(s);
 	}
-	t_camllist	*camlist;
-	camlist = NULL;
 	t_vector	color;
  
 	//	image
@@ -90,7 +90,7 @@ int		main(int argc, char *argv[])
 	make_light(get_vector(-2,0.4,-0.3), get_vector(0.3,0.5,0.9),0.6);
 //	make_light(get_vector(2,0.4,-0.3), get_vector(0.9,0.5,0.3),0.6);
 
-	render_img(&img, &scr, &cam);
+	render_img(&setup.img, &setup.scr, &cam);
 	//delete
 	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
 		ft_lstclear(&g_figures[i], free);

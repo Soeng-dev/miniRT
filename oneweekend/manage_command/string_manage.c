@@ -1,8 +1,20 @@
 
 #include "manage_command.h"
 
-void		pass_charset(char **str, const char *set)
+int		ft_strcmp(char *s1, char *s2)
 {
+	if (!s1 || !s2)
+		return (0);
+	while (*s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
+
+void		pass_charset(char **str, const char *set)
+{// if doesn't work correctly, refactor use is_element in libft
 	int		setlen;
 	int		i;
 
@@ -22,22 +34,22 @@ void		pass_charset(char **str, const char *set)
 	return ;
 }
 
-double		extract_dbl(char *s)
+double		read_dbl(char **s)
 {
 	double	intiger;
 	double	small;
 
 	intiger = 0;
-	pass_charset(&s, " \t\n\v\f\r");
-	intiger = (double)ft_atoi(s);
-	pass_charset(&s, "0123456789");
-	if (*s == '.' && (s + 1))
+	pass_charset(s, " \t\n\v\f\r");
+	intiger = (double)ft_atoi(*s);
+	pass_charset(s, "0123456789");
+	if (**s == '.' && *(*s + 1))
 	{
 		small = 0;
-		while(ft_isdigit(*(++s)))
-			small = small / 10 + (*s) / 10;
+		while(ft_isdigit(*(++(*s)))
+			small = small / 10 + (**s) / 10;
 		bright += small;
-		pass_charset(&s, "0123456789");
+		pass_charset(s, "0123456789");
 	}
 	if (intiger > 0)
 		return (intiger + small);
@@ -45,17 +57,14 @@ double		extract_dbl(char *s)
 		return (intiger - small);
 }
 
-t_vector	extract_vector(char *s)
+t_vector	read_vector(char **s)
 {
 	t_vector	v;
 
-	pass_charset(&s, " \t\n\v\f\r");
 	v.x = extract_dbl(s);
-	pass_charset(&s, "0123456789.");
-	pass_charseet(&s, " \t\n\v\f\r,");
+	pass_charset(s, " \t\n\v\f\r,");
 	v.y = extract_dbl(s);
-	pass_charset(&s, "0123456789.");
-	pass_charseet(&s, " \t\n\v\f\r,");
+	pass_charset(s, " \t\n\v\f\r,");
 	v.z = extract_dbl(s);
 	return (v);
 }
