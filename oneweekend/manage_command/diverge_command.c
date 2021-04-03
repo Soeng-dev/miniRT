@@ -33,6 +33,6 @@ void	command(char *s, t_info *info)
 		is_error = 1;
 	free (id);
 	if (is_error)
-		error_exit();
+		error_exit(info);
 	return ;
 }

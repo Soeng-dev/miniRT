@@ -15,8 +15,8 @@ struct s_info
 typedef struct s_info	t_info;
 
 //error
-void	error_exit(void);
-void	error_return(int *is_error);
+void	error_exit(t_info *info);
+void	set_errflag(int *is_error);
 
 //string
 int		ft_strcmp(char *s1, char *s2);

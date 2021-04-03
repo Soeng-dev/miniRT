@@ -24,7 +24,7 @@ void	set_ambient(char *s, int *is_error)
 		*is_error = 1;
 	ambient = read_vector(&s);
 	if (ambient.x < 0 || ambient.y < 0 || ambient.z < 0)
-		*is_error = 1;
+		return (set_errflag(is_error));	
 	ambient = multi(ambient, bright);
 	g_light_data.ambient = ambient;
 	return ;
@@ -56,6 +56,6 @@ void	set_light(char *s, int *is_error)
 	bright = read_dbl(&s);
 	color = read_vector(&s);
 	if (bright < 0 || color.x < 0 || color.y < 0 || color.z < 0)
-		*is_error = 1;
+		return (set_errflag(is_error));
 	make_light(pos, color, bright);
 }

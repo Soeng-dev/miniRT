@@ -59,6 +59,7 @@ int		mouse_check(int button, int x, int y)
 void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam) 
 {
 	t_vector	color;
+
 	for (int j = scr->height - 1; j >= 0; --j)
 	{
 		for (int i = 0; i < scr->width; ++i)

@@ -9,7 +9,7 @@ void	set_fuzz_scatter(char *s, t_material *mat, int *is_error)
 	if (!ft_strcmp(trimmed, "metal"))
 		mat->scatter = metal;
 	else if (ft_strcmp(trimmed, "lambertian"))
-		*is_error = TRUE;
+		return (set_errflag(is_error));
 	pass_charset(&s, trimmed);
 	free(trimmed);
 	mat->fuzz = read_dbl(&s);
@@ -30,7 +30,7 @@ void	set_material(char *s, t_material **mat, int *is_error)
 	pass_charset(&s, " \t\n\v\f\r");
 	*mat = get_material(color, fuzz, scatter);
 	if (!(*mat))
-		return (error_return(is_error));
+		return (set_errflag(is_error));
 	if (*s)
 		set_fuzz_scatter(s, *mat, is_error);
 	return ;
@@ -45,7 +45,7 @@ void	set_sphere(char *s, int *is_error)
 	center = read_vector(&s);
 	r = read_dbl(&s) / 2.0;
 	if (r <= 0)
-		return (error_return(is_error));
+		return (set_errflag(is_error));
 	set_material(s, &mat, is_error);
 	if (is_error)
 		return ;

@@ -64,7 +64,8 @@ int		main(int argc, char *argv[])
 
 	init_campos(&campos, get_vector(0, 0, 0), get_vector(0, 0, -1), get_vector(0, 1, 0));
 	init_camview(&camview, M_PI / 2, info.setup.scr.ratio, 1.0);
-	init_camera(&cam, &campos, &camview);
+//	init_camera(&cam, &campos, &camview);
+	make_camera(&info.camlist, &campos, &camview);
 
 	// make figures
 	t_material	mat_ground;
@@ -88,7 +89,7 @@ int		main(int argc, char *argv[])
 	make_light(get_vector(-2,3,-0.3), get_vector(1,1,1),0.6);
 //	make_light(get_vector(2,0.4,-0.3), get_vector(0.9,0.5,0.3),0.6);
 
-	render_img(&info.setup.img_data, &info.setup.scr, &cam);
+	render_img(&info.setup.img_data, &info.setup.scr, info.camlist->cam);
 	//delete
 	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
 		ft_lstclear(&g_figures[i], free);
