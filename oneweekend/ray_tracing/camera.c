@@ -23,7 +23,7 @@ void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview
 	t_screen	view;
 
 	//check w if camera doesn't work
-	w = compos->dir;
+	w = multi(campos->dir, -1);
 	u = normalize(cross(campos->upward, w));
 	v = cross(w, u);
 	view.height = 2.0 * camview->focallen * tan(camview->angle / 2.0);
@@ -39,27 +39,26 @@ void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview
 	cam->lowerleft = minus(cam->origin, cam->lowerleft);
 }
 
-void	make_camera(t_camlist *camlist, const t_campos *campos, const t_camview *camview)
+void	make_camera(t_camlist **camlist, const t_campos *campos, const t_camview *camview)
 {
-	if (camlist)
+	if (*camlist)
 	{
-		camlist->next = (t_camlist *)malloc(sizeof(t_camlist));
-		if (!camlist->next)
+		(*camlist)->next = (t_camlist *)malloc(sizeof(t_camlist));
+		if (!(*camlist)->next)
 			return ;
-		camlist->next->prev = camlist;
-		camlist->next->next = NULL;
-		camlist->next->cam = (t_camera *)malloc(sizeof(t_camera));
-		init_camera(camlist->next->cam, campos, camview);
+		(*camlist)->next->prev = *camlist;
+		(*camlist)->next->next = NULL;
+		(*camlist)->next->cam = (t_camera *)malloc(sizeof(t_camera));
+		init_camera((*camlist)->next->cam, campos, camview);
 	}
 	else
 	{
-		camlist = (t_camlist *)malloc(sizeof(t_camlist));
-		if (!camlist)
+		(*camlist) = (t_camlist *)malloc(sizeof(t_camlist));
+		if (!(*camlist))
 			return ;
-		camlist->prev = NULL;
-		camlist->next = NULL;
-		camlist->cam = (t_camera *)malloc(sizeof(t_camera));
-		init_camera(camlist->cam, campos, camview);
+		(*camlist)->prev = NULL;
+		(*camlist)->next = NULL;
+		(*camlist)->cam = (t_camera *)malloc(sizeof(t_camera));
+		init_camera((*camlist)->cam, campos, camview);
 	}
 }
-

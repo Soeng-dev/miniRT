@@ -40,15 +40,14 @@ double		read_dbl(char **s)
 	double	small;
 
 	intiger = 0;
+	small = 0;
 	pass_charset(s, " \t\n\v\f\r");
 	intiger = (double)ft_atoi(*s);
 	pass_charset(s, "0123456789");
 	if (**s == '.' && *(*s + 1))
 	{
-		small = 0;
-		while(ft_isdigit(*(++(*s)))
+		while(ft_isdigit(*(++(*s))))
 			small = small / 10 + (**s) / 10;
-		bright += small;
 		pass_charset(s, "0123456789");
 	}
 	if (intiger > 0)
@@ -61,10 +60,10 @@ t_vector	read_vector(char **s)
 {
 	t_vector	v;
 
-	v.x = extract_dbl(s);
+	v.x = read_dbl(s);
 	pass_charset(s, " \t\n\v\f\r,");
-	v.y = extract_dbl(s);
+	v.y = read_dbl(s);
 	pass_charset(s, " \t\n\v\f\r,");
-	v.z = extract_dbl(s);
+	v.z = read_dbl(s);
 	return (v);
 }

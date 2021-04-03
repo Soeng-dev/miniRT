@@ -1,21 +1,22 @@
 
 # include <stdio.h>
 # include "manage_command.h"
+# include "../miniRT.h"
 
-void	command(char *s, void *target, void *param)
+void	command(char *s, t_info *info)
 {
 	char	*id;
-	int		is_error
+	int		is_error;
 
-	is_error = 0;
+	is_error = FALSE;
 	pass_charset(&s, " \t\n\v\f\r");
 	id = ft_strtrim(s, " \t\n\v\f\r");
 	if (!ft_strcmp("R", id))
-		set_mlx_resolution(++s, (t_setup *)target, &is_error);
+		set_mlx_resolution(++s, &info->setup, &is_error);
 	else if (!ft_strcmp("A", id))
-		set_ambient(++s);
+		set_ambient(++s, &is_error);
 	else if (!ft_strcmp("c", id))
-		set_camera(++s, (t_camlist *)target, (double *)param, &is_error);
+		set_camera(++s, info, &is_error);
 	else if (!ft_strcmp("l", id))
 		set_light(++s, &is_error);
 	else if (!ft_strcmp("sp", id))

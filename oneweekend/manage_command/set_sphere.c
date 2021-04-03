@@ -1,26 +1,21 @@
 
-#include <manage_command.h>
+#include "manage_command.h"
 
-void	set_fuzz_scatter(char *s, t_vector *color, void **scatter, int *is_error)
+void	set_fuzz_scatter(char *s, t_material *mat, int *is_error)
 {
 	char	*trimmed;
 
 	trimmed = ft_strtrim(s, " \t\n\v\f\r");
 	if (!ft_strcmp(trimmed, "metal"))
-		*scatter = metal;
-	else if (ft_strcmp(trimmed, "lambertian") != 0)
+		mat->scatter = metal;
+	else if (ft_strcmp(trimmed, "lambertian"))
 		*is_error = TRUE;
-	else
-		*scatter = lambertian;
+	pass_charset(&s, trimmed);
 	free(trimmed);
-	pass_charset(&s, "abcdefghijklmnopqrstuvwxyz");
-	pass_charset(&s, " \t\n\v\f\r");
-	if (*s)
-	{
-		fuzz = read_dbl(&s);
-		if (fuzz < 0)
-			*is_error = TRUE;
-	}
+	mat->fuzz = read_dbl(&s);
+	if (mat->fuzz < 0)
+		*is_error = TRUE;
+	return ;
 }
 
 void	set_material(char *s, t_material **mat, int *is_error)
@@ -30,14 +25,14 @@ void	set_material(char *s, t_material **mat, int *is_error)
 	int			(*scatter)(const t_ray *, void *, t_ray *);
 
 	fuzz = 0;
-	scatter = NULL;
+	scatter = lambertian;
 	color = read_vector(&s);
 	pass_charset(&s, " \t\n\v\f\r");
-	if (*s)
-		set_fuzz_scatter(s, &color, &scatter, is_error);
 	*mat = get_material(color, fuzz, scatter);
 	if (!(*mat))
-		*is_error = 1;
+		return (error_return(is_error));
+	if (*s)
+		set_fuzz_scatter(s, *mat, is_error);
 	return ;
 }
 
@@ -49,8 +44,12 @@ void	set_sphere(char *s, int *is_error)
 
 	center = read_vector(&s);
 	r = read_dbl(&s) / 2.0;
+	if (r <= 0)
+		return (error_return(is_error));
 	set_material(s, &mat, is_error);
-	make_sphere
+	if (is_error)
+		return ;
+	make_sphere(center, r, mat);
 	return ;
 }
 

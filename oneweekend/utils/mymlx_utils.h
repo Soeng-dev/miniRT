@@ -14,8 +14,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "../get_next_line/get_next_line.h"
-# include "../ray_tracing/ray.h"
-# include "fd_flush.h"
+# include "../ray_tracing/ray_tracing.h"
 # include "myvector.h"
 
 struct	s_screen
@@ -46,15 +45,15 @@ typedef struct s_img_data	t_img_data;
 struct	s_setup
 {
 	t_mlx_vars	mlx_vars;
-	t_img_data	img;
+	t_img_data	img_data;
 	t_screen	scr;
 };
 typedef struct s_setup	t_setup;
 
-void	pixput(const t_mlx_data *img, int x, int y, int color);
+void	pixput(const t_img_data *img, int x, int y, int color);
 int		get_color(t_vector colvec, double gamma);
-int		key_check(int key, t_camera *cam);
+int		key_check(int key);
 int		mouse_check(int button, int x, int y);
-void	render_img(const t_mlx_data *img, const t_screen *scr, const t_camera *cam);
+void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam);
 
 #endif

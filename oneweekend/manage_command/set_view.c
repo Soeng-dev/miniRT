@@ -3,14 +3,13 @@
 
 void	set_mlx_resolution(char *s, t_setup *setup, int *is_error)
 {
-	ft_memset(scr, sizeof(t_setup));
+	ft_memset(setup, 0, sizeof(t_setup));
 
-	get_mlx_screen_size(setup->mlx_vars.mlx, &setup->scr.width, &setup->scr.height);
-	setup->scr.width = dbl_min(ft_atoi(s), setup->scr.width);
+	setup->scr.width = ft_atoi(s);
 	pass_charset(&s, " \t\n\v\f\r");
 	pass_charset(&s, "0123456789");
-	setup->scr.height= dbl_min(ft_atoi(s), setup->scr.height);
-	if (setup->mlx_vars.width <= 0 || setup->mlx_vars.height <= 0)
+	setup->scr.height= ft_atoi(s);
+	if (setup->scr.width <= 0 || setup->scr.height <= 0)
 		*is_error = 1;
 	return ;
 }
@@ -31,7 +30,7 @@ void	set_ambient(char *s, int *is_error)
 	return ;
 }
 
-void	set_camera(char *s, t_camlist *camlist, double *scr_ratio, int *is_error)
+void	set_camera(char *s, t_info *info, int *is_error)
 {
 	t_campos	campos;
 	t_camview	camview;
@@ -40,10 +39,11 @@ void	set_camera(char *s, t_camlist *camlist, double *scr_ratio, int *is_error)
 	campos.origin = read_vector(&s);
 	campos.dir = read_vector(&s);
 	camview.angle = M_PI * (read_dbl(&s) / 180);
-	if (camview.angle >= M_PI || camview.angle <=0)
+	if (camview.angle >= M_PI || camview.angle <= 0)
 		*is_error = 1;
 	camview.focallen = 1.0;
-	camview.ratio = *scr_ratio;
+	camview.ratio = info->setup.scr.ratio;
+	make_camera(&info->camlist, &campos, &camview);
 }
 
 void	set_light(char *s, int *is_error)

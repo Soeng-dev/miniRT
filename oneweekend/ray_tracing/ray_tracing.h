@@ -66,6 +66,9 @@ void		raycast(const t_ray *ray, t_hit_record *hitted);
 t_vector	get_scattered_dir(const t_vector *normal);
 void		init_material(t_material *material, t_vector color, double fuzz, \
 							int (*scatter)(const t_ray*, void *, t_ray *));
+t_material	*get_material(t_vector color, double fuzz, \
+							int (*scatter)(const t_ray*, void *, t_ray *));
+
 int			metal(const t_ray *r_in, void *hitted_record, t_ray *scattered);
 int			lambertian(const t_ray *r_in, void *hitted_record, t_ray *scattered);
 t_ray		get_ray(t_vector pos, t_vector dir);

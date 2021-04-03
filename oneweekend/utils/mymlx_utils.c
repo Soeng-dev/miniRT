@@ -12,7 +12,7 @@
 
 # include "../miniRT.h"
 
-void			pixput(const t_mlx_data *img, int x, int y, int color)
+void			pixput(const t_img_data *img, int x, int y, int color)
 {
 	char	*dst;
 
@@ -30,7 +30,7 @@ int		get_color(t_vector colorvec, double gamma)
 	return (color);
 }
 
-int		key_check(int key, t_camera * cam)
+int		key_check(int key)
 {
 	char	*s;
 
@@ -56,7 +56,7 @@ int		mouse_check(int button, int x, int y)
 	return (0);
 }
 
-void	render_img(const t_mlx_data *img, const t_screen *scr, const t_camera *cam) 
+void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam) 
 {
 	t_vector	color;
 	for (int j = scr->height - 1; j >= 0; --j)
