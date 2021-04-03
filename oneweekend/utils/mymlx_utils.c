@@ -34,7 +34,7 @@ int		key_check(int key)
 {
 	char	*s;
 
-	//printf("%d\n", key);
+	printf("%d\n", key);
 	if (key == KEY_ESC)
 		exit(0);
 	if (key == KEY_TAB)

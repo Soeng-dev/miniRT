@@ -8,8 +8,10 @@ void	command(char *s, t_info *info)
 	char	*id;
 	int		is_error;
 
-	is_error = FALSE;
 	pass_charset(&s, " \t\n\v\f\r");
+	if (!(*s))
+		return ;
+	is_error = FALSE;
 	id = ft_strtrim(s, " \t\n\v\f\r");
 	if (!ft_strcmp("R", id))
 		set_mlx_resolution(++s, &info->setup, &is_error);
