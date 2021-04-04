@@ -7,6 +7,8 @@
 # include "../libft/libft.h"
 # include "../utils/mymlx_utils.h"
 # include "../ray_tracing/ray_tracing.h"
+# include "../get_next_line/get_next_line.h"
+
 struct s_info
 {
 	t_camlist	*camlist;
@@ -19,10 +21,12 @@ void	error_exit(t_info *info);
 void	set_errflag(int *is_error);
 
 //string
-int		ft_strcmp(char *s1, char *s2);
-void	pass_charset(char **str, const char *set);
-double	read_dbl(char **s);
+int			ft_strcmp(char *s1, char *s2);
+int			is_element(const char *set, char c);
+void		pass_charset(char **str, const char *set);
+double		read_dbl(char **s);
 t_vector	read_vector(char **s);
+
 
 //diverge_command
 void	command(char *s, t_info *info);

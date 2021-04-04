@@ -39,7 +39,7 @@ void	raycast(const t_ray *ray, t_hit_record *hitted)
 	return ;
 }
 
-t_vector	get_background_color(const t_ray *ray, double ambience)
+t_vector	get_background_color(const t_ray *ray, double ambient)
 {
 	t_vector	background_color;
 	double		ratio;
@@ -48,11 +48,11 @@ t_vector	get_background_color(const t_ray *ray, double ambience)
 	background_color.x = (1.0 - ratio)+ ratio * 0.5;
 	background_color.y = (1.0 - ratio)+ ratio * 0.7;
 	background_color.z = 1.0;
-	background_color = multi(background_color, ambience);
+	background_color = multi(background_color, ambient);
 	return (background_color);
 }
 
-t_vector	ray_color(const t_ray *ray, double ambience, int depth)
+t_vector	ray_color(const t_ray *ray, double ambient, int depth)
 {
 	t_hit_record	hitted;
 	t_vector		color;
@@ -63,10 +63,10 @@ t_vector	ray_color(const t_ray *ray, double ambience, int depth)
 	init_hit_record(&hitted);
 	raycast(ray, &hitted);
 	if (hitted.time == NOT_HIT)
-		color  = get_background_color(ray, ambience);
+		color  = get_background_color(ray, ambient);
 	else if (hitted.material->scatter(ray, (void*)&hitted, &scattered))
 	{
-		color = ray_color(&scattered, ambience, depth - 1);
+		color = ray_color(&scattered, ambient, depth - 1);
 		color = multi_corresponds(hitted.material->albedo, color);
 		light_hitted(&hitted, &color);
 		color = vec_clamp(color, 0.03, 1);

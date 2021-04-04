@@ -48,8 +48,7 @@ void	make_camera(t_camlist **camlist, const t_campos *campos, const t_camview *c
 			return ;
 		(*camlist)->next->prev = *camlist;
 		(*camlist)->next->next = NULL;
-		(*camlist)->next->cam = (t_camera *)malloc(sizeof(t_camera));
-		init_camera((*camlist)->next->cam, campos, camview);
+		*camlist = (*camlist)->next;
 	}
 	else
 	{
@@ -58,7 +57,7 @@ void	make_camera(t_camlist **camlist, const t_campos *campos, const t_camview *c
 			return ;
 		(*camlist)->prev = NULL;
 		(*camlist)->next = NULL;
-		(*camlist)->cam = (t_camera *)malloc(sizeof(t_camera));
-		init_camera((*camlist)->cam, campos, camview);
 	}
+	(*camlist)->cam = (t_camera *)malloc(sizeof(t_camera));
+	init_camera((*camlist)->cam, campos, camview);
 }

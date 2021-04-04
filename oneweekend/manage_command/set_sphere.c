@@ -3,12 +3,13 @@
 
 void	set_fuzz_scatter(char *s, t_material *mat, int *is_error)
 {
+	printf("hi\n");
 	char	*trimmed;
 
 	trimmed = ft_strtrim(s, " \t\n\v\f\r");
 	if (!ft_strcmp(trimmed, "metal"))
 		mat->scatter = metal;
-	else if (ft_strcmp(trimmed, "lambertian"))
+	else if (ft_strcmp(trimmed, "lambertian") != 0)
 		return (set_errflag(is_error));
 	pass_charset(&s, trimmed);
 	free(trimmed);
@@ -26,16 +27,15 @@ void	set_material(char *s, t_material **mat, int *is_error)
 
 	fuzz = 0;
 	scatter = lambertian;
-	color = read_vector(&s);
+	color = divide(read_vector(&s), 255.0);
 	pass_charset(&s, " \t\n\v\f\r");
 	*mat = get_material(color, fuzz, scatter);
-	if (!(*mat))
+	if (!(*mat) || color.x < 0 || color.y < 0 || color.z < 0)
 		return (set_errflag(is_error));
 	if (*s)
 		set_fuzz_scatter(s, *mat, is_error);
 	return ;
 }
-
 void	set_sphere(char *s, int *is_error)
 {
 	t_material	*mat;
@@ -47,7 +47,7 @@ void	set_sphere(char *s, int *is_error)
 	if (r <= 0)
 		return (set_errflag(is_error));
 	set_material(s, &mat, is_error);
-	if (is_error)
+	if (*is_error)
 		return ;
 	make_sphere(center, r, mat);
 	return ;

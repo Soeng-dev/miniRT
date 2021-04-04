@@ -1,39 +1,50 @@
 
-# include <stdio.h>
 # include "manage_command.h"
 # include "../miniRT.h"
 
+int		get_idlen(char *s, char *delimiters)
+{
+	int		idlen;
+
+	idlen = 0;
+	while (!is_element(delimiters, *s) && *s)
+	{
+		++s;
+		++idlen;
+	}
+	return (idlen);
+}
+
 void	command(char *s, t_info *info)
 {
-	char	*id;
+	int		idlen;
 	int		is_error;
 
 	pass_charset(&s, " \t\n\v\f\r");
 	if (!(*s))
 		return ;
 	is_error = FALSE;
-	id = ft_strtrim(s, " \t\n\v\f\r");
-	if (!ft_strcmp("R", id))
+	idlen = get_idlen(s, " \t\n\v\f\r");
+	if (!ft_strncmp("R", s, idlen))
 		set_mlx_resolution(++s, &info->setup, &is_error);
-	else if (!ft_strcmp("A", id))
+	else if (!ft_strncmp("A", s, idlen))
 		set_ambient(++s, &is_error);
-	else if (!ft_strcmp("c", id))
+	else if (!ft_strncmp("c", s, idlen))
 		set_camera(++s, info, &is_error);
-	else if (!ft_strcmp("l", id))
+	else if (!ft_strncmp("l", s, idlen))
 		set_light(++s, &is_error);
-	else if (!ft_strcmp("sp", id))
+	else if (!ft_strncmp("sp", s, idlen))
 		set_sphere(s + 2, &is_error);
-	else if (!ft_strcmp("pl", id))
+	else if (!ft_strncmp("pl", s, idlen))
 	{}
-	else if (!ft_strcmp("sq", id))
+	else if (!ft_strncmp("sq", s, idlen))
 	{}
-	else if (!ft_strcmp("cy", id))
+	else if (!ft_strncmp("cy", s, idlen))
 	{}
-	else if (!ft_strcmp("tr", id))
+	else if (!ft_strncmp("tr", s, idlen))
 	{}
 	else
 		is_error = 1;
-	free (id);
 	if (is_error)
 		error_exit(info);
 	return ;
