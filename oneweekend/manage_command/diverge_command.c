@@ -20,6 +20,7 @@ void	command(char *s, t_info *info)
 	int		idlen;
 	int		is_error;
 
+	printf("hi\n");
 	pass_charset(&s, " \t\n\v\f\r");
 	if (!(*s))
 		return ;

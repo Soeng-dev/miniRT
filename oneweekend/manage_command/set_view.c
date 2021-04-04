@@ -7,7 +7,6 @@ void	set_mlx_resolution(char *s, t_setup *setup, int *is_error)
 	pass_charset(&s, " \t\n\v\f\r");
 	pass_charset(&s, "0123456789");
 	setup->scr.height= ft_atoi(s);
-//	printf("width:%f	height:%f\n\n", setup->scr.width, setup->scr.height);
 	if (setup->scr.width <= 0 || setup->scr.height <= 0)
 		*is_error = 1;
 	return ;
@@ -19,7 +18,6 @@ void	set_ambient(char *s, int *is_error)
 	t_vector	ambient;
 
 	bright = read_dbl(&s);
-	//printf("b %f\n", bright);
 	if (bright < 0)
 		return (set_errflag(is_error));
 	ambient = divide(read_vector(&s), 255.0);

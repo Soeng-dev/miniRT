@@ -3,7 +3,6 @@
 
 void	set_fuzz_scatter(char *s, t_material *mat, int *is_error)
 {
-	printf("hi\n");
 	char	*trimmed;
 
 	trimmed = ft_strtrim(s, " \t\n\v\f\r");
