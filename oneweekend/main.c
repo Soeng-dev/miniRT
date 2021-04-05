@@ -85,8 +85,9 @@ int		main(int argc, char *argv[])
 			command(s, &info); }
 		free(s);
 	}
-	make_plane(get_vector(0, -0.3, -1), get_vector(0, 1, 0), &mat_center);
-
+//	make_plane(get_vector(0, -0.3, -1), get_vector(0, 1, 0), &mat_center);
+	//t_plane *pl = g_figures[PLANE]->content;
+//printf("%f %f %f\n", pl->material->albedo.x, pl->material->albedo.y, pl->material->albedo.z);
 		//  make image with mlx
 	info.setup.mlx_vars.mlx = mlx_init();
  	info.setup.mlx_vars.win = mlx_new_window(info.setup.mlx_vars.mlx, (int)info.setup.scr.width + 1, (int)info.setup.scr.height + 1, "miniRT");

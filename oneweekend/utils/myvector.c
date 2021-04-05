@@ -119,3 +119,10 @@ t_vector	cross(t_vector v1, t_vector v2)
 	cross.z = v1.x * v2.y - v1.y * v2.x;
 	return (cross);
 }
+
+int				is_valid_vector(t_vector v, double min, double max)
+{
+	return (min <= v.x && v.x <= max &&\
+			min <= v.y && v.y <= max &&\
+			min <= v.z && v.z <= max);
+}

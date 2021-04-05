@@ -45,39 +45,3 @@ void		pass_charset(char **str, const char *set)
 	}
 	return ;
 }
-
-double		read_dbl(char **s)
-{
-	double	intiger;
-	double	small;
-
-	intiger = 0;
-	small = 0;
-	pass_charset(s, " \t\n\v\f\r");
-	intiger = (double)ft_atoi(*s);
-	if (**s == '-')
-		++(*s);
-	pass_charset(s, "0123456789");
-	if (**s == '.' && *(*s + 1))
-	{
-		while(ft_isdigit(*(++(*s))))
-			small = (small / 10.0) + ((**s - '0') / 10.0);
-		pass_charset(s, "0123456789");
-	}
-	if (intiger >= 0)
-		return (intiger + small);
-	else
-		return (intiger - small);
-}
-
-t_vector	read_vector(char **s)
-{
-	t_vector	v;
-
-	v.x = read_dbl(s);
-	pass_charset(s, " \t\n\v\f\r,");
-	v.y = read_dbl(s);
-	pass_charset(s, " \t\n\v\f\r,");
-	v.z = read_dbl(s);
-	return (v);
-}

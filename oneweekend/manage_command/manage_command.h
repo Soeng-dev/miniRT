@@ -4,6 +4,7 @@
 # define _USE_MATH_DEFINES
 
 # include <math.h>
+# include <stdlib.h>
 # include "../libft/libft.h"
 # include "../utils/mymlx_utils.h"
 # include "../ray_tracing/ray_tracing.h"
@@ -26,7 +27,7 @@ int			is_element(const char *set, char c);
 void		pass_charset(char **str, const char *set);
 double		read_dbl(char **s);
 t_vector	read_vector(char **s);
-
+void		set_fuzz_scatter(char *s, t_material *mat, int *is_error);
 
 //diverge_command
 void	command(char *s, t_info *info);
@@ -38,9 +39,8 @@ void	set_camera(char *s, t_info *info, int *is_error);
 void	set_light(char *s, int *is_error);
 
 //fiugres
-void	set_fuzz_scatter(char *s, t_material *mat, int *is_error);
-void	set_material(char *s, t_material **mat, int *is_error);
 void	set_sphere(char *s, int *is_error);
+void	set_plane(char *s, int *is_error);
 
 
 #endif

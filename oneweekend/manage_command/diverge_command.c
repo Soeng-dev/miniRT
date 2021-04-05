@@ -26,17 +26,17 @@ void	command(char *s, t_info *info)
 	is_error = FALSE;
 	idlen = get_idlen(s, " \t\n\v\f\r");
 	if (!ft_strncmp("R", s, idlen))
-		set_mlx_resolution(++s, &info->setup, &is_error);
+		set_mlx_resolution(s + idlen, &info->setup, &is_error);
 	else if (!ft_strncmp("A", s, idlen))
-		set_ambient(++s, &is_error);
+		set_ambient(s + idlen, &is_error);
 	else if (!ft_strncmp("c", s, idlen))
-		set_camera(++s, info, &is_error);
+		set_camera(s + idlen, info, &is_error);
 	else if (!ft_strncmp("l", s, idlen))
-		set_light(++s, &is_error);
+		set_light(s + idlen, &is_error);
 	else if (!ft_strncmp("sp", s, idlen))
-		set_sphere(s + 2, &is_error);
+		set_sphere(s + idlen, &is_error);
 	else if (!ft_strncmp("pl", s, idlen))
-		set_sphere(s + 2, &is_error);
+		set_plane(s + idlen, &is_error);
 	else if (!ft_strncmp("sq", s, idlen))
 	{}
 	else if (!ft_strncmp("cy", s, idlen))
