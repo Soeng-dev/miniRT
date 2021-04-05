@@ -55,6 +55,14 @@ struct	s_plane
 	t_material	*material;
 };
 typedef struct s_plane	t_plane;
+struct	s_square
+{
+	t_vector	ctr;
+	t_vector	normal;
+	double		half_size;
+	t_material	*material;
+};
+typedef struct s_square	t_square;
 
 t_list		*g_figures[NUM_OF_FIGTYPES];
 t_lightdata	g_light_data;
@@ -82,15 +90,19 @@ void		delete_light(void);
 void		light_hitted(const t_hit_record *hitted, t_vector *color);
 
 //figures
+//sphere
+void		init_sphere(t_sphere *sp, t_vector center, double r, t_material *material);
+void		hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted);
+void		make_sphere(t_vector center, double radius, t_material *material);
+
 //plane
 void		init_plane(t_plane *plane, t_vector p, t_vector normal, t_material *material);
 void	make_plane(t_vector p, t_vector normal, t_material *material);
 void	hit_plane(void *plane, const t_ray *ray, t_hit_record *hitted);
 
-//sphere
-void		init_sphere(t_sphere *sp, t_vector center, double r, t_material *material);
-void		hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted);
-void		make_sphere(t_vector center, double radius, t_material *material);
+//square
+void	hit_square(void *square, const t_ray *ray, t_hit_record *hitted);
+void	make_square(t_vector ctr, t_vector normal, double side_size, t_material *material);
 
 
 #endif

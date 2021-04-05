@@ -1,5 +1,5 @@
 
-# include "../miniRT.h"
+# include "../../miniRT.h"
 
 void	init_plane(t_plane *plane, t_vector p, t_vector normal, t_material *material)
 {
@@ -26,17 +26,17 @@ void	make_plane(t_vector p, t_vector normal, t_material *material)
 
 void	hit_plane(void *plane, const t_ray *ray, t_hit_record *hitted)
 {
-	double	t;
+	double	time;
 	t_plane	*pl;
 
 	pl = (t_plane *)plane;
-	t = dot(minus(pl->p, ray->pos), pl->normal)\
+	time = dot(minus(pl->p, ray->pos), pl->normal)\
 		/ dot(ray->dir, pl->normal);
-	if (time_is_valid(t))
+	if (time_is_valid(time))
 	{
-		hitted->pos = raypos_at_t(*ray, t);
+		hitted->pos = raypos_at_t(*ray, time);
 		hitted->normal = pl->normal;
-		hitted->time = t;
+		hitted->time = time;
 		hitted->is_front_face = TRUE;
 		hitted->material = pl->material;
 	}

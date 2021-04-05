@@ -54,6 +54,6 @@ void	pixput(const t_img_data *img, int x, int y, int color);
 int		get_color(t_vector colvec, double gamma);
 int		key_check(int key);
 int		mouse_check(int button, int x, int y);
-void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam, double ambient);
+void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam);
 
 #endif

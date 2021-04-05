@@ -43,3 +43,11 @@ int			myrand(void)
 	r = (109 * r + 1021) % 32768;
 	return (r);
 }
+
+double		absol(double n)
+{
+	if (n > 0)
+		return (n);
+	else
+		return (-n);
+}

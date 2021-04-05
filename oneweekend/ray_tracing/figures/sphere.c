@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../miniRT.h"
+#include "../../miniRT.h"
 
 void	init_sphere(t_sphere *sp, t_vector center, double r, t_material *material)
 {

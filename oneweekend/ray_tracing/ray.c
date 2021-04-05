@@ -36,7 +36,9 @@ void	raycast(const t_ray *ray, t_hit_record *hitted)
 {
 	hitted->time = NOT_HIT;
 	record_hitted(g_figures[PLANE], hit_plane, ray, hitted);
+
 	record_hitted(g_figures[SPHERE], hit_sphere, ray, hitted);
+	record_hitted(g_figures[SQUARE], hit_square, ray, hitted);
 	return ;
 }
 

@@ -56,7 +56,7 @@ int		mouse_check(int button, int x, int y)
 	return (0);
 }
 
-void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam, double ambient) 
+void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam) 
 {
 	t_vector	color;
 
@@ -77,7 +77,7 @@ void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam,
 				double v = ((double)j + ((double)s / SAMPLES_PER_PIXEL)) / (scr->height - 1);
 				t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
 				init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
-				color = add(color, ray_color(&ray, ambient, 20));
+				color = add(color, ray_color(&ray, 20));
 			}
 			color = divide(color, SAMPLES_PER_PIXEL);
 
