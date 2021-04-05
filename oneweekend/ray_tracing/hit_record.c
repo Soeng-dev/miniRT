@@ -13,7 +13,7 @@ void	record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_
 	init_hit_record(&new_hitted);
 	while (same_kind_figures)
 	{
-		hit((t_sphere*)same_kind_figures->content, ray, &new_hitted);
+		hit(same_kind_figures->content, ray, &new_hitted);
 		if (new_hitted.time < hitted->time)
 			*hitted = new_hitted;
 		same_kind_figures = same_kind_figures->next;

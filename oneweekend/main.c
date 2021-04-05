@@ -52,12 +52,12 @@ int		main(int argc, char *argv[])
 //
 //	// make figures
 //	t_material	mat_ground;
-//	t_material	mat_center;
+	t_material	mat_center;
 //	t_material	mat_left;
 //	t_material	mat_right;
 //
 //	init_material(&mat_ground, get_vector(0.8, 0.8, 0), 0, lambertian);
-//	init_material(&mat_center, get_vector(0.7, 0.3, 0.3), 0, lambertian);
+	init_material(&mat_center, get_vector(0.7, 0.3, 0.3), 0, lambertian);
 //	init_material(&mat_left, get_vector(0.8, 0, 0), 0.8, lambertian);
 //	init_material(&mat_right, get_vector(0, 0, 0.8), 0.3, lambertian);
 //
@@ -85,6 +85,7 @@ int		main(int argc, char *argv[])
 			command(s, &info); }
 		free(s);
 	}
+	make_plane(get_vector(0, -0.3, -1), get_vector(0, 1, 0), &mat_center);
 
 		//  make image with mlx
 	info.setup.mlx_vars.mlx = mlx_init();
@@ -101,7 +102,7 @@ int		main(int argc, char *argv[])
 	render_img(&info.setup.img_data, &info.setup.scr, info.camlist->cam, 1);
 	//delete, need to add camera and camlist free
 	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
-		ft_lstclear(&g_figures[i], free);
+		ft_lstclear(&g_figures[i], free);// need to change free to function which free material of figure also
 	if (g_light_data.light_arr)
 		free(g_light_data.light_arr);
 	mlx_put_image_to_window(info.setup.mlx_vars.mlx, info.setup.mlx_vars.win, info.setup.img_data.img, 0, 0);

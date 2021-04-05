@@ -64,8 +64,8 @@ void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam,
 		return ;
 	for (int j = scr->height - 1; j >= 0; --j)
 	{
-		ft_putnbr_fd(j, 1);
-		write(1, "\n", 1);
+//		ft_putnbr_fd(j, 1);
+//		write(1, "\n", 1);
 		for (int i = 0; i < scr->width; ++i)
 		{
 			ft_memset(&color, 0, sizeof(t_vector));

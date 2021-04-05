@@ -43,7 +43,7 @@ void	light_hitted(const t_hit_record *hitted, t_vector *color)
 	t_vector		color_by_light;
 	t_hit_record	blocked;
 	double			spot_bright;
-	int			i;
+	int				i;
 
 	if (!g_light_data.light_arr)
 		return ;

@@ -20,7 +20,6 @@ void	command(char *s, t_info *info)
 	int		idlen;
 	int		is_error;
 
-	printf("hi\n");
 	pass_charset(&s, " \t\n\v\f\r");
 	if (!(*s))
 		return ;
@@ -37,7 +36,7 @@ void	command(char *s, t_info *info)
 	else if (!ft_strncmp("sp", s, idlen))
 		set_sphere(s + 2, &is_error);
 	else if (!ft_strncmp("pl", s, idlen))
-	{}
+		set_sphere(s + 2, &is_error);
 	else if (!ft_strncmp("sq", s, idlen))
 	{}
 	else if (!ft_strncmp("cy", s, idlen))

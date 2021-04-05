@@ -35,6 +35,7 @@ t_vector	raypos_at_t(t_ray ray, double t)
 void	raycast(const t_ray *ray, t_hit_record *hitted)
 {
 	hitted->time = NOT_HIT;
+	record_hitted(g_figures[PLANE], hit_plane, ray, hitted);
 	record_hitted(g_figures[SPHERE], hit_sphere, ray, hitted);
 	return ;
 }
@@ -49,7 +50,7 @@ t_vector	get_background_color(const t_ray *ray, double ambient)
 	background_color.y = (1.0 - ratio)+ ratio * 0.7;
 	background_color.z = 1.0;
 	background_color = multi(background_color, ambient);
-	return (background_color);
+	return get_vector(0.5, 0.5, 0.5);
 }
 
 t_vector	ray_color(const t_ray *ray, double ambient, int depth)
@@ -59,7 +60,7 @@ t_vector	ray_color(const t_ray *ray, double ambient, int depth)
 	t_ray			scattered;
 
 	if (depth <= 0)
-		return (get_vector(0, 0, 0));
+		return (get_vector(1, 1, 1));
 	init_hit_record(&hitted);
 	raycast(ray, &hitted);
 	if (hitted.time == NOT_HIT)

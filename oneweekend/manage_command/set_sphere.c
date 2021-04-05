@@ -51,4 +51,3 @@ void	set_sphere(char *s, int *is_error)
 	make_sphere(center, r, mat);
 	return ;
 }
-

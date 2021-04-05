@@ -48,18 +48,22 @@ struct	s_sphere
 	t_material	*material;
 };
 typedef struct s_sphere	t_sphere;
+struct	s_plane
+{
+	t_vector	p;
+	t_vector	normal;
+	t_material	*material;
+};
+typedef struct s_plane	t_plane;
 
 t_list		*g_figures[NUM_OF_FIGTYPES];
 t_lightdata	g_light_data;
 
 void		init_ray(t_ray *ray, t_vector pos, t_vector dir);
-void		init_sphere(t_sphere *sp, t_vector center, double r, t_material *material);
 t_vector	raypos_at_t(t_ray ray, double t);
-void		hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted);
 t_vector	ray_color(const t_ray *ray, double ambient, int depth);
 void		init_hit_record(t_hit_record *hitted);
 int			check_front_face(const t_ray *ray, const t_vector * outward_normal);
-void		make_sphere(t_vector center, double radius, t_material *material);
 int			time_is_valid(long double time);
 void		record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_ray *, t_hit_record *), const t_ray *ray, t_hit_record *hitted);
 void		raycast(const t_ray *ray, t_hit_record *hitted);
@@ -76,4 +80,17 @@ void		init_light(t_light *light, t_vector pos, t_vector color, double bright);
 void		make_light(t_vector pos, t_vector color, double bright);
 void		delete_light(void);
 void		light_hitted(const t_hit_record *hitted, t_vector *color);
+
+//figures
+//plane
+void		init_plane(t_plane *plane, t_vector p, t_vector normal, t_material *material);
+void	make_plane(t_vector p, t_vector normal, t_material *material);
+void	hit_plane(void *plane, const t_ray *ray, t_hit_record *hitted);
+
+//sphere
+void		init_sphere(t_sphere *sp, t_vector center, double r, t_material *material);
+void		hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted);
+void		make_sphere(t_vector center, double radius, t_material *material);
+
+
 #endif
