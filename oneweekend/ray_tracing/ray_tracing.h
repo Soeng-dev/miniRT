@@ -61,7 +61,7 @@ t_lightdata	g_light_data;
 
 void		init_ray(t_ray *ray, t_vector pos, t_vector dir);
 t_vector	raypos_at_t(t_ray ray, double t);
-t_vector	ray_color(const t_ray *ray, double ambient, int depth);
+t_vector	ray_color(const t_ray *ray, int depth);
 void		init_hit_record(t_hit_record *hitted);
 int			check_front_face(const t_ray *ray, const t_vector * outward_normal);
 int			time_is_valid(long double time);
