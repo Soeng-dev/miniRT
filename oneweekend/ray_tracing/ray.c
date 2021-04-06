@@ -49,7 +49,7 @@ t_vector	ray_color(const t_ray *ray, int depth)
 	t_ray			scattered;
 
 	if (depth <= 0)
-		return (get_vector(1, 1, 1));
+		return (get_vector(0, 0, 0));
 	init_hit_record(&hitted);
 	raycast(ray, &hitted);
 	if (hitted.time == NOT_HIT)
@@ -62,7 +62,7 @@ t_vector	ray_color(const t_ray *ray, int depth)
 		color = vec_clamp(color, 0.0001, 1);
 	}
 	else
-		color = get_vector(1, 1, 1);
+		color = get_vector(0, 0, 0);
 	return (color);
 }
 

@@ -63,6 +63,13 @@ struct	s_square
 	t_material	material;
 };
 typedef struct s_square	t_square;
+struct	s_cylinder
+{
+	t_vector	ctr;
+	t_vector	normal;
+	t_material	material;
+};
+typedef struct s_cylinder	t_cylinder;
 
 t_list		*g_figures[NUM_OF_FIGTYPES];
 t_lightdata	g_light_data;
@@ -104,5 +111,6 @@ void	hit_plane(void *plane, const t_ray *ray, t_hit_record *hitted);
 void	hit_square(void *square, const t_ray *ray, t_hit_record *hitted);
 void	make_square(t_vector ctr, t_vector normal, double side_size, t_material *material);
 
+//cylinder
 
 #endif
