@@ -69,7 +69,7 @@ int		main(int argc, char *argv[])
 	//test
 	t_material	mat_center;
 	init_material(&mat_center, get_vector(0.7, 0.3, 0.3), 0, lambertian);
-	make_square(get_vector(0,0,-1), get_vector(0, 0, 1), 1.5, &mat_center);
+//	make_square(get_vector(0,0,-1), get_vector(0, 0, 1), 1.5, &mat_center);
 
 
 	printf("before render\n");

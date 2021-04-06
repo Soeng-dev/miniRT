@@ -16,7 +16,7 @@ void	init_sphere(t_sphere *sp, t_vector center, double r, t_material *material)
 {
 	sp->ctr = center;
 	sp->r = r;
-	sp->material = material;
+	sp->material = *material;
 }
 
 void	make_sphere(t_vector center, double radius, t_material *material)
@@ -69,7 +69,7 @@ void	hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
 		if (hitted->time == NOT_HIT)
 			return ;
 		hitted->pos = raypos_at_t(*ray, hitted->time);
-		hitted->material = sp->material;
+		hitted->material = &sp->material;
 		outward_normal = divide(minus(hitted->pos, sp->ctr), sp->r);
 		hitted->is_front_face = check_front_face(ray, &outward_normal);
 		if (hitted->is_front_face)

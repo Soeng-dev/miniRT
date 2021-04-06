@@ -45,14 +45,14 @@ struct	s_sphere
 {
 	t_vector	ctr;
 	double		r;
-	t_material	*material;
+	t_material	material;
 };
 typedef struct s_sphere	t_sphere;
 struct	s_plane
 {
 	t_vector	p;
 	t_vector	normal;
-	t_material	*material;
+	t_material	material;
 };
 typedef struct s_plane	t_plane;
 struct	s_square
@@ -60,7 +60,7 @@ struct	s_square
 	t_vector	ctr;
 	t_vector	normal;
 	double		half_size;
-	t_material	*material;
+	t_material	material;
 };
 typedef struct s_square	t_square;
 

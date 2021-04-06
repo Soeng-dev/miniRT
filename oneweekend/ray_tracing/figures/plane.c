@@ -5,7 +5,7 @@ void	init_plane(t_plane *plane, t_vector p, t_vector normal, t_material *materia
 {
 	plane->p = p;
 	plane->normal = normal;
-	plane->material = material;
+	plane->material = *material;
 	return;
 }
 
@@ -38,7 +38,7 @@ void	hit_plane(void *plane, const t_ray *ray, t_hit_record *hitted)
 		hitted->normal = pl->normal;
 		hitted->time = time;
 		hitted->is_front_face = TRUE;
-		hitted->material = pl->material;
+		hitted->material = &pl->material;
 	}
 	else
 		hitted->time = NOT_HIT;

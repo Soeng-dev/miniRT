@@ -41,6 +41,7 @@ void	set_light(char *s, int *is_error);
 //fiugres
 void	set_sphere(char *s, int *is_error);
 void	set_plane(char *s, int *is_error);
+void	set_square(char *s, int *is_error);
 
 
 #endif

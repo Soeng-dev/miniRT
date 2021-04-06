@@ -16,7 +16,7 @@ void	make_square(t_vector ctr, t_vector normal, double side_size, t_material *ma
 	sq->ctr = ctr;
 	sq->normal = normal;
 	sq->half_size = side_size / 2.0;
-	sq->material = material;
+	sq->material = *material;
 	ft_lstadd_front(&g_figures[SQUARE], square_node);
 	return ;
 }
@@ -44,7 +44,7 @@ void	hit_square(void *square, const t_ray *ray, t_hit_record *hitted)
 		hitted->normal = sq->normal;
 		hitted->time = time;
 		hitted->is_front_face = TRUE;
-		hitted->material = sq->material;
+		hitted->material = &sq->material;
 	}
 	else
 		hitted->time = NOT_HIT;
