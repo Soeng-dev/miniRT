@@ -67,6 +67,8 @@ struct	s_cylinder
 {
 	t_vector	ctr;
 	t_vector	normal;
+	double		r;
+	double		half_h;
 	t_material	material;
 };
 typedef struct s_cylinder	t_cylinder;

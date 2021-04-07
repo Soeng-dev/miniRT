@@ -12,9 +12,9 @@ void	record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_
 
 	if (!hit || !hitted)
 		return ;
-	init_hit_record(&new_hitted);
 	while (same_kind_figures)
 	{
+		init_hit_record(&new_hitted);
 		hit(same_kind_figures->content, ray, &new_hitted);
 		if (new_hitted.time < hitted->time)
 			*hitted = new_hitted;

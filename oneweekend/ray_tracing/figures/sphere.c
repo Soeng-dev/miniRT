@@ -12,14 +12,14 @@
 
 #include "../../miniRT.h"
 
-void	init_sphere(t_sphere *sp, t_vector center, double r, t_material *material)
+void			init_sphere(t_sphere *sp, t_vector center, double r, t_material *material)
 {
 	sp->ctr = center;
 	sp->r = r;
 	sp->material = *material;
 }
 
-void	make_sphere(t_vector center, double radius, t_material *material)
+void			make_sphere(t_vector center, double radius, t_material *material)
 {
 	t_list	*sphere_node;
 
@@ -34,7 +34,7 @@ void	make_sphere(t_vector center, double radius, t_material *material)
 	return ;
 }
 
-double	get_sphere_hitted_time(double a, double b, double sqrt_dis)
+static double	get_sphere_hitted_time(double a, double b, double sqrt_dis)
 {
 	double time;
 
@@ -48,34 +48,37 @@ double	get_sphere_hitted_time(double a, double b, double sqrt_dis)
 		return (NOT_HIT);
 }
 
-void	hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
+static void		set_sphere_hitrec(t_hit_record *hitted, const t_sphere *sp, const t_ray *ray)
 {
-	double		a;
-	double		b;
-	double		c;
-	double		time;
-	double		discriminant;
-	t_sphere	*sp;
 	t_vector	outward_normal;
 
-	sp = (t_sphere *)sphere;
+	if (hitted->time == NOT_HIT)
+		return ;
+	hitted->pos = raypos_at_t(*ray, hitted->time);
+	hitted->material = (t_material *)&sp->material;
+	outward_normal = divide(minus(hitted->pos, sp->ctr), sp->r);
+	hitted->is_front_face = check_front_face(ray, &outward_normal);
+	if (hitted->is_front_face)
+		hitted->normal = outward_normal;
+	else
+		hitted->normal = multi(outward_normal, -1);
+}
+
+void			hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
+{
+	double			a;
+	double			b;
+	double			c;
+	double			discriminant;
+	const t_sphere	*sp;
+
+	sp = (const t_sphere *)sphere;
 	a = dot(ray->dir, ray->dir);
 	b = dot(ray->dir, minus(ray->pos, sp->ctr));
 	c = dot(minus(ray->pos, sp->ctr), minus(ray->pos, sp->ctr)) - pow(sp->r, 2);
 	discriminant = b * b - a * c;
 	if (discriminant > 0)
-	{
 		hitted->time = get_sphere_hitted_time(a, b, sqrt(discriminant));
-		if (hitted->time == NOT_HIT)
-			return ;
-		hitted->pos = raypos_at_t(*ray, hitted->time);
-		hitted->material = &sp->material;
-		outward_normal = divide(minus(hitted->pos, sp->ctr), sp->r);
-		hitted->is_front_face = check_front_face(ray, &outward_normal);
-		if (hitted->is_front_face)
-			hitted->normal = outward_normal;
-		else
-			hitted->normal = multi(outward_normal, -1);
-	}
+	set_sphere_hitrec(hitted, sp, ray);
 	return ;
 }

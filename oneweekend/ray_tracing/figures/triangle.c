@@ -57,7 +57,6 @@ void		hit_triangle(void *triangle, const t_ray *ray, t_hit_record *hitted)
 	tr = (t_triangle *)triangle;
 	time = dot(minus(tr->p, ray->pos), tr->normal) \
 			/ dot(ray->dir, tr->normal);
-	//printf("hi %lf\n", time);
 	pos = raypos_at_t(*ray, time);
 	hitted->time = NOT_HIT;
 	if (time_is_valid(time))
