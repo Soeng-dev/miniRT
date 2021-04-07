@@ -1,7 +1,7 @@
  
 #include "../../miniRT.h"
 
-void			init_cylinder(t_cylinder *cyl, t_vector ctr, t_vector normal, t_material *material)
+void		init_cylinder(t_cylinder *cyl, t_vector ctr, t_vector normal, t_material *material)
 {
 	cyl->ctr = ctr;
 	cyl->normal = normal;
@@ -9,7 +9,7 @@ void			init_cylinder(t_cylinder *cyl, t_vector ctr, t_vector normal, t_material 
 	return ;
 }
 
-void			make_cylinder(t_vector ctr, t_vector normal, t_material *material)
+void		make_cylinder()
 {
 	t_list	*cyl_node;
 
@@ -23,32 +23,52 @@ void			make_cylinder(t_vector ctr, t_vector normal, t_material *material)
 	ft_lstadd_front(&g_figures[CYLINDER], cyl_node);
 }
 
-static double	get_cyl_hitted_time(double a, double b, double sqrt_dis)
+//뭐가 됬든 !is_front_face인데 범위안의 h 에서 만난다면 바닥또는 천장통과, 이때 범위밖의 h에서 반드시 만날것이므로 범위밖의 h를 이용해 바닥인지 천장인지 판단, h1, h2에 각각의 해를 저장한 후 바닥이나 천장을 통과한다면 비례식 이용해 t또는 raypos 구해서 나머지 전부구하기
+static int	set_others(t_hit_record *hitted, const t_cylidner *cyl, const t_ray *ray, double time)
 {
-	double time;
+	double h;
 
-	time = (-b - sqrt_dis) / a;
-	if (time_is_valid(time))
-		return (time);
-	time = (-b + sqrt_dis) / a;
-	if (time_is_valid(time))
-		return (time);
+	hitted->pos = raypos_at_t(*ray, time);
+	h = dot(cyl->normal, minus(ray->pos, cyl->p)) \
+	    / dot(cyl->normal, cyl->normal);
+	if (h < 0 || cyl->height < h)
+		return (FALSE);
+	outward_normal = minus(ray->pos, add(cyl->p, multi(cyl->normal, h)));
+	hitted->is_front_face = check_front_face(ray, &outward_normal);
+	if (hitted->is_front_face)
+	{
+		hitted->time = time;
+		hitted->pos = raypos_at_t(*ray, time);
+	}
 	else
-		return (NOT_HIT);
+	{
+			
+
+
+
+	
 }
 
-static void		set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, const t_ray *ray)
+
+static void	set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, const t_ray *ray)
 {
 	t_vector	outward_normal;
-	double		h;
 
+	hitted->time = NOT_HIT;
+	time = (-b - sqrt_dis) / a;
+	if (time_is_valid(time))
+	{
+		}
+
+	{
+		time = (-b + sqrt_dis) / a;
+		if (time_is_valid(time))
+			hitted->time = time;
+	}
 	if (hitted->time == NOT_HIT)
 		return ;
-	hitted->pos = raypos_at_t(*ray, hitted->time);
+		
 	hitted->material = (t_material *)&cyl->material;
-	h = dot(cyl->normal, minus(ray->pos, cyl->ctr)) / dot(cyl->normal, cyl->normal);
-	outward_normal = minus(ray->pos, add(cyl->ctr, multi(cyl->normal, h)));
-	hitted->is_front_face = check_front_face(ray, &outward_normal);
 	if (hitted->is_front_face)
 		hitted->normal = outward_normal;
 	else
@@ -56,7 +76,7 @@ static void		set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, const t
 	return ;
 }
 
-void			hit_cylinder(void *cylinder, const t_ray *ray, t_hit_record *hitted)
+void		hit_cylinder(void *cylinder, const t_ray *ray, t_hit_record *hitted)
 {
 	double				a;
 	double				b;
@@ -66,7 +86,7 @@ void			hit_cylinder(void *cylinder, const t_ray *ray, t_hit_record *hitted)
 	const t_cylinder	*cyl;
 
 	cyl = (const t_cylinder *)cylinder;
-	delp = minus(ray->pos, cyl->ctr);
+	delp = minus(ray->pos, cyl->p);
 	a = dot(minus(ray->dir, multi(cyl->normal, dot(ray->dir, cyl->normal))), \
 			minus(ray->dir, multi(cyl->normal, dot(ray->dir, cyl->normal))));
 	b = dot(minus(ray->dir, multi(cyl->normal, dot(cyl->normal, ray->dir))), \

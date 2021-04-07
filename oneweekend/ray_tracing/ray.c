@@ -62,7 +62,7 @@ t_vector	ray_color(const t_ray *ray, int depth)
 		color = vec_clamp(color, 0.0001, 1);
 	}
 	else
-		color = get_vector(0.5, 0.5, 0.5);
+		color = get_vector(1, 1, 1);
 	return (color);
 }
 

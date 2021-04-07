@@ -65,10 +65,10 @@ struct	s_square
 typedef struct s_square	t_square;
 struct	s_cylinder
 {
-	t_vector	ctr;
+	t_vector	p;
 	t_vector	normal;
 	double		r;
-	double		half_h;
+	double		height;
 	t_material	material;
 };
 typedef struct s_cylinder	t_cylinder;
