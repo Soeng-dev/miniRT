@@ -70,6 +70,14 @@ struct	s_cylinder
 	t_material	material;
 };
 typedef struct s_cylinder	t_cylinder;
+struct	s_triangle
+{
+	t_vector	p;
+	t_vector	edge1;
+	t_vector	edge2;
+	t_material	material;
+};
+typedef struct s_triangle	t_triangle;
 
 t_list		*g_figures[NUM_OF_FIGTYPES];
 t_lightdata	g_light_data;
