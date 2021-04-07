@@ -37,16 +37,18 @@ void	hit_square(void *square, const t_ray *ray, t_hit_record *hitted)
 	time = dot(minus(sq->ctr, ray->pos), sq->normal)\
 		   / dot(ray->dir, sq->normal);
 	pos = raypos_at_t(*ray, time);
-	if (time_is_valid(time) && pos_in_square(&pos, sq))
+	hitted->time = NOT_HIT;
+	if (time_is_valid(time))
 	{
-		hitted->time = time;
-		hitted->pos = pos;
-		hitted->normal = sq->normal;
-		hitted->time = time;
-		hitted->is_front_face = TRUE;
-		hitted->material = &sq->material;
+		if (pos_in_square(&pos, sq))
+		{
+			hitted->time = time;
+			hitted->pos = pos;
+			hitted->normal = sq->normal;
+			hitted->time = time;
+			hitted->is_front_face = TRUE;
+			hitted->material = &sq->material;
+		}
 	}
-	else
-		hitted->time = NOT_HIT;
 	return ;
 }

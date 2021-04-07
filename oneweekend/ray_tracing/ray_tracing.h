@@ -75,6 +75,7 @@ struct	s_triangle
 	t_vector	p;
 	t_vector	edge1;
 	t_vector	edge2;
+	t_vector	normal;
 	t_material	material;
 };
 typedef struct s_triangle	t_triangle;
@@ -120,5 +121,10 @@ void	hit_square(void *square, const t_ray *ray, t_hit_record *hitted);
 void	make_square(t_vector ctr, t_vector normal, double side_size, t_material *material);
 
 //cylinder
+
+//triangle
+void	init_triangle(t_triangle *tr, t_vector *points, t_material *mat);
+void	make_triangle(t_vector first, t_vector second, t_vector third, t_material *mat);
+void	hit_triangle(void *triangle, const t_ray *ray, t_hit_record *hitted);
 
 #endif

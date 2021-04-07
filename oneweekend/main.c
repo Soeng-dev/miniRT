@@ -69,10 +69,8 @@ int		main(int argc, char *argv[])
 	//test
 	t_material	mat_center;
 	init_material(&mat_center, get_vector(0.7, 0.3, 0.3), 0, lambertian);
-//	make_square(get_vector(0,0,-1), get_vector(0, 0, 1), 1.5, &mat_center);
+//	make_triangle(get_vector(0, 0,-1), get_vector(-0.5, 1, -1), get_vector(0.5, 1, -1), &mat_center);
 
-
-	printf("before render\n");
 	render_img(&info.setup.img_data, &info.setup.scr, info.camlist->cam);
 	printf("after render\n");
 

@@ -40,11 +40,11 @@ void	command(char *s, t_info *info)
 	else if (!ft_strncmp("pl", s, idlen))
 		set_plane(s + idlen, &is_error);
 	else if (!ft_strncmp("sq", s, idlen))
-		set_square(s+idlen, &is_error);
+		set_square(s + idlen, &is_error);
 	else if (!ft_strncmp("cy", s, idlen))
 	{}
 	else if (!ft_strncmp("tr", s, idlen))
-	{}
+		set_triangle(s + idlen, &is_error);
 	else
 		is_error = TRUE;
 	if (is_error)

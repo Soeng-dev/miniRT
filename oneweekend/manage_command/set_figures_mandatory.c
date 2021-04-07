@@ -56,3 +56,23 @@ void	set_square(char *s, int *is_error)
 	make_square(ctr, normal, side_size, &mat);
 	return ;
 }
+
+void	set_triangle(char *s, int *is_error)
+{
+	t_vector	first;
+	t_vector	second;
+	t_vector	third;
+	t_material	mat;
+
+	first = read_vector(&s);
+	second = read_vector(&s);
+	third = read_vector(&s);
+	mat.albedo = divide(read_vector(&s), 255);
+	if (!is_valid_vector(mat.albedo, 0, 1.0))
+		return (set_errflag(is_error));
+	set_fuzz_scatter(s, &mat, is_error);
+	if (*is_error)
+		return ;
+	make_triangle(first, second, third, &mat);
+	return ;
+}

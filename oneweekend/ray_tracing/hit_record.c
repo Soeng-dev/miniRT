@@ -10,6 +10,8 @@ void	record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_
 {
 	t_hit_record	new_hitted;
 
+	if (!hit || !hitted)
+		return ;
 	init_hit_record(&new_hitted);
 	while (same_kind_figures)
 	{

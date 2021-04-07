@@ -70,25 +70,25 @@ void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam)
 		{
 			ft_memset(&color, 0, sizeof(t_vector));
 			//anti alias
-			for (int s = 0; s < (int)SAMPLES_PER_PIXEL; ++s)
-			{
-				t_ray	ray;
-				double u = ((double)i + ((double)s / SAMPLES_PER_PIXEL)) / (scr->width - 1);
-				double v = ((double)j + ((double)s / SAMPLES_PER_PIXEL)) / (scr->height - 1);
-				t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
-				init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
-				color = add(color, ray_color(&ray, 20));
-			}
-			color = divide(color, SAMPLES_PER_PIXEL);
+//			for (int s = 0; s < (int)SAMPLES_PER_PIXEL; ++s)
+//			{
+//				t_ray	ray;
+//				double u = ((double)i + ((double)s / SAMPLES_PER_PIXEL)) / (scr->width - 1);
+//				double v = ((double)j + ((double)s / SAMPLES_PER_PIXEL)) / (scr->height - 1);
+//				t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
+//				init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
+//				color = add(color, ray_color(&ray, 20));
+//			}
+//			color = divide(color, SAMPLES_PER_PIXEL);
 
 			//no AA
-//			t_ray	ray;
-//			double u = (double)i / (scr->width - 1);
-//			double v = (double)j / (scr->height - 1);
-//			t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
-//			init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
-//			color = ray_color(&ray, ambient, 20);
-		
+			t_ray	ray;
+			double u = (double)i / (scr->width - 1);
+			double v = (double)j / (scr->height - 1);
+			t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
+			init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
+			color = ray_color(&ray, 20);
+
 
 			pixput(img, i, (scr->height - 1) - j, get_color(color, 2));
 		}
