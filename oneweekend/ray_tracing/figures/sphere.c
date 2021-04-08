@@ -34,20 +34,6 @@ void			make_sphere(t_vector center, double radius, t_material *material)
 	return ;
 }
 
-static double	get_sphere_hitted_time(double a, double b, double sqrt_dis)
-{
-	double time;
-
-	time = (-b - sqrt_dis) / a;
-	if (time_is_valid(time))
-		return (time);
-	time = (-b + sqrt_dis) / a;
-	if (time_is_valid(time))
-		return (time);
-	else
-		return (NOT_HIT);
-}
-
 static void		set_sphere_hitrec(t_hit_record *hitted, const t_sphere *sp, const t_ray *ray)
 {
 	t_vector	outward_normal;
@@ -66,19 +52,15 @@ static void		set_sphere_hitrec(t_hit_record *hitted, const t_sphere *sp, const t
 
 void			hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
 {
-	double			a;
-	double			b;
-	double			c;
-	double			discriminant;
+	double			eqcoef[3];
+	double			time;
 	const t_sphere	*sp;
 
 	sp = (const t_sphere *)sphere;
-	a = dot(ray->dir, ray->dir);
-	b = dot(ray->dir, minus(ray->pos, sp->ctr));
-	c = dot(minus(ray->pos, sp->ctr), minus(ray->pos, sp->ctr)) - pow(sp->r, 2);
-	discriminant = b * b - a * c;
-	if (discriminant > 0)
-		hitted->time = get_sphere_hitted_time(a, b, sqrt(discriminant));
+	eqcoef[0] = dot(ray->dir, ray->dir);
+	eqcoef[1] = 2 * dot(ray->dir, minus(ray->pos, sp->ctr));
+	eqcoef[2] = dot(minus(ray->pos, sp->ctr), minus(ray->pos, sp->ctr)) - pow(sp->r, 2);
+	hitted->time = get_valid_2nd_eqsol(eqcoef, NOT_HIT, time_is_valid);
 	set_sphere_hitrec(hitted, sp, ray);
 	return ;
 }

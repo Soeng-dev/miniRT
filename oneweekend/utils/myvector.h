@@ -22,5 +22,7 @@ int				vector_is_same(t_vector v1, t_vector v2);
 t_vector		cross(t_vector v1, t_vector v2);
 t_vector		multi_corresponds(t_vector v1, t_vector v2);
 int				is_valid_vector(t_vector v, double min, double max);
+double			distance(t_vector v1, t_vector v2);
+
 
 #endif

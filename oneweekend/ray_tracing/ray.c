@@ -39,6 +39,7 @@ void	raycast(const t_ray *ray, t_hit_record *hitted)
 	record_hitted(g_figures[TRIANGLE], hit_triangle, ray, hitted);
 	record_hitted(g_figures[SPHERE], hit_sphere, ray, hitted);
 	record_hitted(g_figures[SQUARE], hit_square, ray, hitted);
+	record_hitted(g_figures[CYLINDER], hit_cylinder, ray, hitted);
 	return ;
 }
 
@@ -49,7 +50,7 @@ t_vector	ray_color(const t_ray *ray, int depth)
 	t_ray			scattered;
 
 	if (depth <= 0)
-		return (get_vector(0.5, 0.5, 0.5));
+		return (get_vector(0, 0, 0));
 	init_hit_record(&hitted);
 	raycast(ray, &hitted);
 	if (hitted.time == NOT_HIT)

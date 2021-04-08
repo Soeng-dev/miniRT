@@ -126,3 +126,9 @@ int				is_valid_vector(t_vector v, double min, double max)
 			min <= v.y && v.y <= max &&\
 			min <= v.z && v.z <= max);
 }
+
+double		distance(t_vector v1, t_vector v2)
+{
+	v1 = minus(v1, v2);
+	return (sqrt(dot(v1, v1)));
+}

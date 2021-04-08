@@ -76,3 +76,7 @@ void	set_triangle(char *s, int *is_error)
 	make_triangle(first, second, third, &mat);
 	return ;
 }
+
+//void	set_cylindere(char *s, int *is_error)
+//{
+	

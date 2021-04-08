@@ -68,8 +68,10 @@ int		main(int argc, char *argv[])
 
 	//test
 	t_material	mat_center;
-	init_material(&mat_center, get_vector(0.7, 0.3, 0.3), 0, lambertian);
-//	make_cylinder(get_vector(0, 0,-1), get_vector(0, 1, 0), get_vector(0.5, 1, -1), &mat_center);
+	init_material(&mat_center, get_vector(0.7, 0.3, 0.3), 0, metal);
+	t_plane		bottom;
+	init_plane(&bottom, get_vector(0,-0.5,-1), get_vector(0, 1, 0), &mat_center);
+	//make_cylinder(&bottom, 0.4, 1);
 
 	render_img(&info.setup.img_data, &info.setup.scr, info.camlist->cam);
 	printf("after render\n");

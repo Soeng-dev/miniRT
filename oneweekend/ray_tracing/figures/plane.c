@@ -24,22 +24,34 @@ void	make_plane(t_vector p, t_vector normal, t_material *material)
 	return ;
 }
 
-void	hit_plane(void *plane, const t_ray *ray, t_hit_record *hitted)
+int		check_plane_hitpos(const t_plane *pl, const t_ray *ray, t_hit_record *hitted)
 {
 	double	time;
-	t_plane	*pl;
 
-	pl = (t_plane *)plane;
 	time = dot(minus(pl->p, ray->pos), pl->normal)\
-		/ dot(ray->dir, pl->normal);
+			/ dot(ray->dir, pl->normal);
 	if (time_is_valid(time))
 	{
-		hitted->pos = raypos_at_t(*ray, time);
-		hitted->normal = pl->normal;
 		hitted->time = time;
-		hitted->is_front_face = TRUE;
-		hitted->material = &pl->material;
+		hitted->pos = raypos_at_t(*ray, time);
+		return (TRUE);
 	}
+	else
+		return (FALSE);
+}
+
+void	record_hittedpl_normal_mat(const t_plane *pl, const t_ray *ray, t_hit_record *hitted)
+{
+	hitted->normal = pl->normal;
+	hitted->is_front_face = TRUE;
+	hitted->material = (t_material *)&pl->material;
+}
+
+
+void	hit_plane(void *plane, const t_ray *ray, t_hit_record *hitted)
+{
+	if (check_plane_hitpos((const t_plane *)plane, ray, hitted))
+		record_hittedpl_normal_mat(plane, ray, hitted);
 	else
 		hitted->time = NOT_HIT;
 	return ;

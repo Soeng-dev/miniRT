@@ -12,9 +12,13 @@
 
 #ifndef MATH_TOOLS_H
 # define MATH_TOOLS_H
+# include <math.h>
+
 double		dbl_min(double a, double b);
 double		dbl_max(double a, double b);
 double		clamp(double n, double min, double max);
 int			myrand(void);
 double		absol(double n);
+double		get_valid_2nd_eqsol(double *coef, double ret_of_invalid, int (*sol_is_valid)(long double sol));
+
 #endif

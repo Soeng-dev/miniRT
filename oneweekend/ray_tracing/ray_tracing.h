@@ -65,10 +65,11 @@ struct	s_square
 typedef struct s_square	t_square;
 struct	s_cylinder
 {
-	t_vector	p;
-	t_vector	normal;
 	double		r;
 	double		height;
+	t_plane		bottom;
+	t_plane		top;
+	t_vector	normal;
 	t_material	material;
 };
 typedef struct s_cylinder	t_cylinder;
@@ -116,6 +117,8 @@ void		make_sphere(t_vector center, double radius, t_material *material);
 //plane
 void		init_plane(t_plane *plane, t_vector p, t_vector normal, t_material *material);
 void	make_plane(t_vector p, t_vector normal, t_material *material);
+int		check_plane_hitpos(const t_plane *pl, const t_ray *ray, t_hit_record *hitted);
+void	record_hittedpl_normal_mat(const t_plane *pl, const t_ray *ray, t_hit_record *hitted);
 void	hit_plane(void *plane, const t_ray *ray, t_hit_record *hitted);
 
 //square
@@ -123,6 +126,10 @@ void	hit_square(void *square, const t_ray *ray, t_hit_record *hitted);
 void	make_square(t_vector ctr, t_vector normal, double side_size, t_material *material);
 
 //cylinder
+void	init_cylinder(t_cylinder *cyl, const t_plane *bottom, double r, double height);
+void		make_cylinder(const t_plane *bottom, const double r, const double height);
+void		hit_circle(const t_plane *pl, double r, const t_ray *ray, t_hit_record *hitted);
+void		hit_cylinder(void *cylinder, const t_ray *ray, t_hit_record *hitted);
 
 //triangle
 void	init_triangle(t_triangle *tr, t_vector *points, t_material *mat);
