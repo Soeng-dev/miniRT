@@ -20,9 +20,9 @@ void	command(char *s, t_info *info)
 	int		idlen;
 	int		is_error;
 
-	pass_charset(&s, " \t\n\v\f\r");
-	if (!s)
+	if (!s || !info)
 		return ;
+	pass_charset(&s, " \t\n\v\f\r");
 	if (!(*s) || !ft_strncmp("//", s, 2))
 		return ;
 	is_error = FALSE;
@@ -42,7 +42,7 @@ void	command(char *s, t_info *info)
 	else if (!ft_strncmp("sq", s, idlen))
 		set_square(s + idlen, &is_error);
 	else if (!ft_strncmp("cy", s, idlen))
-	{}
+		set_cylinder(s + idlen, &is_error);
 	else if (!ft_strncmp("tr", s, idlen))
 		set_triangle(s + idlen, &is_error);
 	else

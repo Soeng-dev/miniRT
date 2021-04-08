@@ -26,7 +26,7 @@ void	set_plane(char *s, int *is_error)
 	t_material	mat;
 
 	p = read_vector(&s);
-	normal = read_vector(&s);
+	normal = normalize(read_vector(&s));
 	mat.albedo = divide(read_vector(&s), 255.0);
 	if (! is_valid_vector(mat.albedo, 0, 1.0))
 		return (set_errflag(is_error));
@@ -45,7 +45,7 @@ void	set_square(char *s, int *is_error)
 	t_material	mat;
 
 	ctr = read_vector(&s);
-	normal = read_vector(&s);
+	normal = normalize(read_vector(&s));
 	side_size = read_dbl(&s);
 	mat.albedo = divide(read_vector(&s), 255);
 	if (!is_valid_vector(mat.albedo, 0, 1.0) || side_size <= 0)
@@ -77,6 +77,24 @@ void	set_triangle(char *s, int *is_error)
 	return ;
 }
 
-//void	set_cylindere(char *s, int *is_error)
-//{
-	
+void	set_cylinder(char *s, int *is_error)
+{
+	t_plane		bottom;
+	double		r;
+	double		height;
+	t_vector	color;
+
+	bottom.p = read_vector(&s);
+	bottom.normal = normalize(read_vector(&s));
+	r = read_dbl(&s) / 2.0;
+	height = read_dbl(&s);
+	bottom.material.albedo = divide(read_vector(&s), 255);
+	if (!is_valid_vector(bottom.material.albedo, 0, 1.0) || r <= 0 || height <= 0)
+		return (set_errflag(is_error));
+	set_fuzz_scatter(s, &bottom.material, is_error);
+	if (*is_error)
+		return ;
+	make_cylinder(&bottom, r, height);
+	return ;
+}
+
