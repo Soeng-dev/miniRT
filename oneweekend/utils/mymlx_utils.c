@@ -33,19 +33,24 @@ int		get_color(t_vector colorvec, double gamma)
 int		key_check(int key, t_info *info)
 {
 	char	*s;
+	int		cmd_result;
 
 	if (key == KEY_ESC)
 		exit(0);
 	if (key == KEY_ENT)
 	{
 		get_next_line(STDIN, &s);
-		command(s, info);
-		render_img(&info->setup.img_data, &info->setup.scr, info->camlist->cam);
-		free(s);
-		s = NULL;
-		mlx_put_image_to_window(info->setup.mlx_vars.mlx, info->setup.mlx_vars.win, info->setup.img_data.img, 0, 0);
-		mlx_loop(info->setup.mlx_vars.mlx);
-
+		cmd_result = check_command(s, info);
+		if (cmd_result == CMD_ERROR)
+			printf("Wrong input command\n");
+		else if (cmd_result == CMD_CORRECT)
+		{
+			render_img(&info->setup.img_data, &info->setup.scr, info->camlist->cam);
+			free(s);
+			s = NULL;
+			mlx_put_image_to_window(info->setup.mlx_vars.mlx, info->setup.mlx_vars.win, info->setup.img_data.img, 0, 0);
+			mlx_loop(info->setup.mlx_vars.mlx);
+		}
 	}
 	return (0);
 }

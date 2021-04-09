@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <mlx.h>
 #include "miniRT.h"
 
 int		open_rtfile(char *name)
@@ -48,7 +49,10 @@ int		main(int argc, char *argv[])
 			return (0);
 		}
 		while (get_next_line(rtfile, &s) > 0)
-			command(s, &info);
+		{
+			if (check_command(s, &info) == CMD_ERROR)
+			;//free all malloc and return (0);
+		}
 		free(s);
 	}
 

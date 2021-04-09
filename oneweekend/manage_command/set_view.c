@@ -8,7 +8,10 @@ void	set_mlx_resolution(char *s, t_setup *setup, int *is_error)
 	pass_charset(&s, "0123456789");
 	setup->scr.height= ft_atoi(s);
 	if (setup->scr.width <= 0 || setup->scr.height <= 0)
-		*is_error = 1;
+	{
+		//ft_memset//마무리할것
+		*is_error = TRUE;
+	}
 	return ;
 }
 

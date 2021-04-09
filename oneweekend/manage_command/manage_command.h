@@ -2,6 +2,9 @@
 #ifndef MANAGE_COMMAND_H
 # define MANAGE_COMMAND_H
 # define _USE_MATH_DEFINES
+# define CMD_ERROR		-1
+# define CMD_CORRECT	1
+# define CMD_COMMENT	0
 
 # include <math.h>
 # include <stdlib.h>
@@ -23,7 +26,7 @@ t_vector	read_vector(char **s);
 void		set_fuzz_scatter(char *s, t_material *mat, int *is_error);
 
 //diverge_command
-void	command(char *s, t_info *info);
+int		check_command(char *s, t_info *info);
 
 //view
 void	set_mlx_resolution(char *s, t_setup *setup, int *is_error);
