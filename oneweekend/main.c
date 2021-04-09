@@ -1,6 +1,5 @@
 
 #include <stdio.h>
-#include <mlx.h>
 #include "miniRT.h"
 
 int		open_rtfile(char *name)
@@ -30,7 +29,7 @@ int		main(int argc, char *argv[])
 	int		rtfile;
 	t_camlist	*camlist;
 
-	//ft_memset(&info, 0, sizeof(t_info));
+	ft_memset(&info, 0, sizeof(t_info));
 	s = NULL;
 
 	t_vector	color;
@@ -39,7 +38,6 @@ int		main(int argc, char *argv[])
 	info.setup.scr.ratio = 16.0/9.0;
 	info.setup.scr.width = 100;
 	info.setup.scr.height = info.setup.scr.width / info.setup.scr.ratio;
-
 
 	if (argc >= 2)
 	{
@@ -50,8 +48,7 @@ int		main(int argc, char *argv[])
 			return (0);
 		}
 		while (get_next_line(rtfile, &s) > 0)
-		{
-			command(s, &info); }
+			command(s, &info);
 		free(s);
 	}
 
@@ -61,7 +58,7 @@ int		main(int argc, char *argv[])
  	info.setup.img_data.addr = mlx_get_data_addr(info.setup.img_data.img, &info.setup.img_data.bpp, &info.setup.img_data.linelen, &info.setup.img_data.endian);
 
 	//hook
-	mlx_hook(info.setup.mlx_vars.win, MLX_KEY_PRESS, 0, key_check, &info.setup.mlx_vars.win);
+	mlx_hook(info.setup.mlx_vars.win, MLX_KEY_PRESS, 0, key_check, &info);
 	mlx_hook(info.setup.mlx_vars.win, MLX_BUTTON_PRESS, 0, mouse_check, &info.setup.mlx_vars.win);
 	mlx_hook(info.setup.mlx_vars.win, MLX_RED_CROSS, 0, (int (*)())exit, &info.setup.mlx_vars.win);// need to change exit to memory managed exit function
 
@@ -74,13 +71,17 @@ int		main(int argc, char *argv[])
 //	make_cylinder(&bottom, 0.4, 1);
 
 	render_img(&info.setup.img_data, &info.setup.scr, info.camlist->cam);
+//	get_next_line(STDIN, &s);
+//		command(s, &info);
+//		render_img(&info.setup.img_data, &info.setup.scr, info.camlist->cam);
+
 	printf("after render\n");
 
 	//delete, need to add camera and camlist free
-	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
-		ft_lstclear(&g_figures[i], free);// need to change free to function which free material of figure also
-	if (g_light_data.light_arr)
-		free(g_light_data.light_arr);
+//	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
+//		ft_lstclear(&g_figures[i], free);// need to change free to function which free material of figure also
+//	if (g_light_data.light_arr)
+//		free(g_light_data.light_arr);
 	mlx_put_image_to_window(info.setup.mlx_vars.mlx, info.setup.mlx_vars.win, info.setup.img_data.img, 0, 0);
 	mlx_loop(info.setup.mlx_vars.mlx);
 }

@@ -10,9 +10,11 @@
 //# define KEY_DOWN 125
 # define KEY_ESC 53
 # define KEY_TAB 48
+# define KEY_ENT 36
 # define BUTTON_RIGHT 2
 # include <stdio.h>
 # include <stdlib.h>
+# include <mlx.h>
 # include "../get_next_line/get_next_line.h"
 # include "../ray_tracing/ray_tracing.h"
 # include "myvector.h"
@@ -50,9 +52,16 @@ struct	s_setup
 };
 typedef struct s_setup	t_setup;
 
+struct s_info
+{
+	t_camlist	*camlist;
+	t_setup		setup;
+};
+typedef struct s_info	t_info;
+
 void	pixput(const t_img_data *img, int x, int y, int color);
 int		get_color(t_vector colvec, double gamma);
-int		key_check(int key);
+int		key_check(int key, t_info *info);
 int		mouse_check(int button, int x, int y);
 void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam);
 

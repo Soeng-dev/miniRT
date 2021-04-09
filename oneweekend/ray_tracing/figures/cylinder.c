@@ -32,7 +32,7 @@ void		hit_circle(const t_plane *pl, double r, const t_ray *ray, t_hit_record *hi
 {
 	if (check_plane_hitpos(pl, ray, hitted))
 	{
-		if (distance(hitted->pos, pl->p) <= r)
+		if (distance(hitted->pos, pl->p) < r)
 			record_hittedpl_normal_mat(pl, ray, hitted);
 		else
 		{

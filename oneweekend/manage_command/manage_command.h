@@ -10,13 +10,6 @@
 # include "../ray_tracing/ray_tracing.h"
 # include "../get_next_line/get_next_line.h"
 
-struct s_info
-{
-	t_camlist	*camlist;
-	t_setup		setup;
-};
-typedef struct s_info	t_info;
-
 //error
 void	error_exit(t_info *info);
 void	set_errflag(int *is_error);

@@ -17,5 +17,4 @@
 # include "get_next_line/get_next_line.h"
 # include "manage_command/manage_command.h"
 
-
 #endif
