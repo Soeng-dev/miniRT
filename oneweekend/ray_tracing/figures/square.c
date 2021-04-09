@@ -17,6 +17,7 @@ void	make_square(t_vector ctr, t_vector normal, double side_size, t_material *ma
 	sq->normal = normal;
 	sq->half_size = side_size / 2.0;
 	sq->material = *material;
+	square_node->pos = &sq->ctr;
 	ft_lstadd_front(&g_figures[SQUARE], square_node);
 	return ;
 }

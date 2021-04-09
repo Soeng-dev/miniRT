@@ -1,44 +1,49 @@
 
 #include "../miniRT.h"
 
-void	prt_figures(char *cmd)
+int		select_figure(char *cmd, int *is_error)
 {
-	int		fig;
 	t_list	*same_kind;
+	int		fig;
 
-	if (!ft_strcmp(cmd, "plane") || !ft_strcmp(cmd, "pl"))
-		fig = PLANE;
-	else if (!ft_strcmp(cmd, "sphere") || !ft_strcmp(cmd, "sp"))
-		fig = SPHERE;
-	else if (!ft_strcmp(cmd, "cylinder") || !ft_strcmp(cmd, "cyl"))
-		fig = CYLINDER;
-	else if (!ft_strcmp(cmd, "square") || !ft_strcmp(cmd, "sq"))
-		fig = SQUARE;
-	else if (!ft_strcmp(cmd, "triangle") || !ft_strcmp(cmd, "tr"))
-		fig = TRIANGLE;
-	same_kind = g_figures[fig];
+	if (!cmd)
+		return (set_errflag(is_error));
+	fig = get_figtype(cmd);
+	if (fig == CMD_ERROR)
+		return resize(is_error);
 	fig = 0;
-//	while (same_kind)
-//	{
-//		fig++;
-//		printf("%d: %f
-//		same_kind = same_kind->next;
-//	}
-	if (cmd)
-		free(cmd);
+	same_kind = g_figures[fig];
+	while (same_kind)
+	{
+		printf("%d. position : %f %f %f\n", fig, same_kind->pos->x, same_kind->pos->y, same_kind->pos->z);
+		same_kind = same_kind->next;
+		fig++;
+	}
+	printf("Enter number of figure to resize\n");
+	read_stdin_command(cmd, is_error);
+	if (*is_error)
+		return (CMD_ERROR);
+	fig = ft_atoi(cmd);
+	free(cmd);
+	return (fig);
 }
 
 void	resize(int *is_error)
 {
 	char	*cmd;
+	char	*trimmed;
+	int		fig;
 
-	cmd = NULL
+	cmd = NULL;
 	printf("Enter object type\n");
-	if (get_next_line(STDIN, &cmd) == ERROR)
-	{
-		printf("Input Read failed\n");
-		*is_error = TRUE;
+	read_stdin_command(cmd, is_error);
+	trimmed = ft_strtrim(cmd, " \t\n\v\f\r");
+	fig = select_figure(trimmed, is_error);
+	if (*is_error)
 		return ;
-	}
-	prt_figures(ft_strtrim, " \t\n\v\f\r");
-	printf("Enter number of object to resize\n");
+	if (trimmed)
+		free(trimmed);
+	
+	free(cmd);
+
+}

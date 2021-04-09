@@ -20,6 +20,7 @@ void	make_plane(t_vector p, t_vector normal, t_material *material)
 	if (!plane_node->content)
 		return ;
 	init_plane((t_plane *)(plane_node->content), p, normal, material);
+	plane_node->pos = &((t_plane *)plane_node->content)->p;
 	ft_lstadd_front(&g_figures[PLANE], plane_node);
 	return ;
 }

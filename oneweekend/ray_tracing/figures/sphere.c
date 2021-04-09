@@ -30,6 +30,7 @@ void			make_sphere(t_vector center, double radius, t_material *material)
 	if (!(sphere_node->content))
 		return ;
 	init_sphere((t_sphere *)(sphere_node->content), center, radius, material);
+	sphere_node->pos = &((t_sphere *)sphere_node->content)->ctr;
 	ft_lstadd_front(&g_figures[SPHERE], sphere_node);
 	return ;
 }

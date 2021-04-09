@@ -15,10 +15,12 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+# include "../utils/myvector.h"
 
 struct	s_list
 {
 	void			*content;
+	t_vector		*pos;
 	struct s_list	*next;
 };
 

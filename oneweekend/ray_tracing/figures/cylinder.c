@@ -25,6 +25,7 @@ void		make_cylinder(const t_plane *bottom, const double r, const double height)
 	if (!cyl_node->content)
 		return ;
 	init_cylinder((t_cylinder *)(cyl_node->content), bottom, r, height);
+	cyl_node->pos = &((t_cylinder *)cyl_node->content)->bottom.p;
 	ft_lstadd_front(&g_figures[CYLINDER], cyl_node);
 }
 

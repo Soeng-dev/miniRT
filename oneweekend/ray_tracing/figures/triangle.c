@@ -26,6 +26,7 @@ void		make_triangle(t_vector first, t_vector second, t_vector third, t_material 
 	points[1] = second;
 	points[2] = third;
 	init_triangle((t_triangle *)(triangle_node->content), points, mat);
+	triangle_node->pos = &((t_triangle *)triangle_node->content)->p;
 	ft_lstadd_front(&g_figures[TRIANGLE], triangle_node);
 	return ;
 }

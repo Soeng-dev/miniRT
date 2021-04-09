@@ -1,7 +1,7 @@
 
 #include "manage_command.h"
 
-double		read_dbl(char **s)
+double	read_dbl(char **s)
 {
 	double	intiger;
 	double	small;
@@ -62,4 +62,39 @@ void	set_fuzz_scatter(char *s, t_material *mat, int *is_error)
 	if (mat->fuzz < 0)
 		*is_error = TRUE;
 	return ;
+}
+
+int		get_figtype(char *cmd)
+{
+	int		figtype;
+
+	if (!cmd)
+		return (CMD_ERROR);
+	if (!ft_strcmp(cmd, "plane") || !ft_strcmp(cmd, "pl"))
+		figtype = PLANE;
+	else if (!ft_strcmp(cmd, "sphere") || !ft_strcmp(cmd, "sp"))
+		figtype = SPHERE;
+	else if (!ft_strcmp(cmd, "cylinder") || !ft_strcmp(cmd, "cyl"))
+		figtype = CYLINDER;
+	else if (!ft_strcmp(cmd, "square") || !ft_strcmp(cmd, "sq"))
+		figtype = SQUARE;
+	else if (!ft_strcmp(cmd, "triangle") || !ft_strcmp(cmd, "tr"))
+		figtype = TRIANGLE;
+	else
+	{
+		printf("Wrong input\n");
+		figtype = CMD_ERROR;
+	}
+	return (figtype);
+}
+
+void	read_stdin_command(char *cmd, int *is_error)
+{
+	if (get_next_line(STDIN, cmd) == ERROR)
+	{
+		printf("Input Read failed\n");
+		*is_error = TRUE;
+		return (CMD_ERROR);
+	}
+	return (CMD_CORRECT);
 }

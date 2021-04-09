@@ -21,9 +21,13 @@ void	set_errflag(int *is_error);
 int			ft_strcmp(char *s1, char *s2);
 int			is_element(const char *set, char c);
 void		pass_charset(char **str, const char *set);
+
+//read
 double		read_dbl(char **s);
 t_vector	read_vector(char **s);
+int		get_figtype(char *cmd);
 void		set_fuzz_scatter(char *s, t_material *mat, int *is_error);
+int			read_stdin_command(char *cmd, int *is_error);
 
 //diverge_command
 int		check_command(char *s, t_info *info);
@@ -40,6 +44,9 @@ void	set_plane(char *s, int *is_error);
 void	set_square(char *s, int *is_error);
 void	set_cylinder(char *s, int *is_error);
 void	set_triangle(char *s, int *is_error);
+
+//change
+void	resize(int *is_error);
 
 #endif
 
