@@ -97,4 +97,3 @@ void	set_cylinder(char *s, int *is_error)
 	make_cylinder(&bottom, r, height);
 	return ;
 }
-

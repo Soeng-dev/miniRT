@@ -59,7 +59,7 @@ void	light_hitted(const t_hit_record *hitted, t_vector *color)
 		if (blocked.time == NOT_HIT)
 		{
 			spot_bright = 1 + light->bright * \
-							dot(normalize(light_dir), hitted->normal);
+								dot(normalize(light_dir), hitted->normal);
 			color_by_light = add(light->color, get_vector(1, 1, 1));
 			color_by_light = multi(color_by_light, spot_bright);
 		}

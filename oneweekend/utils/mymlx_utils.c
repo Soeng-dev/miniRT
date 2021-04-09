@@ -87,7 +87,7 @@ void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam)
 			double v = (double)j / (scr->height - 1);
 			t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
 			init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
-			color = ray_color(&ray, 20);
+			color = ray_color(&ray, 70);
 
 
 			pixput(img, i, (scr->height - 1) - j, get_color(color, 2));
