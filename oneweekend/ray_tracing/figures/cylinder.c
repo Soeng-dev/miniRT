@@ -6,10 +6,8 @@ void		init_cylinder(t_cylinder *cyl, const t_plane *bottom, double r, double hei
 	cyl->r = r;
 	cyl->height = height;
 	cyl->bottom = *bottom;
-	printf("%f %f %f\n", cyl->bottom.material.albedo.x, cyl->bottom.material.albedo.y, cyl->bottom.material.albedo.z);
 	cyl->bottom.normal = multi(bottom->normal, -1);
 	cyl->top = *bottom;
-	printf("%f %f %f\n", cyl->top.material.albedo.x, cyl->top.material.albedo.y, cyl->top.material.albedo.z);
 	cyl->top.p = add(bottom->p, multi(bottom->normal, height));
 	cyl->normal = bottom->normal;
 	cyl->material = bottom->material;
@@ -35,8 +33,7 @@ void		hit_circle(const t_plane *pl, double r, const t_ray *ray, t_hit_record *hi
 	if (check_plane_hitpos(pl, ray, hitted))
 	{
 		if (distance(hitted->pos, pl->p) <= r)
-		{	record_hittedpl_normal_mat(pl, ray, hitted);
-			printf("%f %f %f\n", hitted->normal.x, hitted->normal.y, hitted->normal.z);}
+			record_hittedpl_normal_mat(pl, ray, hitted);
 		else
 		{
 			hitted->time = NOT_HIT;

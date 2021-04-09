@@ -7,9 +7,6 @@ void		init_triangle(t_triangle *tr, t_vector *points, t_material *mat)
 	tr->edge1 = minus(points[1], points[0]);
 	tr->edge2 = minus(points[2], points[0]);
 	tr->normal = cross(tr->edge1, tr->edge2);
-	printf("%f %f %f\n", tr->edge1.x, tr->edge1.y, tr->edge1.z);
-	printf("%f %f %f\n", tr->edge2.x, tr->edge2.y, tr->edge2.z);
-	printf("%f %f %f\n", tr->normal.x, tr->normal.y, tr->normal.z);
 	tr->material = *mat;
 	return ;
 }
