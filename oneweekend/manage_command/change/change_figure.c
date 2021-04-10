@@ -70,7 +70,7 @@ void	change_square(t_square *sq, int *is_error, int *quit_cmdmode)
 		change_color(&sq->material.albedo, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "material", idlen))
 		change_material(&sq->material, cmd + idlen, is_error);
-	else if (!ft_strncmp(cmd, "half size", idlen))
+	else if (!ft_strncmp(cmd, "half_size", idlen))
 		change_length(&sq->half_size, cmd + idlen, is_error);
 	else
 		*is_error = TRUE;
