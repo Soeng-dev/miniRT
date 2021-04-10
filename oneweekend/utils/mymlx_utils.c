@@ -35,19 +35,21 @@ int		key_check(int key, t_info *info)
 	char	*s;
 	int		cmd_result;
 
+	s = NULL;
 	if (key == KEY_ESC)
-		exit(0);
+		exit(0); //change to memory managed function
 	if (key == KEY_ENT)
 	{
 		get_next_line(STDIN, &s);
 		cmd_result = check_command(s, info);
+		free(s);
+		if (cmd_result == CMD_QUIT)
+			return (CMD_QUIT);
 		if (cmd_result == CMD_ERROR)
-			printf("Wrong input command\n");
+			printf("Error\n");
 		else if (cmd_result == CMD_CORRECT)
 		{
 			render_img(&info->setup.img_data, &info->setup.scr, info->camlist->cam);
-			free(s);
-			s = NULL;
 			mlx_put_image_to_window(info->setup.mlx_vars.mlx, info->setup.mlx_vars.win, info->setup.img_data.img, 0, 0);
 			mlx_loop(info->setup.mlx_vars.mlx);
 		}

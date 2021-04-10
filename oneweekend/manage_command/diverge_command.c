@@ -17,6 +17,7 @@ int		get_idlen(char *s, char *delimiters)
 int		check_command(char *s, t_info *info)
 {
 	int		idlen;
+	int		quit_cmdmode;
 	int		is_error;
 
 	if (!s || !info)
@@ -44,12 +45,14 @@ int		check_command(char *s, t_info *info)
 		set_cylinder(s + idlen, &is_error);
 	else if (!ft_strncmp("tr", s, idlen))
 		set_triangle(s + idlen, &is_error);
-	else if (!ft_strncmp("resize", s, idlen))
-		resize(&is_error);
+	else if (!ft_strncmp("change", s, idlen))
+		change(&is_error, &quit_cmdmode);
 	else
 		is_error = TRUE;
 	if (is_error)
 		return (CMD_ERROR);
+	else if (quit_cmdmode == TRUE)
+		return (CMD_QUIT);
 	else
 		return (CMD_CORRECT);
 }

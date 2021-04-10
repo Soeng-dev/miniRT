@@ -1,5 +1,5 @@
 
-#include "manage_command.h"
+#include "../miniRT.h"
 
 double	read_dbl(char **s)
 {
@@ -64,7 +64,7 @@ void	set_fuzz_scatter(char *s, t_material *mat, int *is_error)
 	return ;
 }
 
-int		get_figtype(char *cmd)
+int		read_figtype(char *cmd)
 {
 	int		figtype;
 
@@ -88,13 +88,18 @@ int		get_figtype(char *cmd)
 	return (figtype);
 }
 
-void	read_stdin_command(char *cmd, int *is_error)
+void	read_stdin_command(char **cmd, int *is_error, int *quit_cmdmode)
 {
+	printf("quit for stop command mode\n");
 	if (get_next_line(STDIN, cmd) == ERROR)
 	{
 		printf("Input Read failed\n");
 		*is_error = TRUE;
-		return (CMD_ERROR);
+		if (*cmd)
+			free(*cmd);
+		return ;
 	}
-	return (CMD_CORRECT);
+	if (!ft_strcmp(*cmd, "quit"))
+		*quit_cmdmode = TRUE;
+	return ;
 }
