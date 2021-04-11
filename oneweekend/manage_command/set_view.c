@@ -3,10 +3,13 @@
 
 void	set_mlx_resolution(char *s, t_setup *setup, int *is_error)
 {
+	if (setup->scr.width || setup->scr.height)
+		return ;
 	setup->scr.width = ft_atoi(s);
 	pass_charset(&s, " \t\n\v\f\r");
 	pass_charset(&s, "0123456789");
 	setup->scr.height= ft_atoi(s);
+	printf("%f %f\n", setup->scr.width, setup->scr.height);
 	if (setup->scr.width <= 0 || setup->scr.height <= 0)
 	{
 		//ft_memset//마무리할것
@@ -20,6 +23,9 @@ void	set_ambient(char *s, int *is_error)
 	double		bright;
 	t_vector	ambient;
 
+	if (!vector_is_same(g_light_data.ambient, \
+						get_vector (0, 0, 0)))
+		return ;
 	bright = read_dbl(&s);
 	if (bright < 0)
 		return (set_errflag(is_error));

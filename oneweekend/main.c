@@ -35,11 +35,6 @@ int		main(int argc, char *argv[])
 
 	t_vector	color;
  
-	//	image
-	info.setup.scr.ratio = 16.0/9.0;
-	info.setup.scr.width = 100;
-	info.setup.scr.height = info.setup.scr.width / info.setup.scr.ratio;
-
 	if (argc >= 2)
 	{
 		rtfile = open_rtfile(argv[1]);

@@ -132,3 +132,17 @@ double		distance(t_vector v1, t_vector v2)
 	v1 = minus(v1, v2);
 	return (sqrt(dot(v1, v1)));
 }
+
+t_vector	rotate_vector(t_vector target, t_vector axis, double angle)
+{
+	t_vector	rotated;
+	double		temp;
+
+	axis = normalize(axis);
+	temp = (axis.x + axis.y + axis.z) * (1 - cos(angle));
+	rotated.x = (axis.x * temp + (axis.z - axis.y) * sin(angle) + cos(angle));
+	rotated.y = (axis.y * temp + (axis.x - axis.z) * sin(angle) + cos(angle));
+	rotated.z = (axis.z * temp + (axis.y - axis.x) * sin(angle) + cos(angle));
+	rotated = multi_corresponds(rotated, target);
+	return (rotated);
+}
