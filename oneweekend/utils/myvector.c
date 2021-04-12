@@ -95,6 +95,11 @@ t_vector	multi_corresponds(t_vector v1, t_vector v2)
 	return (v1);
 }
 
+double		sum_of_elements(t_vector v1)
+{
+	return (v1.x + v1.y + v1.z);
+}
+
 int				vector_is_same(t_vector v1, t_vector v2)
 {
 	if (v1.x == v2.x && \
@@ -136,13 +141,22 @@ double		distance(t_vector v1, t_vector v2)
 t_vector	rotate_vector(t_vector target, t_vector axis, double angle)
 {
 	t_vector	rotated;
-	double		temp;
+	t_vector	temp;
+	t_vector	coef;
 
 	axis = normalize(axis);
-	temp = (axis.x + axis.y + axis.z) * (1 - cos(angle));
-	rotated.x = (axis.x * temp + (axis.z - axis.y) * sin(angle) + cos(angle));
-	rotated.y = (axis.y * temp + (axis.x - axis.z) * sin(angle) + cos(angle));
-	rotated.z = (axis.z * temp + (axis.y - axis.x) * sin(angle) + cos(angle));
-	rotated = multi_corresponds(rotated, target);
+	coef = multi(axis, 1 - cos(angle));
+	temp.x = axis.x * coef.x + cos(angle);
+	temp.y = axis.y * coef.x - axis.z * sin(angle);
+	temp.z = axis.z * coef.x + axis.y * sin(angle);
+	rotated.x = sum_of_elements(multi_corresponds(temp, target));
+	temp.x = axis.x * coef.y + axis.z * sin(angle);
+	temp.y = axis.y * coef.y + cos(angle);
+	temp.z = axis.z * coef.y - axis.x * sin(angle);
+	rotated.y = sum_of_elements(multi_corresponds(temp, target));
+	temp.x = axis.x * coef.z - axis.y * sin(angle);
+	temp.y = axis.y * coef.z + axis.x * sin(angle);
+	temp.z = axis.z * coef.z - cos(angle);
+	rotated.z = sum_of_elements(multi_corresponds(temp, target));
 	return (rotated);
 }

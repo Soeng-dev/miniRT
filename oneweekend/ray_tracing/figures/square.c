@@ -14,7 +14,7 @@ void	make_square(t_vector ctr, t_vector normal, double side_size, t_material *ma
 		return ;
 	sq = (t_square *)square_node->content;
 	sq->ctr = ctr;
-	sq->normal = normal;
+	sq->normal = normalize(normal);
 	sq->half_size = side_size / 2.0;
 	sq->material = *material;
 	square_node->pos = &sq->ctr;
@@ -36,11 +36,11 @@ void	hit_square(void *square, const t_ray *ray, t_hit_record *hitted)
 
 	sq = (t_square *)square;
 	time = dot(minus(sq->ctr, ray->pos), sq->normal)\
-		   / dot(ray->dir, sq->normal);
-	pos = raypos_at_t(*ray, time);
+			/ dot(ray->dir, sq->normal);
 	hitted->time = NOT_HIT;
 	if (time_is_valid(time))
 	{
+		pos = raypos_at_t(*ray, time);
 		if (pos_in_square(&pos, sq))
 		{
 			hitted->time = time;

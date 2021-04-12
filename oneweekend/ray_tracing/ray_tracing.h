@@ -59,6 +59,8 @@ struct	s_square
 {
 	t_vector	ctr;
 	t_vector	normal;
+	t_vector	u;
+	t_vector	v;
 	double		half_size;
 	t_material	material;
 };

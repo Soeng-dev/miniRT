@@ -103,10 +103,7 @@ void	change_cylinder(t_cylinder *cyl, int *is_error, int *quit_cmdmode)
 	else if (!ft_strncmp(cmd, "radius", idlen))
 		change_length(&cyl->r, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "height", idlen))
-	{
 		change_length(&cyl->height, cmd + idlen, is_error);
-		cyl->top.p = add(cyl->bottom.p, multi(cyl->normal, cyl->height));
-	}
 	else
 		*is_error = TRUE;
 	init_cylinder(cyl, &changed, cyl->r, cyl->height);

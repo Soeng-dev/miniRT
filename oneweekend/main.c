@@ -39,9 +39,6 @@ int		main(int argc, char *argv[])
 //	info.setup.scr.ratio = 16.0 / 9.0;
 //	info.setup.scr.width = 1000;
 //	info.setup.scr.height = info.setup.scr.width / info.setup.scr.ratio;
-	info.setup.scr.width = 100;
-	info.setup.scr.height = 400;
-	info.setup.scr.ratio = info.setup.scr.width / info.setup.scr.height;
 
 	if (argc >= 2)
 	{
@@ -59,7 +56,6 @@ int		main(int argc, char *argv[])
 		free(s);
 	}
 
-	printf("after set %f %f\n", info.setup.scr.width, info.setup.scr.height);
 	info.setup.mlx_vars.mlx = mlx_init();
  	info.setup.mlx_vars.win = mlx_new_window(info.setup.mlx_vars.mlx, (int)info.setup.scr.width + 1, (int)info.setup.scr.height + 1, "miniRT");
  	info.setup.img_data.img = mlx_new_image(info.setup.mlx_vars.mlx, (int)info.setup.scr.width + 1, (int)info.setup.scr.height + 1);

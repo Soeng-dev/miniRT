@@ -1,19 +1,18 @@
 
 #include "manage_command.h"
 
-void	set_mlx_resolution(char *s, t_info *info, int *is_error)
+void	set_mlx_resolution(char *s, t_screen *scr, int *is_error)
 {
-//	if (info->setup.scr.width || info->setup.scr.height)
-//		return ;
-	info->setup.scr.width = read_dbl(&s);
-	info->setup.scr.height = read_dbl(&s);
-	info->setup.scr.ratio = info->setup.scr.width / info->setup.scr.height;
-	printf("%f %f\n", info->setup.scr.width, info->setup.scr.height);
-//	if (setup->scr.width <= 0 || setup->scr.height <= 0)
-//	{
-//		//ft_memset//마무리할것
-//		*is_error = TRUE;
-//	}
+	if (scr->width || scr->height)
+		return ;
+	scr->width = read_dbl(&s);
+	scr->height = read_dbl(&s);
+	scr->ratio = scr->width / scr->height;
+	if (scr->width <= 0 || scr->height <= 0)
+	{
+		//ft_memset//마무리할것
+		*is_error = TRUE;
+	}
 	return ;
 }
 
