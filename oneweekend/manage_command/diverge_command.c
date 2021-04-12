@@ -28,7 +28,7 @@ int		check_command(char *s, t_info *info)
 	is_error = FALSE;
 	idlen = get_idlen(s, " \t\n\v\f\r");
 	if (!ft_strncmp("R", s, idlen))
-		set_mlx_resolution(s + idlen, &info->setup, &is_error);
+		set_mlx_resolution(s + idlen, info, &is_error);
 	else if (!ft_strncmp("A", s, idlen))
 		set_ambient(s + idlen, &is_error);
 	else if (!ft_strncmp("c", s, idlen))

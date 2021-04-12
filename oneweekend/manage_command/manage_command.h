@@ -35,7 +35,7 @@ int			check_command(char *s, t_info *info);
 int			get_idlen(char *s, char *delimiters);
 
 //view
-void		set_mlx_resolution(char *s, t_setup *setup, int *is_error);
+void		set_mlx_resolution(char *s, t_info *info, int *is_error);
 void		set_ambient(char *s, int *is_error);
 void		set_camera(char *s, t_info *info, int *is_error);
 void		set_light(char *s, int *is_error);
