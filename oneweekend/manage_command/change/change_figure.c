@@ -53,21 +53,23 @@ void	change_square(t_square *sq, int *is_error, int *quit_cmdmode)
 {
 	int			idlen;
 	char		*cmd;
+	t_plane		pl;
 
 	printf("Enter command for change\n");
 	cmd = NULL;
 	read_stdin_command(&cmd, is_error, quit_cmdmode);
+	init_plane(&pl, sq->ctr, sq->normal, &sq->material);
 	if (*is_error || *quit_cmdmode)
 		return ;
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
-		translate(&sq->ctr, cmd + idlen, is_error);
+		translate(&pl.p, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "rotation", idlen))
-		rotate(&sq->normal, cmd + idlen, is_error);
+		rotate(&pl.normal, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "color", idlen))
-		change_color(&sq->material.albedo, cmd + idlen, is_error);
+		change_color(&pl.material.albedo, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "material", idlen))
-		change_material(&sq->material, cmd + idlen, is_error);
+		change_material(&pl.material, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "side_size", idlen))
 	{
 		change_length(&sq->half_size, cmd + idlen, is_error);
@@ -75,6 +77,9 @@ void	change_square(t_square *sq, int *is_error, int *quit_cmdmode)
 	}
 	else
 		*is_error = TRUE;
+	if (*is_error)
+		return (free(cmd));
+	init_square(sq, &pl, 2 * sq->half_size);
 	return free(cmd);
 }
 

@@ -125,7 +125,8 @@ void	hit_plane(void *plane, const t_ray *ray, t_hit_record *hitted);
 
 //square
 void	hit_square(void *square, const t_ray *ray, t_hit_record *hitted);
-void	make_square(t_vector ctr, t_vector normal, double side_size, t_material *material);
+void	make_square(const t_plane *pl, const double side_size);
+void	init_square(t_square *sq, const t_plane *pl, const double side_size);
 
 //cylinder
 void	init_cylinder(t_cylinder *cyl, const t_plane *bottom, double r, double height);

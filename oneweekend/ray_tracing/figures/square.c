@@ -1,7 +1,26 @@
 
 #include "../../miniRT.h"
 
-void	make_square(t_vector ctr, t_vector normal, double side_size, t_material *material)
+void	init_square(t_square *sq, const t_plane *pl, const double side_size)
+{
+	double		p;
+	double		t;
+	t_vector	omega;
+
+	sq->ctr = pl->p;
+	sq->normal = normalize(pl->normal);
+	sq->half_size = side_size / 2.0;
+	sq->material = pl->material;
+	p = asin(sq->normal.x);
+	t = asin(sq->normal.y / (-cos(p)));
+	init_vector(&omega, 0, cos(t), sin(t));
+	sq->u = rotate_vector(get_vector(1, 0, 0), omega, p);
+	sq->v = rotate_vector(get_vector(0, 1, 0), get_vector(1, 0, 0), t);
+	sq->v = rotate_vector(sq->v, omega, p);
+	return ;
+}
+
+void	make_square(const t_plane *pl, const double side_size)
 {
 	t_list		*square_node;
 	t_square	*sq;
@@ -13,21 +32,8 @@ void	make_square(t_vector ctr, t_vector normal, double side_size, t_material *ma
 	if (!square_node->content)
 		return ;
 	sq = (t_square *)square_node->content;
-	sq->ctr = ctr;
-	sq->normal = normalize(normal);
-	sq->half_size = side_size / 2.0;
-	sq->material = *material;
-	sq->u.y = sqrt(pow(normal.x, 2) / (pow(normal.x, 2) + pow(normal.x, 2)));
-	sq->u.x = -(sq->u.y * normal.y) / normal.x;
-	sq->u.z = 0;
-	sq->v.x = 0;
-	sq->v.z = sqrt(pow(normal.y, 2) / (pow(normal.y, 2) + pow(normal.z, 2)));
-	sq->v.y = -(sq->v.z * normal.z) / normal.y;
-	sq->u = normalize(sq->u);
-	sq->v = normalize(sq->v);
+	init_square(sq, pl, side_size);
 	square_node->pos = &sq->ctr;
-	printf("%f %f %f\n", sq->u.x, sq->u.y, sq->u.z);
-	printf("%f %f %f\n", sq->v.x, sq->v.y, sq->v.z);
 	ft_lstadd_front(&g_figures[SQUARE], square_node);
 	return ;
 }
@@ -39,8 +45,8 @@ int		pos_in_square(const t_vector *pos, const t_square *sq)
 	double		horiz;
 
 	diff = minus(*pos, sq->ctr);
-	horiz = (diff.x * sq->v.y - diff.y * sq->v.x) / (sq->u.x * sq->v.y - sq->u.y * sq->v.x);
-	vert = (diff.x - horiz * sq->u.x) / sq->v.x;
+	vert = dot(diff, sq->v) / dot(sq->v, sq->v);
+	horiz = dot(diff, sq->u) / dot(sq->u, sq->u);
 	if (-sq->half_size < horiz && horiz < sq->half_size &&\
 		-sq->half_size < vert && vert < sq->half_size)
 		return (TRUE);

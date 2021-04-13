@@ -4,7 +4,7 @@
 void	init_plane(t_plane *plane, t_vector p, t_vector normal, t_material *material)
 {
 	plane->p = p;
-	plane->normal = normal;
+	plane->normal = normalize(normal);
 	plane->material = *material;
 	return;
 }

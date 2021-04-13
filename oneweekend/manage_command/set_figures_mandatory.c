@@ -39,21 +39,19 @@ void	set_plane(char *s, int *is_error)
 
 void	set_square(char *s, int *is_error)
 {
-	t_vector	ctr;
-	t_vector	normal;
-	double		side_size;
-	t_material	mat;
+	t_plane	pl;
+	double	side_size;
 
-	ctr = read_vector(&s);
-	normal = normalize(read_vector(&s));
+	pl.p = read_vector(&s);
+	pl.normal = normalize(read_vector(&s));
 	side_size = read_dbl(&s);
-	mat.albedo = divide(read_vector(&s), 255);
-	if (!is_valid_vector(mat.albedo, 0, 1.0) || side_size <= 0)
+	pl.material.albedo = divide(read_vector(&s), 255);
+	if (!is_valid_vector(pl.material.albedo, 0, 1.0) || side_size <= 0)
 		return (set_errflag(is_error));
-	set_fuzz_scatter(s, &mat, is_error);
+	set_fuzz_scatter(s, &pl.material, is_error);
 	if (*is_error)
 		return ;
-	make_square(ctr, normal, side_size, &mat);
+	make_square(&pl, side_size);
 	return ;
 }
 

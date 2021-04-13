@@ -156,7 +156,7 @@ t_vector	rotate_vector(t_vector target, t_vector axis, double angle)
 	rotated.y = sum_of_elements(multi_corresponds(temp, target));
 	temp.x = axis.x * coef.z - axis.y * sin(angle);
 	temp.y = axis.y * coef.z + axis.x * sin(angle);
-	temp.z = axis.z * coef.z - cos(angle);
+	temp.z = axis.z * coef.z + cos(angle);
 	rotated.z = sum_of_elements(multi_corresponds(temp, target));
 	return (rotated);
 }
