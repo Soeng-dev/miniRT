@@ -15,6 +15,8 @@
 # define SQUARE 3
 # define TRIANGLE 4
 # define NUM_OF_FIGTYPES 5
+# define LIGHT 6
+# define CAMERA 7
 # define TRUE 1
 # define FALSE 0
 

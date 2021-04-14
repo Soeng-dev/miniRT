@@ -46,7 +46,7 @@ int		check_command(char *s, t_info *info)
 	else if (!ft_strncmp("tr", s, idlen))
 		set_triangle(s + idlen, &is_error);
 	else if (!ft_strncmp("change", s, idlen))
-		change(&is_error, &quit_cmdmode);
+		change(info, &is_error, &quit_cmdmode);
 	else
 		is_error = TRUE;
 	if (is_error)

@@ -14,7 +14,7 @@ void	change_plane(t_plane *pl, int *is_error, int *quit_cmdmode)
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
 		translate(&pl->p, cmd + idlen, is_error);
-	else if (!ft_strncmp(cmd, "rotation", idlen))
+	else if (!ft_strncmp(cmd, "rotate", idlen))
 		rotate(&pl->normal, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "color", idlen))
 		change_color(&pl->material.albedo, cmd + idlen, is_error);
@@ -64,7 +64,7 @@ void	change_square(t_square *sq, int *is_error, int *quit_cmdmode)
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
 		translate(&pl.p, cmd + idlen, is_error);
-	else if (!ft_strncmp(cmd, "rotation", idlen))
+	else if (!ft_strncmp(cmd, "rotate", idlen))
 		rotate(&pl.normal, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "color", idlen))
 		change_color(&pl.material.albedo, cmd + idlen, is_error);
@@ -99,7 +99,7 @@ void	change_cylinder(t_cylinder *cyl, int *is_error, int *quit_cmdmode)
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
 		translate(&changed.p, cmd + idlen, is_error);
-	else if (!ft_strncmp(cmd, "rotation", idlen))
+	else if (!ft_strncmp(cmd, "rotate", idlen))
 		rotate(&changed.normal, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "color", idlen))
 		change_color(&changed.material.albedo, cmd + idlen, is_error);
@@ -128,7 +128,7 @@ void	change_triangle(t_triangle *tr, int *is_error, int *quit_cmdmode)
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
 		translate(&tr->p, cmd + idlen, is_error);
-	else if (!ft_strncmp(cmd, "rotation", idlen))
+	else if (!ft_strncmp(cmd, "rotate", idlen))
 	{
 		rotate(&tr->edge1, cmd + idlen, is_error);
 		rotate(&tr->edge2, cmd + idlen, is_error);

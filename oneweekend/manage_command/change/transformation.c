@@ -28,8 +28,8 @@ void	rotate(t_vector *target, char *cmd, int *is_error)
 	if (!ft_isdigit(*cmd) && (*cmd != '-' && !ft_isdigit(*(cmd + 1))))
 		return (set_errflag(is_error));
 	angle = read_dbl(&cmd) * (M_PI / 180);
-	printf("bf %f %f %f\n", target->x, target->y, target->z);
+	//printf("bf %f %f %f\n", target->x, target->y, target->z);
 	*target = rotate_vector(*target, axis, angle);
-	printf("af %f %f %f\n", target->x, target->y, target->z);
+	//printf("af %f %f %f\n", target->x, target->y, target->z);
 	return ;
 }

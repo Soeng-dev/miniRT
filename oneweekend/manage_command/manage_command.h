@@ -29,6 +29,7 @@ t_vector	read_vector(char **s);
 int			read_figtype(char *cmd);
 void		set_fuzz_scatter(char *s, t_material *mat, int *is_error);
 void		read_stdin_command(char **cmd, int *is_error, int *quit_cmdmode);
+int			read_target_type(char *cmd);
 
 //diverge_command
 int			check_command(char *s, t_info *info);
@@ -48,7 +49,7 @@ void		set_cylinder(char *s, int *is_error);
 void		set_triangle(char *s, int *is_error);
 
 //change
-void		change(int *is_error, int *quit_cmdmode);
+void		change(t_info *info, int *is_error, int *quit_cmdmode);
 void		change_color(t_vector *target, char *cmd, int *is_error);
 void		change_material(t_material *target, char *cmd, int *is_error);
 void		change_length(double *target, char *cmd, int *is_error);
@@ -59,6 +60,9 @@ void		change_cylinder(t_cylinder *cyl, int *is_error, int *quit_cmdmode);
 void		change_triangle(t_triangle *tr, int *is_error, int *quit_cmdmode);
 void		translate(t_vector *pos, char *cmd, int *is_error);
 void		rotate(t_vector *target, char *cmd, int *is_error);
+void		change_light(int lightnum, int *is_error, int *quit_cmdmode);
+void		change_camera(t_camlist *camlist, int camnum, int *is_error, int *quit_cmdmode);
+void		rotate_camera(t_camlist *camlist, char *cmd, int *is_error);
 
 #endif
 
