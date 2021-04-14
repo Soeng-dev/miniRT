@@ -1,6 +1,4 @@
 
-#include <stdio.h>
-#include <mlx.h>
 #include "miniRT.h"
 
 int		open_rtfile(char *name)
@@ -23,39 +21,37 @@ int		open_rtfile(char *name)
 		return (ERROR);
 }
 
+int		save_bmp(t_img_data *img, const char *path)
+{
+	int		fd;
+
+	fd = open(path, O_CREAT | O_TRUNC | O_WRONLY);
+	
+
 int		main(int argc, char *argv[])
 {
-	t_info		info;
-	char	*s;
-	int		rtfile;
+	char		*line;
+	int			rtfile;
 	t_camlist	*camlist;
-
-	ft_memset(&info, 0, sizeof(t_info));
-	s = NULL;
-
 	t_vector	color;
+	t_info		info;
 
-	//	image
-//	info.setup.scr.ratio = 16.0 / 9.0;
-//	info.setup.scr.width = 1000;
-//	info.setup.scr.height = info.setup.scr.width / info.setup.scr.ratio;
-
-	if (argc >= 2)
+	if (argc < 2)
+		return (0);
+	ft_memset(&info, 0, sizeof(t_info));
+	rtfile = open_rtfile(argv[1]);
+	if (rtfile == ERROR)
 	{
-		rtfile = open_rtfile(argv[1]);
-		if (rtfile == ERROR)
-		{
-			printf("Error\n");
-			return (0);
-		}
-		while (get_next_line(rtfile, &s) > 0)
-		{
-			if (check_command(s, &info) == CMD_ERROR)
-			;//free all malloc and return (0);
-		}
-		free(s);
+		printf("Error\n");
+		return (0);
 	}
-
+	line = NULL;
+	while (get_next_line(rtfile, &line) > 0)
+	{
+		if (check_command(line, &info) == CMD_ERROR)
+		;//free all malloc and return (0);
+	}
+	free(line);
 	info.setup.mlx_vars.mlx = mlx_init();
  	info.setup.mlx_vars.win = mlx_new_window(info.setup.mlx_vars.mlx, (int)info.setup.scr.width + 1, (int)info.setup.scr.height + 1, "miniRT");
  	info.setup.img_data.img = mlx_new_image(info.setup.mlx_vars.mlx, (int)info.setup.scr.width + 1, (int)info.setup.scr.height + 1);
@@ -66,26 +62,18 @@ int		main(int argc, char *argv[])
 	mlx_hook(info.setup.mlx_vars.win, MLX_BUTTON_PRESS, 0, mouse_check, &info.setup.mlx_vars.win);
 	mlx_hook(info.setup.mlx_vars.win, MLX_RED_CROSS, 0, (int (*)())exit, &info.setup.mlx_vars.win);// need to change exit to memory managed exit function
 
-
-	//test
-//	t_material	mat_center;
-//	init_material(&mat_center, get_vector(0.7, 0.3, 0.3), 0, lambertian);
-//	t_plane		bottom;
-//	init_plane(&bottom, get_vector(0,-0.5,-1), get_vector(0, 1, 0), &mat_center);
-//	make_cylinder(&bottom, 0.4, 1);
-
 	render_img(&info.setup.img_data, &info.setup.scr, info.camlist->cam);
-//	get_next_line(STDIN, &s);
-//		command(s, &info);
-//		render_img(&info.setup.img_data, &info.setup.scr, info.camlist->cam);
-
-	printf("after render\n");
+	printf("print image done\n");
 
 	//delete, need to add camera and camlist free
-//	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
-//		ft_lstclear(&g_figures[i], free);// need to change free to function which free material of figure also
-//	if (g_light_data.light_arr)
-//		free(g_light_data.light_arr);
+	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
+		ft_lstclear(&g_figures[i], free);// need to change free to function which free material of figure also
+	if (g_light_data.light_arr)
+		free(g_light_data.light_arr);
+
+	if (argc == 3)
+		if (!ft_strcmp(argv[2], "--save"))
+			save_bmp(img, "./scene/saved_scene");
 	mlx_put_image_to_window(info.setup.mlx_vars.mlx, info.setup.mlx_vars.win, info.setup.img_data.img, 0, 0);
 	mlx_loop(info.setup.mlx_vars.mlx);
 }

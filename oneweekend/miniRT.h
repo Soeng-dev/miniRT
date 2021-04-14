@@ -4,10 +4,12 @@
 # define _USE_MATH_DEFINES
 # define SAMPLES_PER_PIXEL 30
 # define STDIN 0
+# include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include "libft/libft.h"
 # include "utils/mymlx_utils.h"
@@ -16,5 +18,4 @@
 # include "ray_tracing/ray_tracing.h"
 # include "get_next_line/get_next_line.h"
 # include "manage_command/manage_command.h"
-
 #endif

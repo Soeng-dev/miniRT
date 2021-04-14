@@ -62,7 +62,6 @@ int		mouse_check(int button, int x, int y)
 	char *str;
 
 	str = NULL;
-	printf("%d	%d	%d\n", button, x,y);
 	return (0);
 }
 
@@ -74,34 +73,31 @@ void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam)
 		return ;
 	for (int j = scr->height - 1; j >= 0; --j)
 	{
-//		ft_putnbr_fd(j, 1);
-//		write(1, "\n", 1);
 		for (int i = 0; i < scr->width; ++i)
 		{
 			ft_memset(&color, 0, sizeof(t_vector));
 			//anti alias
-//			for (int s = 0; s < (int)SAMPLES_PER_PIXEL; ++s)
-//			{
-//				t_ray	ray;
-//				double u = ((double)i + ((double)s / SAMPLES_PER_PIXEL)) / (scr->width - 1);
-//				double v = ((double)j + ((double)s / SAMPLES_PER_PIXEL)) / (scr->height - 1);
-//				t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
-//				init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
-//				color = add(color, ray_color(&ray, 20));
-//			}
-//			color = divide(color, SAMPLES_PER_PIXEL);
-
+			for (int s = 0; s < (int)SAMPLES_PER_PIXEL; ++s)
+			{
+				t_ray	ray;
+				double u = ((double)i + ((double)s / SAMPLES_PER_PIXEL)) / (scr->width - 1);
+				double v = ((double)j + ((double)s / SAMPLES_PER_PIXEL)) / (scr->height - 1);
+				t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
+				init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
+				color = add(color, ray_color(&ray, 20));
+			}
+			color = divide(color, SAMPLES_PER_PIXEL);
+	
 			//no AA
-			t_ray	ray;
-			double u = (double)i / (scr->width - 1);
-			double v = (double)j / (scr->height - 1);
-			t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
-			init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
-			color = ray_color(&ray, 70);
-
-
-			pixput(img, i, (scr->height - 1) - j, get_color(color, 2));
+//			t_ray	ray;
+//			double u = (double)i / (scr->width - 1);
+//			double v = (double)j / (scr->height - 1);
+//			t_vector offset = add(multi(cam->horizontal, u), multi(cam->vertical, v));
+//			init_ray(&ray, cam->origin, minus(add(cam->lowerleft, offset), cam->origin));
+//			color = ray_color(&ray, 70);
+			
+			pixput(img, i, (int)scr->height - 1 - j, get_color(color, 2)); 
 		}
 	}
-	printf("print image done\n");
+	printf("render image done\n");
 }
