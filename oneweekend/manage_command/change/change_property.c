@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   change_property.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 16:07:37 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/16 12:55:42 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../../miniRT.h"
+#include "../../minirt.h"
 
 void	change_color(t_vector *target, char *cmd, int *is_error)
 {
@@ -9,7 +20,7 @@ void	change_color(t_vector *target, char *cmd, int *is_error)
 	if (!(*cmd))
 		return (set_errflag(is_error));
 	color = divide(read_vector(&cmd), 255);
-	if ( ! is_valid_vector(color, 0, 1))
+	if (!is_valid_vector(color, 0, 1))
 		return (set_errflag(is_error));
 	else
 		*target = color;

@@ -1,7 +1,7 @@
 
 #ifndef LIGHT_H
 # define LIGHT_H
-# include "../utils/myvector.h"
+# include "../utils/math/myvector.h"
 
 struct	s_light
 {

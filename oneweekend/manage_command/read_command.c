@@ -1,5 +1,5 @@
 
-#include "../miniRT.h"
+#include "../minirt.h"
 
 double	read_dbl(char **s)
 {
@@ -103,7 +103,10 @@ void	read_stdin_command(char **cmd, int *is_error, int *quit_cmdmode)
 			free(*cmd);
 		return ;
 	}
-	if (!ft_strcmp(*cmd, "quit"))
+	else if (!ft_strcmp(*cmd, "quit"))
+	{
 		*quit_cmdmode = TRUE;
+		free(*cmd);
+	}
 	return ;
 }

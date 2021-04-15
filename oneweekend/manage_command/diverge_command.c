@@ -1,5 +1,5 @@
 
-# include "../miniRT.h"
+# include "../minirt.h"
 
 int		get_idlen(char *s, char *delimiters)
 {

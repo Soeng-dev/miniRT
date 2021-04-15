@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../miniRT.h"
+#include "../../minirt.h"
 
 void			init_sphere(t_sphere *sp, t_vector center, double r, t_material *material)
 {
@@ -32,6 +32,7 @@ void			make_sphere(t_vector center, double radius, t_material *material)
 	init_sphere((t_sphere *)(sphere_node->content), center, radius, material);
 	sphere_node->pos = &((t_sphere *)sphere_node->content)->ctr;
 	ft_lstadd_front(&g_figures[SPHERE], sphere_node);
+	printf("%p\n", g_figures[SPHERE]);
 	return ;
 }
 

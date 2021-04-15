@@ -10,15 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../miniRT.h"
-
-void			pixput(const t_img_data *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr + (y * img->linelen + x * (img->bpp / 8));
-	*(unsigned int *)dst = color;
-}
+#include "../minirt.h"
 
 int		get_color(t_vector colorvec, double gamma)
 {
@@ -100,4 +92,12 @@ void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam)
 		}
 	}
 	printf("render image done\n");
+}
+
+void			pixput(const t_img_data *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->linelen + x * (img->bpp / 8));
+	*(unsigned int *)dst = color;
 }

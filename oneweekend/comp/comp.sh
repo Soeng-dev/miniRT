@@ -1,4 +1,4 @@
 #!/bin/bash
 ./rmgch.sh
-gcc -lmlx -framework OpenGL -framework AppKit $1 miniRT.h main.c libft/*.? utils/*.? ray_tracing/*.? ray_tracing/figures/*.? manage_command/*.? manage_command/*/*.? get_next_line/*.?
+gcc -lmlx -framework OpenGL -framework AppKit $1 miniRT.h main.c libft/*.? utils/*.? utils/*/*.? ray_tracing/*.? ray_tracing/figures/*.? manage_command/*.? manage_command/*/*.? get_next_line/*.?
 mv a.out miniRT

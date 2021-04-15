@@ -48,18 +48,32 @@ void		set_square(char *s, int *is_error);
 void		set_cylinder(char *s, int *is_error);
 void		set_triangle(char *s, int *is_error);
 
-//change
+/*
+**	select change
+*/
 void		change(t_info *info, int *is_error, int *quit_cmdmode);
+/*
+**	change property
+*/
 void		change_color(t_vector *target, char *cmd, int *is_error);
 void		change_material(t_material *target, char *cmd, int *is_error);
 void		change_length(double *target, char *cmd, int *is_error);
-void		change_plane(t_plane *pl, int *is_error, int *quit_cmdmode);
-void		change_sphere(t_sphere *sp, int *is_error, int *quit_cmdmode);
-void		change_square(t_square *sq, int *is_error, int *quit_cmdmode);
-void		change_cylinder(t_cylinder *cyl, int *is_error, int *quit_cmdmode);
-void		change_triangle(t_triangle *tr, int *is_error, int *quit_cmdmode);
+/*
+**	change figure
+*/
+void		change_plane(t_plane *pl, char *cmd, int *is_error, int *quit_cmdmode);
+void		change_sphere(t_sphere *sp, char *cmd, int *is_error, int *quit_cmdmode);
+void		change_square(t_square *sq, char *cmd, int *is_error, int *quit_cmdmode);
+void		change_cylinder(t_cylinder *cyl, char *cmd, int *is_error, int *quit_cmdmode);
+void		change_triangle(t_triangle *tr, char *cmd, int *is_error, int *quit_cmdmode);
+/*
+**	transformation
+*/
 void		translate(t_vector *pos, char *cmd, int *is_error);
 void		rotate(t_vector *target, char *cmd, int *is_error);
+/*
+**	change cam, light
+*/
 void		change_light(int lightnum, int *is_error, int *quit_cmdmode);
 void		change_camera(t_camlist *camlist, int camnum, int *is_error, int *quit_cmdmode);
 void		rotate_camera(t_camlist *camlist, char *cmd, int *is_error);

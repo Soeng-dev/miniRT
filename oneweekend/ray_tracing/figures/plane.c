@@ -1,5 +1,5 @@
 
-# include "../../miniRT.h"
+# include "../../minirt.h"
 
 void	init_plane(t_plane *plane, t_vector p, t_vector normal, t_material *material)
 {
@@ -43,7 +43,10 @@ int		check_plane_hitpos(const t_plane *pl, const t_ray *ray, t_hit_record *hitte
 
 void	record_hittedpl_normal_mat(const t_plane *pl, const t_ray *ray, t_hit_record *hitted)
 {
-	hitted->normal = pl->normal;
+	if (dot(ray->dir, pl->normal) < 0)
+		hitted->normal = pl->normal;
+	else
+		hitted->normal = multi(pl->normal, -1.0);
 	hitted->is_front_face = TRUE;
 	hitted->material = (t_material *)&pl->material;
 }

@@ -1,16 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   change_figures.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 16:07:37 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/16 12:55:42 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../../miniRT.h"
+#include "../../minirt.h"
 
-void	change_plane(t_plane *pl, int *is_error, int *quit_cmdmode)
+void	change_plane(t_plane *pl, char *cmd, int *is_error, int *quit_cmdmode)
 {
 	int			idlen;
-	char		*cmd;
 
-	printf("Enter command for change\n");
-	cmd = NULL;
-	read_stdin_command(&cmd, is_error, quit_cmdmode);
-	if (*is_error || *quit_cmdmode)
-		return ;
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
 		translate(&pl->p, cmd + idlen, is_error);
@@ -22,19 +27,13 @@ void	change_plane(t_plane *pl, int *is_error, int *quit_cmdmode)
 		change_material(&pl->material, cmd + idlen, is_error);
 	else
 		*is_error = TRUE;
-	return free(cmd);
+	return (free(cmd));
 }
 
-void	change_sphere(t_sphere *sp, int *is_error, int *quit_cmdmode)
+void	change_sphere(t_sphere *sp, char *cmd, int *is_error, int *quit_cmdmode)
 {
 	int			idlen;
-	char		*cmd;
 
-	printf("Enter command for change\n");
-	cmd = NULL;
-	read_stdin_command(&cmd, is_error, quit_cmdmode);
-	if (*is_error || *quit_cmdmode)
-		return ;
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
 		translate(&sp->ctr, cmd + idlen, is_error);
@@ -46,21 +45,15 @@ void	change_sphere(t_sphere *sp, int *is_error, int *quit_cmdmode)
 		change_length(&sp->r, cmd + idlen, is_error);
 	else
 		*is_error = TRUE;
-	return free(cmd);
+	return (free(cmd));
 }
 
-void	change_square(t_square *sq, int *is_error, int *quit_cmdmode)
+void	change_square(t_square *sq, char *cmd, int *is_error, int *quit_cmdmode)
 {
 	int			idlen;
-	char		*cmd;
 	t_plane		pl;
 
-	printf("Enter command for change\n");
-	cmd = NULL;
-	read_stdin_command(&cmd, is_error, quit_cmdmode);
 	init_plane(&pl, sq->ctr, sq->normal, &sq->material);
-	if (*is_error || *quit_cmdmode)
-		return ;
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
 		translate(&pl.p, cmd + idlen, is_error);
@@ -80,22 +73,17 @@ void	change_square(t_square *sq, int *is_error, int *quit_cmdmode)
 	if (*is_error)
 		return (free(cmd));
 	init_square(sq, &pl, 2 * sq->half_size);
-	return free(cmd);
+	return (free(cmd));
 }
 
-void	change_cylinder(t_cylinder *cyl, int *is_error, int *quit_cmdmode)
+void	change_cylinder(t_cylinder *cyl, char *cmd, \
+						int *is_error, int *quit_cmdmode)
 {
 	int			idlen;
-	char		*cmd;
 	t_plane		changed;
 
-	printf("Enter command for change\n");
-	cmd = NULL;
 	changed = cyl->bottom;
 	changed.normal = multi(cyl->bottom.normal, -1);
-	read_stdin_command(&cmd, is_error, quit_cmdmode);
-	if (*is_error || *quit_cmdmode)
-		return ;
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
 		translate(&changed.p, cmd + idlen, is_error);
@@ -112,19 +100,14 @@ void	change_cylinder(t_cylinder *cyl, int *is_error, int *quit_cmdmode)
 	else
 		*is_error = TRUE;
 	init_cylinder(cyl, &changed, cyl->r, cyl->height);
-	return free(cmd);
+	return (free(cmd));
 }
 
-void	change_triangle(t_triangle *tr, int *is_error, int *quit_cmdmode)
+void	change_triangle(t_triangle *tr, char *cmd, \
+						int *is_error, int *quit_cmdmode)
 {
 	int			idlen;
-	char		*cmd;
 
-	printf("Enter command for change\n");
-	cmd = NULL;
-	read_stdin_command(&cmd, is_error, quit_cmdmode);
-	if (*is_error || *quit_cmdmode)
-		return ;
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
 		translate(&tr->p, cmd + idlen, is_error);
@@ -140,5 +123,5 @@ void	change_triangle(t_triangle *tr, int *is_error, int *quit_cmdmode)
 		change_material(&tr->material, cmd + idlen, is_error);
 	else
 		*is_error = TRUE;
-	return free(cmd);
+	return (free(cmd));
 }

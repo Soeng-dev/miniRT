@@ -1,6 +1,6 @@
  
-#include "../../miniRT.h"
-//make and init need to be impelemented considering cylinder top and bottom can be compatible with hit_plane
+#include "../../minirt.h"
+
 void		init_cylinder(t_cylinder *cyl, const t_plane *bottom, double r, double height)
 {
 	cyl->r = r;

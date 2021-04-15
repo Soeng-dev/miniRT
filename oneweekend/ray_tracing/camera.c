@@ -1,5 +1,5 @@
 
-#include "../miniRT.h"
+#include "../minirt.h"
 
 void	init_campos(t_campos *campos, t_vector origin, t_vector dir, t_vector upward)
 {

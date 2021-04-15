@@ -12,9 +12,10 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "libft/libft.h"
+# include "utils/math/myvector.h"
+# include "utils/bmp_tools.h"
+# include "utils/math/math_tools.h"
 # include "utils/mymlx_utils.h"
-# include "utils/myvector.h"
-# include "utils/math_tools.h"
 # include "ray_tracing/ray_tracing.h"
 # include "get_next_line/get_next_line.h"
 # include "manage_command/manage_command.h"

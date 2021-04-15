@@ -1,5 +1,5 @@
 
-#include "../miniRT.h"
+#include "../minirt.h"
 
 void	init_light(t_light *light, t_vector pos, t_vector color, double bright)
 {
@@ -22,8 +22,7 @@ void	make_light(t_vector pos, t_vector color, double bright)
 		free(g_light_data.light_arr);
 	}
 	g_light_data.light_arr = light;
-	light = g_light_data.light_arr + g_light_data.count;
-	init_light(light, pos, color, bright);
+	init_light(light + g_light_data.count, pos, color, bright);
 	g_light_data.count++;
 }
 

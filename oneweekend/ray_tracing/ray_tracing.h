@@ -3,7 +3,7 @@
 # define RAY_TRACING_H
 # include <float.h>
 # include "../libft/libft.h"
-# include "../utils/myvector.h"
+# include "../utils/math/myvector.h"
 # include "camera.h"
 # include "light.h"
 # define NOT_HIT DBL_MAX 

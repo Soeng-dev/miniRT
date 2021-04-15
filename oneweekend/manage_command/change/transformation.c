@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   transformation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 16:07:37 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/16 12:55:42 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../../miniRT.h"
+#include "../../minirt.h"
 
 void	translate(t_vector *pos, char *cmd, int *is_error)
 {
@@ -28,8 +39,6 @@ void	rotate(t_vector *target, char *cmd, int *is_error)
 	if (!ft_isdigit(*cmd) && (*cmd != '-' && !ft_isdigit(*(cmd + 1))))
 		return (set_errflag(is_error));
 	angle = read_dbl(&cmd) * (M_PI / 180);
-	//printf("bf %f %f %f\n", target->x, target->y, target->z);
 	*target = rotate_vector(*target, axis, angle);
-	//printf("af %f %f %f\n", target->x, target->y, target->z);
 	return ;
 }

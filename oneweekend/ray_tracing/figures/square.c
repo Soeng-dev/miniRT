@@ -1,5 +1,5 @@
 
-#include "../../miniRT.h"
+#include "../../minirt.h"
 
 void	init_square(t_square *sq, const t_plane *pl, const double side_size)
 {

@@ -1,5 +1,5 @@
 
-#include "../miniRT.h"
+#include "../minirt.h"
 
 void		init_material(t_material *material, t_vector color, double fuzz, \
 												int (*scatter)(const t_ray*, void *, t_ray *))

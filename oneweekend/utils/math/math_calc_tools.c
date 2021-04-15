@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math_tools.c                                       :+:      :+:    :+:   */
+/*   math_calc_tools.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -28,33 +28,8 @@ double		dbl_max(double a, double b)
 		return (b);
 }
 
-double		clamp(double n, double min, double max)
-{
-	if (n < min)
-		return (min);
-	else if (n > max)
-		return (max);
-	else
-		return (n);
-}
-
-int			myrand(void)
-{
-	static int	r;
-
-	r = (109 * r + 1021) % 32768;
-	return (r);
-}
-
-double		absol(double n)
-{
-	if (n > 0)
-		return (n);
-	else
-		return (-n);
-}
-
-double		get_valid_2nd_eqsol(double *coef, double ret_of_invalid, int (*sol_is_valid)(long double sol))
+double		get_valid_2nd_eqsol(double *coef, double ret_of_invalid, \
+								int (*sol_is_valid)(long double sol))
 {
 	double	sol;
 	double	discriminant;
@@ -73,4 +48,3 @@ double		get_valid_2nd_eqsol(double *coef, double ret_of_invalid, int (*sol_is_va
 	else
 		return (ret_of_invalid);
 }
-

@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math_tools.h                                       :+:      :+:    :+:   */
+/*   math_calc_tools.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/10 16:07:37 by soekim            #+#    #+#             */
-/*   Updated: 2021/03/16 12:55:42 by soekim           ###   ########.fr       */
+/*   Created: 2021/03/10 16:06:51 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/16 11:31:04 by soekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MATH_TOOLS_H
-# define MATH_TOOLS_H
-# include <math.h>
+#include "math_tools.h"
 
-double		dbl_min(double a, double b);
-double		dbl_max(double a, double b);
-double		clamp(double n, double min, double max);
-int			myrand(void);
-double		absol(double n);
-double		get_valid_2nd_eqsol(double *coef, double ret_of_invalid, int (*sol_is_valid)(long double sol));
+double		clamp(double n, double min, double max)
+{
+	if (n < min)
+		return (min);
+	else if (n > max)
+		return (max);
+	else
+		return (n);
+}
 
-#endif
+int			myrand(void)
+{
+	static int	r;
+
+	r = (109 * r + 1021) % 32768;
+	return (r);
+}
+
+double		absol(double n)
+{
+	if (n > 0)
+		return (n);
+	else
+		return (-n);
+}

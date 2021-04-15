@@ -1,5 +1,5 @@
 
-#include "miniRT.h"
+#include "minirt.h"
 
 int		open_rtfile(char *name)
 {
@@ -20,13 +20,6 @@ int		open_rtfile(char *name)
 	else
 		return (ERROR);
 }
-
-int		save_bmp(t_img_data *img, const char *path)
-{
-	int		fd;
-
-	fd = open(path, O_CREAT | O_TRUNC | O_WRONLY);
-	
 
 int		main(int argc, char *argv[])
 {
@@ -66,14 +59,22 @@ int		main(int argc, char *argv[])
 	printf("print image done\n");
 
 	//delete, need to add camera and camlist free
-	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
-		ft_lstclear(&g_figures[i], free);// need to change free to function which free material of figure also
-	if (g_light_data.light_arr)
-		free(g_light_data.light_arr);
+//	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
+//		ft_lstclear(&g_figures[i], free);// need to change free to function which free material of figure also
+//	if (g_light_data.light_arr)
+//		free(g_light_data.light_arr);
 
 	if (argc == 3)
+	{
 		if (!ft_strcmp(argv[2], "--save"))
-			save_bmp(img, "./scene/saved_scene");
+		{
+			t_bh	bh;
+
+			set_bmpheader(&bh, &info.setup.scr);
+			save_bmp(&info.setup.img_data, &info.setup.scr, bh, "./scenes/saved_scene.bmp");
+			return (0);
+		}
+	}
 	mlx_put_image_to_window(info.setup.mlx_vars.mlx, info.setup.mlx_vars.win, info.setup.img_data.img, 0, 0);
 	mlx_loop(info.setup.mlx_vars.mlx);
 }

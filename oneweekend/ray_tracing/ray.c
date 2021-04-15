@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../miniRT.h"
+#include "../minirt.h"
 
 void	init_ray(t_ray *ray, t_vector pos, t_vector dir)
 {

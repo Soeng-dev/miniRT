@@ -1,5 +1,5 @@
 
-#include "../miniRT.h"
+#include "../minirt.h"
 
 int		time_is_valid(long double time)
 {

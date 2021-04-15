@@ -15,7 +15,7 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
-# include "../utils/myvector.h"
+# include "../utils/math/myvector.h"
 
 struct	s_list
 {

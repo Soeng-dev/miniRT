@@ -1,5 +1,5 @@
 
-#include "../../miniRT.h"
+#include "../../minirt.h"
 
 void		init_triangle(t_triangle *tr, t_vector *points, t_material *mat)
 {

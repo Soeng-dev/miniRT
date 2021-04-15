@@ -1,7 +1,7 @@
 
 #ifndef CAMERA_H
 # define CAMERA_H
-# include "../utils/myvector.h"
+# include "../utils/math/myvector.h"
 
 struct	s_camera
 {
