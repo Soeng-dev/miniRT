@@ -46,8 +46,8 @@ int		main(int argc, char *argv[])
 	}
 	free(line);
 	info.setup.mlx_vars.mlx = mlx_init();
- 	info.setup.mlx_vars.win = mlx_new_window(info.setup.mlx_vars.mlx, (int)info.setup.scr.width + 1, (int)info.setup.scr.height + 1, "miniRT");
- 	info.setup.img_data.img = mlx_new_image(info.setup.mlx_vars.mlx, (int)info.setup.scr.width + 1, (int)info.setup.scr.height + 1);
+ 	info.setup.mlx_vars.win = mlx_new_window(info.setup.mlx_vars.mlx, (int)info.setup.scr.width, (int)info.setup.scr.height, "miniRT");
+ 	info.setup.img_data.img = mlx_new_image(info.setup.mlx_vars.mlx, (int)info.setup.scr.width, (int)info.setup.scr.height);
  	info.setup.img_data.addr = mlx_get_data_addr(info.setup.img_data.img, &info.setup.img_data.bpp, &info.setup.img_data.linelen, &info.setup.img_data.endian);
 
 	//hook
@@ -55,14 +55,8 @@ int		main(int argc, char *argv[])
 	mlx_hook(info.setup.mlx_vars.win, MLX_BUTTON_PRESS, 0, mouse_check, &info.setup.mlx_vars.win);
 	mlx_hook(info.setup.mlx_vars.win, MLX_RED_CROSS, 0, (int (*)())exit, &info.setup.mlx_vars.win);// need to change exit to memory managed exit function
 
-	render_img(&info.setup.img_data, &info.setup.scr, info.camlist->cam);
+	render_img(&info.setup.img_data, &info.setup.scr, info.caminfo.curr_camnode->cam);
 	printf("print image done\n");
-
-	//delete, need to add camera and camlist free
-//	for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
-//		ft_lstclear(&g_figures[i], free);// need to change free to function which free material of figure also
-//	if (g_light_data.light_arr)
-//		free(g_light_data.light_arr);
 
 	if (argc == 3)
 	{
@@ -72,6 +66,11 @@ int		main(int argc, char *argv[])
 
 			set_bmpheader(&bh, &info.setup.scr);
 			save_bmp(&info.setup.img_data, &info.setup.scr, bh, "./scenes/saved_scene.bmp");
+			//delete, need to add camera and camlist free
+			for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
+				ft_lstclear(&g_figures[i], free);
+			if (g_light_data.light_arr)
+				free(g_light_data.light_arr);
 			return (0);
 		}
 	}

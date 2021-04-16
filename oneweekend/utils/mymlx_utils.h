@@ -12,20 +12,26 @@
 
 #ifndef MYMLX_UTILS_H
 # define MYMLX_UTILS_H
-# define MLX_KEY_PRESS 2
-# define MLX_BUTTON_PRESS 4
-# define MLX_RED_CROSS 17
-# define KEY_RIGHT 124
-# define KEY_LEFT 123
-# define KEY_UP 126
-# define KEY_DOWN 125
-# define KEY_ESC 53
-# define KEY_TAB 48
-# define KEY_ENT 36
-# define BUTTON_RIGHT 2
+
+# define MLX_KEY_PRESS		2
+# define MLX_BUTTON_PRESS	4
+# define MLX_RED_CROSS		17
+
+# define BUTTON_LEFT	1
+# define BUTTON_RIGHT	2
+
+# define KEY_RIGHT	124
+# define KEY_LEFT	123
+# define KEY_UP		126
+# define KEY_DOWN	125
+# define KEY_ESC	53
+# define KEY_TAB	48
+# define KEY_ENT	36
+
 # include <stdio.h>
 # include <stdlib.h>
 # include <mlx.h>
+
 # include "../get_next_line/get_next_line.h"
 # include "../ray_tracing/ray_tracing.h"
 # include "math/myvector.h"
@@ -65,7 +71,7 @@ typedef struct s_setup		t_setup;
 
 struct	s_info
 {
-	t_camlist	*camlist;
+	t_caminfo	caminfo;
 	t_setup		setup;
 };
 typedef struct s_info		t_info;

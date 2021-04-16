@@ -79,7 +79,7 @@ static void	prt_tglist(int type, t_info *info)
 	tgnum = 1;
 	if (type == CAMERA)
 	{
-		target = (void *)info->camlist;
+		target = (void *)info->caminfo.camlist;
 		while (target)
 		{
 			printf("%d. position : ", tgnum++);
@@ -120,7 +120,7 @@ static void	select_targetnum(t_info *info, int type, \
 	if (tgnum < 1)
 		return (set_errflag(is_error));
 	if (type == CAMERA)
-		change_camera(info->camlist, tgnum, is_error, quit_cmdmode);
+		change_camera(info->caminfo.camlist, tgnum, is_error, quit_cmdmode);
 	else if (type == LIGHT)
 		change_light(tgnum, is_error, quit_cmdmode);
 }

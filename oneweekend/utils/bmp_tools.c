@@ -17,7 +17,7 @@ void	set_bmpheader(t_bh *bh, const t_screen *scr)
 	ft_memset(bh, 0, sizeof(t_bh));
 	bh->bfh.bf_type[0] = 'B';
 	bh->bfh.bf_type[1] = 'M';
-	bh->bfh.bf_size = 54 + sizeof(int) * (int)scr->height * ((int)scr->width);
+	bh->bfh.bf_size = 54 + 4 * (int)scr->height * (int)scr->width;
 	bh->bfh.bf_off_bits = 54;
 	bh->bih.bi_size = 40;
 	bh->bih.bi_width = (int)scr->width;

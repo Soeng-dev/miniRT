@@ -42,13 +42,13 @@ void	set_camera(char *s, t_info *info, int *is_error)
 
 	campos.upward = get_vector(0, 1, 0);
 	campos.origin = read_vector(&s);
-	campos.dir = read_vector(&s);
+	campos.dir = normalize(read_vector(&s));
 	camview.angle = M_PI * (read_dbl(&s) / 180.0);
 	if (camview.angle >= M_PI || camview.angle <= 0)
 		return (set_errflag(is_error));
 	camview.focallen = 1.0;
 	camview.ratio = info->setup.scr.ratio;
-	make_camera(&info->camlist, &campos, &camview);
+	make_camera(&info->caminfo, &campos, &camview);
 }
 
 void	set_light(char *s, int *is_error)

@@ -27,25 +27,36 @@ int		key_check(int key, t_info *info)
 	char	*s;
 	int		cmd_result;
 
-	s = NULL;
 	if (key == KEY_ESC)
 		exit(0); //change to memory managed function
 	if (key == KEY_ENT)
 	{
+		s = NULL;
 		get_next_line(STDIN, &s);
 		cmd_result = check_command(s, info);
 		free(s);
-		if (cmd_result == CMD_QUIT)
-			return (CMD_QUIT);
 		if (cmd_result == CMD_ERROR)
 			printf("Error\n");
-		else if (cmd_result == CMD_CORRECT)
-		{
-			render_img(&info->setup.img_data, &info->setup.scr, info->camlist->cam);
+		if (cmd_result == CMD_QUIT || cmd_result == CMD_ERROR)
+			return (0);
+	}
+	else if (key == KEY_LEFT)
+	{
+		if (!info->caminfo.curr_camnode->prev)
+			return (0);
+		info->caminfo.curr_camnode = info->caminfo.curr_camnode->prev;
+	}
+	else if (key == KEY_RIGHT)
+	{
+		if (!info->caminfo.curr_camnode->next)
+			return (0);
+		info->caminfo.curr_camnode = info->caminfo.curr_camnode->next;
+	}
+	else
+		return (0);
+	render_img(&info->setup.img_data, &info->setup.scr, info->caminfo.curr_camnode->cam);
 			mlx_put_image_to_window(info->setup.mlx_vars.mlx, info->setup.mlx_vars.win, info->setup.img_data.img, 0, 0);
 			mlx_loop(info->setup.mlx_vars.mlx);
-		}
-	}
 	return (0);
 }
 
@@ -63,8 +74,10 @@ void	render_img(const t_img_data *img, const t_screen *scr, const t_camera *cam)
 
 	if (!img || !scr || !cam)
 		return ;
+	printf("render img start\n");
 	for (int j = scr->height - 1; j >= 0; --j)
 	{
+		printf("left	%.1f%%\n", (100.0 * (double)j) / scr->height);
 		for (int i = 0; i < scr->width; ++i)
 		{
 			ft_memset(&color, 0, sizeof(t_vector));

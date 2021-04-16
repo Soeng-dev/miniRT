@@ -5,6 +5,7 @@
 # define CMD_ERROR		-1
 # define CMD_CORRECT	1
 # define CMD_COMMENT	0
+# define CMD_NONE		0
 # define CMD_QUIT		-2
 
 # include <math.h>

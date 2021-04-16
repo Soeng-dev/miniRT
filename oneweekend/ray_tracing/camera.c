@@ -39,25 +39,26 @@ void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview
 	cam->lowerleft = minus(cam->origin, cam->lowerleft);
 }
 
-void	make_camera(t_camlist **camlist, const t_campos *campos, const t_camview *camview)
+void	make_camera(t_caminfo *caminfo, const t_campos *campos, const t_camview *camview)
 {
-	if (*camlist)
+	if (caminfo->camlist)
 	{
-		(*camlist)->next = (t_camlist *)malloc(sizeof(t_camlist));
-		if (!(*camlist)->next)
+		caminfo->camlist->prev = (t_camlist *)malloc(sizeof(t_camlist));
+		if (!caminfo->camlist->prev)
 			return ;
-		(*camlist)->next->prev = *camlist;
-		(*camlist)->next->next = NULL;
-		*camlist = (*camlist)->next;
+		caminfo->camlist->prev->prev = NULL;
+		caminfo->camlist->prev->next = caminfo->camlist;
+		caminfo->camlist = caminfo->camlist->prev;
 	}
 	else
 	{
-		(*camlist) = (t_camlist *)malloc(sizeof(t_camlist));
-		if (!(*camlist))
+		caminfo->camlist = (t_camlist *)malloc(sizeof(t_camlist));
+		if (!caminfo->camlist)
 			return ;
-		(*camlist)->prev = NULL;
-		(*camlist)->next = NULL;
+		caminfo->camlist->prev = NULL;
+		caminfo->camlist->next = NULL;
 	}
-	(*camlist)->cam = (t_camera *)malloc(sizeof(t_camera));
-	init_camera((*camlist)->cam, campos, camview);
+	caminfo->camlist->cam = (t_camera *)malloc(sizeof(t_camera));
+	init_camera(caminfo->camlist->cam, campos, camview);
+	caminfo->curr_camnode = caminfo->camlist;
 }

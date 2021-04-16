@@ -27,7 +27,7 @@ void	change_plane(t_plane *pl, char *cmd, int *is_error, int *quit_cmdmode)
 		change_material(&pl->material, cmd + idlen, is_error);
 	else
 		*is_error = TRUE;
-	return (free(cmd));
+	return ;
 }
 
 void	change_sphere(t_sphere *sp, char *cmd, int *is_error, int *quit_cmdmode)
@@ -45,7 +45,7 @@ void	change_sphere(t_sphere *sp, char *cmd, int *is_error, int *quit_cmdmode)
 		change_length(&sp->r, cmd + idlen, is_error);
 	else
 		*is_error = TRUE;
-	return (free(cmd));
+	return ;
 }
 
 void	change_square(t_square *sq, char *cmd, int *is_error, int *quit_cmdmode)
@@ -73,7 +73,7 @@ void	change_square(t_square *sq, char *cmd, int *is_error, int *quit_cmdmode)
 	if (*is_error)
 		return (free(cmd));
 	init_square(sq, &pl, 2 * sq->half_size);
-	return (free(cmd));
+	return ;
 }
 
 void	change_cylinder(t_cylinder *cyl, char *cmd, \
@@ -100,7 +100,7 @@ void	change_cylinder(t_cylinder *cyl, char *cmd, \
 	else
 		*is_error = TRUE;
 	init_cylinder(cyl, &changed, cyl->r, cyl->height);
-	return (free(cmd));
+	return ;
 }
 
 void	change_triangle(t_triangle *tr, char *cmd, \
@@ -123,5 +123,5 @@ void	change_triangle(t_triangle *tr, char *cmd, \
 		change_material(&tr->material, cmd + idlen, is_error);
 	else
 		*is_error = TRUE;
-	return (free(cmd));
+	return ;
 }
