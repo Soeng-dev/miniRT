@@ -47,5 +47,6 @@ void	init_campos (t_campos *campos, t_vector origin, t_vector dir, t_vector upwa
 void	init_camview(t_camview *camview, double angle, double ratio, double focallen);
 void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview);
 void	make_camera(t_caminfo *caminfo, const t_campos *campos, const t_camview *camview);
+void	clear_camlist(t_caminfo *caminfo);
 
 #endif

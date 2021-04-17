@@ -73,14 +73,16 @@ struct	s_info
 {
 	t_caminfo	caminfo;
 	t_setup		setup;
+	int			err_exit;
 };
 typedef struct s_info		t_info;
 
-void	pixput(const t_img_data *img, int x, int y, int color);
 int		get_color(t_vector colvec, double gamma);
 int		key_check(int key, t_info *info);
-int		mouse_check(int button, int x, int y);
+void	anti_alias(t_vector *color, const t_camera *cam, \
+					const t_screen *scr, t_vector *curr);
 void	render_img(const t_img_data *img, const t_screen *scr,\
 					const t_camera *cam);
+void	prt_img(t_info *info);
 
 #endif

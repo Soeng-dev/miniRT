@@ -48,6 +48,5 @@ void			prt_vector(char *pre, t_vector target, char *post)
 		pre = &blank;
 	if (!post)
 		post = &blank;
-	printf("%s%f %f %f%s\n",pre, target.x, target.y, target.z, post);
 	return ;
 }

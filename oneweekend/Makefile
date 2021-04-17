@@ -3,8 +3,7 @@ NAME = miniRT
 CC = gcc
 #CFLAGS = -Wall -Wextra -Werror
 
-
-EXT_STLIB = -lmlx -framework OpenGL -framework AppKit ./libft/libft.a
+EXT_LIB = -lmlx -framework OpenGL -framework AppKit ./libft/libft.a ./libmlx.dylib
 
 SRC = ./utils/mymlx_utils.c						\
 	  ./utils/bmp_tools.c						\
@@ -24,7 +23,7 @@ SRC = ./utils/mymlx_utils.c						\
 	  ./ray_tracing/figures/sphere.c			\
 	  ./ray_tracing/figures/square.c			\
 	  ./ray_tracing/figures/triangle.c			\
-	  ./manage_command/error_quit.c				\
+	  ./manage_command/exit_and_error.c			\
 	  ./manage_command/read_command.c			\
 	  ./manage_command/set_view.c				\
 	  ./manage_command/diverge_command.c		\
@@ -43,13 +42,13 @@ OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
-$(NAME) : $(OBJ) libft mlx_mms
-		$(CC) $(CFLAGS) $(EXT_STLIB) $(OBJ) -o $(NAME)
+$(NAME) : $(OBJ) libft
+		$(CC) $(CFLAGS) $(EXT_LIB) $(OBJ) -o $(NAME)
 
 RM = rm -rf
 
 clean : clean_libft clean_mlx_mms
-		$(RM) $(OBJ)
+	$(RM) $(OBJ)
 	
 fclean : clean fclean_libft
 	$(RM) $(NAME)
@@ -57,7 +56,7 @@ fclean : clean fclean_libft
 re: fclean all
 
 
-############### External library makefile #################
+############### External library make command #################
 
 # libft
 libft :

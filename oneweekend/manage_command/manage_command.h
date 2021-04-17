@@ -14,10 +14,15 @@
 # include "../utils/mymlx_utils.h"
 # include "../ray_tracing/ray_tracing.h"
 # include "../get_next_line/get_next_line.h"
+# include "../mlx_mms/mlx.h"
+int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
 
-//error
-void		error_exit(t_info *info);
+/*
+**	exit and error
+*/
+void		exit_program(t_info *info);
 void		set_errflag(int *is_error);
+void		free_allocated(t_info *info);
 
 //string
 int			ft_strcmp(char *s1, char *s2);
@@ -37,7 +42,7 @@ int			check_command(char *s, t_info *info);
 int			get_idlen(char *s, char *delimiters);
 
 //view
-void		set_mlx_resolution(char *s, t_screen *scr, int *is_error);
+void		set_mlx_resolution(char *s, t_info *info, int *is_error);
 void		set_ambient(char *s, int *is_error);
 void		set_camera(char *s, t_info *info, int *is_error);
 void		set_light(char *s, int *is_error);

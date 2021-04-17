@@ -62,3 +62,21 @@ void	make_camera(t_caminfo *caminfo, const t_campos *campos, const t_camview *ca
 	init_camera(caminfo->camlist->cam, campos, camview);
 	caminfo->curr_camnode = caminfo->camlist;
 }
+
+void	clear_camlist(t_caminfo *caminfo)
+{
+	t_camlist	*next;
+	t_camlist	*curr;
+
+	curr = caminfo->camlist;
+	while (curr)
+	{
+		next = curr->next;
+		free(curr->cam);
+		free(curr);
+		ft_memset(curr, 0, sizeof(t_camlist));
+		curr = next;
+	}
+	ft_memset(caminfo, 0, sizeof(t_caminfo));
+	return ;
+}

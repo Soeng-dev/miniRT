@@ -18,33 +18,45 @@ int		open_rtfile(char *name)
 			return (fd);
 	}
 	else
+	{
+		printf("Invalid file name\n");
 		return (ERROR);
+	}
+}
+
+void	read_rtfile(char *path, t_info *info)
+{
+	int			rtfile;
+	char		*line;
+
+	rtfile = open_rtfile(path);
+	if (rtfile == ERROR)
+		info->err_exit = TRUE;
+	else
+	{
+		line = NULL;
+		while (get_next_line(rtfile, &line) > 0)
+		{
+			if (check_command(line, info) == CMD_ERROR)
+				info->err_exit = TRUE;
+		}
+		free(line);
+	}
+	return ;
 }
 
 int		main(int argc, char *argv[])
 {
-	char		*line;
-	int			rtfile;
-	t_camlist	*camlist;
-	t_vector	color;
 	t_info		info;
 
 	if (argc < 2)
 		return (0);
 	ft_memset(&info, 0, sizeof(t_info));
-	rtfile = open_rtfile(argv[1]);
-	if (rtfile == ERROR)
-	{
-		printf("Error\n");
-		return (0);
-	}
-	line = NULL;
-	while (get_next_line(rtfile, &line) > 0)
-	{
-		if (check_command(line, &info) == CMD_ERROR)
-		;//free all malloc and return (0);
-	}
-	free(line);
+	read_rtfile(argv[1], &info);
+	if (info.err_exit)
+		exit_program(&info);
+
+	//init mlx_vars and img_data
 	info.setup.mlx_vars.mlx = mlx_init();
  	info.setup.mlx_vars.win = mlx_new_window(info.setup.mlx_vars.mlx, (int)info.setup.scr.width, (int)info.setup.scr.height, "miniRT");
  	info.setup.img_data.img = mlx_new_image(info.setup.mlx_vars.mlx, (int)info.setup.scr.width, (int)info.setup.scr.height);
@@ -52,11 +64,9 @@ int		main(int argc, char *argv[])
 
 	//hook
 	mlx_hook(info.setup.mlx_vars.win, MLX_KEY_PRESS, 0, key_check, &info);
-	mlx_hook(info.setup.mlx_vars.win, MLX_BUTTON_PRESS, 0, mouse_check, &info.setup.mlx_vars.win);
-	mlx_hook(info.setup.mlx_vars.win, MLX_RED_CROSS, 0, (int (*)())exit, &info.setup.mlx_vars.win);// need to change exit to memory managed exit function
+	mlx_hook(info.setup.mlx_vars.win, MLX_RED_CROSS, 0, (int (*)())exit_program, &info);
 
 	render_img(&info.setup.img_data, &info.setup.scr, info.caminfo.curr_camnode->cam);
-	printf("print image done\n");
 
 	if (argc == 3)
 	{
@@ -66,11 +76,7 @@ int		main(int argc, char *argv[])
 
 			set_bmpheader(&bh, &info.setup.scr);
 			save_bmp(&info.setup.img_data, &info.setup.scr, bh, "./scenes/saved_scene.bmp");
-			//delete, need to add camera and camlist free
-			for (int i = 0; i < NUM_OF_FIGTYPES; ++i)
-				ft_lstclear(&g_figures[i], free);
-			if (g_light_data.light_arr)
-				free(g_light_data.light_arr);
+			free_allocated(&info);
 			return (0);
 		}
 	}
