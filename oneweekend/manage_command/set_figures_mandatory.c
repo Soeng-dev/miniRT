@@ -80,7 +80,6 @@ void	set_cylinder(char *s, int *is_error)
 	t_plane		bottom;
 	double		r;
 	double		height;
-	t_vector	color;
 
 	bottom.p = read_vector(&s);
 	bottom.normal = normalize(read_vector(&s));

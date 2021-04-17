@@ -11,6 +11,8 @@ void	error_exit(t_info *info)
 {
 	int	figtype;
 
+	if (!info)
+		return ;
 	//clear_camlist(info->camlist);
 	if (g_light_data.light_arr)
 		free(g_light_data.light_arr);

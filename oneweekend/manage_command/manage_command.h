@@ -62,11 +62,11 @@ void		change_length(double *target, char *cmd, int *is_error);
 /*
 **	change figure
 */
-void		change_plane(t_plane *pl, char *cmd, int *is_error, int *quit_cmdmode);
-void		change_sphere(t_sphere *sp, char *cmd, int *is_error, int *quit_cmdmode);
-void		change_square(t_square *sq, char *cmd, int *is_error, int *quit_cmdmode);
-void		change_cylinder(t_cylinder *cyl, char *cmd, int *is_error, int *quit_cmdmode);
-void		change_triangle(t_triangle *tr, char *cmd, int *is_error, int *quit_cmdmode);
+void		change_plane(t_plane *pl, char *cmd, int *is_error);
+void		change_sphere(t_sphere *sp, char *cmd, int *is_error);
+void		change_square(t_square *sq, char *cmd, int *is_error);
+void		change_cylinder(t_cylinder *cyl, char *cmd, int *is_error);
+void		change_triangle(t_triangle *tr, char *cmd, int *is_error);
 /*
 **	transformation
 */

@@ -12,7 +12,7 @@
 
 #include "../../minirt.h"
 
-void	change_plane(t_plane *pl, char *cmd, int *is_error, int *quit_cmdmode)
+void	change_plane(t_plane *pl, char *cmd, int *is_error)
 {
 	int			idlen;
 
@@ -30,7 +30,7 @@ void	change_plane(t_plane *pl, char *cmd, int *is_error, int *quit_cmdmode)
 	return ;
 }
 
-void	change_sphere(t_sphere *sp, char *cmd, int *is_error, int *quit_cmdmode)
+void	change_sphere(t_sphere *sp, char *cmd, int *is_error)
 {
 	int			idlen;
 
@@ -48,7 +48,7 @@ void	change_sphere(t_sphere *sp, char *cmd, int *is_error, int *quit_cmdmode)
 	return ;
 }
 
-void	change_square(t_square *sq, char *cmd, int *is_error, int *quit_cmdmode)
+void	change_square(t_square *sq, char *cmd, int *is_error)
 {
 	int			idlen;
 	t_plane		pl;
@@ -76,8 +76,7 @@ void	change_square(t_square *sq, char *cmd, int *is_error, int *quit_cmdmode)
 	return ;
 }
 
-void	change_cylinder(t_cylinder *cyl, char *cmd, \
-						int *is_error, int *quit_cmdmode)
+void	change_cylinder(t_cylinder *cyl, char *cmd, int *is_error)
 {
 	int			idlen;
 	t_plane		changed;
@@ -103,8 +102,7 @@ void	change_cylinder(t_cylinder *cyl, char *cmd, \
 	return ;
 }
 
-void	change_triangle(t_triangle *tr, char *cmd, \
-						int *is_error, int *quit_cmdmode)
+void	change_triangle(t_triangle *tr, char *cmd, int *is_error)
 {
 	int			idlen;
 

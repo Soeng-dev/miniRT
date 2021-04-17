@@ -29,15 +29,15 @@ static void	change_figure(int figtype, int fignum, \
 	if (*is_error || *quit_cmdmode)
 		return ;
 	if (figtype == PLANE)
-		change_plane(target->content, cmd, is_error, quit_cmdmode);
+		change_plane(target->content, cmd, is_error);
 	else if (figtype == SPHERE)
-		change_sphere(target->content, cmd, is_error, quit_cmdmode);
+		change_sphere(target->content, cmd, is_error);
 	else if (figtype == CYLINDER)
-		change_cylinder(target->content, cmd, is_error, quit_cmdmode);
+		change_cylinder(target->content, cmd, is_error);
 	else if (figtype == SQUARE)
-		change_square(target->content, cmd, is_error, quit_cmdmode);
+		change_square(target->content, cmd, is_error);
 	else if (figtype == TRIANGLE)
-		change_triangle(target->content, cmd, is_error, quit_cmdmode);
+		change_triangle(target->content, cmd, is_error);
 	return (free(cmd));
 }
 
@@ -103,7 +103,6 @@ static void	prt_tglist(int type, t_info *info)
 static void	select_targetnum(t_info *info, int type, \
 							int *is_error, int *quit_cmdmode)
 {
-	void	*target;
 	int		tgnum;
 	char	*cmd;
 

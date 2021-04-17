@@ -65,6 +65,9 @@ int		mouse_check(int button, int x, int y)
 	char *str;
 
 	str = NULL;
+	x = y;
+	y = x;
+	button = x;
 	return (0);
 }
 

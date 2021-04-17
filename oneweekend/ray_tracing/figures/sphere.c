@@ -54,7 +54,6 @@ static void		set_sphere_hitrec(t_hit_record *hitted, const t_sphere *sp, const t
 void			hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
 {
 	double			eqcoef[3];
-	double			time;
 	const t_sphere	*sp;
 
 	sp = (const t_sphere *)sphere;

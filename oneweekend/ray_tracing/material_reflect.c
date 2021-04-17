@@ -56,6 +56,8 @@ int			lambertian(const t_ray *r_in, void *hitted_record, t_ray *scattered)
 	const t_hit_record	*hitted;
 	t_vector			scattered_dir;
 
+	if (!r_in)
+		return (FALSE);
 	hitted = (const t_hit_record *)hitted_record;
 	scattered_dir = get_scattered_dir(&hitted->normal);
 	*scattered = get_ray(hitted->pos, scattered_dir);
