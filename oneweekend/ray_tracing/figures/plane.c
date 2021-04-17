@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plane.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 16:07:37 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/16 12:55:42 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-# include "../../minirt.h"
+#include "../../minirt.h"
 
-void	init_plane(t_plane *plane, t_vector p, t_vector normal, t_material *material)
+void	init_plane(t_plane *plane, t_vector p, \
+					t_vector normal, t_material *material)
 {
 	plane->p = p;
 	plane->normal = normalize(normal);
 	plane->material = *material;
-	return;
+	return ;
 }
 
 void	make_plane(t_vector p, t_vector normal, t_material *material)
@@ -25,7 +37,8 @@ void	make_plane(t_vector p, t_vector normal, t_material *material)
 	return ;
 }
 
-int		check_plane_hitpos(const t_plane *pl, const t_ray *ray, t_hit_record *hitted)
+int		check_plane_hitpos(const t_plane *pl, const t_ray *ray, \
+							t_hit_record *hitted)
 {
 	double	time;
 
@@ -41,7 +54,8 @@ int		check_plane_hitpos(const t_plane *pl, const t_ray *ray, t_hit_record *hitte
 		return (FALSE);
 }
 
-void	record_hittedpl_normal_mat(const t_plane *pl, const t_ray *ray, t_hit_record *hitted)
+void	record_hittedpl_normal_mat(const t_plane *pl, const t_ray *ray, \
+									t_hit_record *hitted)
 {
 	if (dot(ray->dir, pl->normal) < 0)
 		hitted->normal = pl->normal;
@@ -49,8 +63,8 @@ void	record_hittedpl_normal_mat(const t_plane *pl, const t_ray *ray, t_hit_recor
 		hitted->normal = multi(pl->normal, -1.0);
 	hitted->is_front_face = TRUE;
 	hitted->material = (t_material *)&pl->material;
+	return ;
 }
-
 
 void	hit_plane(void *plane, const t_ray *ray, t_hit_record *hitted)
 {

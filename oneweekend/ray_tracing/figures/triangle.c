@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 16:17:17 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/15 19:55:33 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../minirt.h"
 
@@ -11,7 +22,8 @@ void		init_triangle(t_triangle *tr, t_vector *points, t_material *mat)
 	return ;
 }
 
-void		make_triangle(t_vector first, t_vector second, t_vector third, t_material *mat)
+void		make_triangle(t_vector first, t_vector second, t_vector third, \
+							t_material *mat)
 {
 	t_list		*triangle_node;
 	t_vector	points[3];

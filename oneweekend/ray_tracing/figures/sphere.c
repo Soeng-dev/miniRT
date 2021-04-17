@@ -12,14 +12,17 @@
 
 #include "../../minirt.h"
 
-void			init_sphere(t_sphere *sp, t_vector center, double r, t_material *material)
+void			init_sphere(t_sphere *sp, t_vector center, double r, \
+							t_material *material)
 {
 	sp->ctr = center;
 	sp->r = r;
 	sp->material = *material;
+	return ;
 }
 
-void			make_sphere(t_vector center, double radius, t_material *material)
+void			make_sphere(t_vector center, double radius, \
+							t_material *material)
 {
 	t_list	*sphere_node;
 
@@ -35,7 +38,8 @@ void			make_sphere(t_vector center, double radius, t_material *material)
 	return ;
 }
 
-static void		set_sphere_hitrec(t_hit_record *hitted, const t_sphere *sp, const t_ray *ray)
+static void		set_sphere_hitrec(t_hit_record *hitted, \
+									const t_sphere *sp, const t_ray *ray)
 {
 	t_vector	outward_normal;
 
@@ -59,7 +63,8 @@ void			hit_sphere(void *sphere, const t_ray *ray, t_hit_record *hitted)
 	sp = (const t_sphere *)sphere;
 	eqcoef[0] = dot(ray->dir, ray->dir);
 	eqcoef[1] = 2 * dot(ray->dir, minus(ray->pos, sp->ctr));
-	eqcoef[2] = dot(minus(ray->pos, sp->ctr), minus(ray->pos, sp->ctr)) - pow(sp->r, 2);
+	eqcoef[2] = dot(minus(ray->pos, sp->ctr), minus(ray->pos, sp->ctr)) \
+				- pow(sp->r, 2);
 	hitted->time = get_valid_2nd_eqsol(eqcoef, NOT_HIT, time_is_valid);
 	set_sphere_hitrec(hitted, sp, ray);
 	return ;

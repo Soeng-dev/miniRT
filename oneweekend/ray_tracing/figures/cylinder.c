@@ -1,7 +1,19 @@
- 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 16:17:17 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/15 19:55:33 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minirt.h"
 
-void		init_cylinder(t_cylinder *cyl, const t_plane *bottom, double r, double height)
+void		init_cylinder(t_cylinder *cyl, const t_plane *bottom, \
+							double r, double height)
 {
 	cyl->r = r;
 	cyl->height = height;
@@ -14,7 +26,8 @@ void		init_cylinder(t_cylinder *cyl, const t_plane *bottom, double r, double hei
 	return ;
 }
 
-void		make_cylinder(const t_plane *bottom, const double r, const double height)
+void		make_cylinder(const t_plane *bottom, \
+						const double r, const double height)
 {
 	t_list	*cyl_node;
 
@@ -29,7 +42,8 @@ void		make_cylinder(const t_plane *bottom, const double r, const double height)
 	ft_lstadd_front(&g_figures[CYLINDER], cyl_node);
 }
 
-void		hit_circle(const t_plane *pl, double r, const t_ray *ray, t_hit_record *hitted)
+void		hit_circle(const t_plane *pl, double r, \
+						const t_ray *ray, t_hit_record *hitted)
 {
 	if (check_plane_hitpos(pl, ray, hitted))
 	{
@@ -44,7 +58,8 @@ void		hit_circle(const t_plane *pl, double r, const t_ray *ray, t_hit_record *hi
 	return ;
 }
 
-void		set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, const t_ray *ray, double time)
+void		set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, \
+							const t_ray *ray, double time)
 {
 	double		h;
 	t_vector	pos;
@@ -52,7 +67,7 @@ void		set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, const t_ray *r
 
 	pos = raypos_at_t(*ray, time);
 	h = dot(minus(pos, cyl->bottom.p), cyl->normal) \
-		 / dot(cyl->normal, cyl->normal);
+		/ dot(cyl->normal, cyl->normal);
 	if (0 < h && h < cyl->height)
 	{
 		hitted->pos = pos;
