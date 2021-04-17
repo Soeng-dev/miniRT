@@ -1,34 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/04 21:29:17 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/16 12:48:22 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minirt.h"
 
-void	init_campos(t_campos *campos, t_vector origin, t_vector dir, t_vector upward)
+void	init_campos(t_campos *campos, t_vector origin, \
+					t_vector dir, t_vector upward)
 {
-	campos->dir= dir;
+	campos->dir = dir;
 	campos->origin = origin;
 	campos->upward = upward;
 }
 
-void	init_camview(t_camview *camview, double angle, double ratio, double focallen)
+void	init_camview(t_camview *camview, double angle, \
+					double ratio, double focallen)
 {
 	camview->focallen = focallen;
 	camview->angle = angle;
 	camview->ratio = ratio;
 }
 
-void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview)
+void	init_camera(t_camera *cam, const t_campos *campos, \
+					const t_camview *camview)
 {
 	t_vector	w;
 	t_vector	u;
 	t_vector	v;
 	t_screen	view;
 
-	//check w if camera doesn't work
 	w = multi(campos->dir, -1);
 	u = normalize(cross(campos->upward, w));
 	v = cross(w, u);
 	view.height = 2.0 * camview->focallen * tan(camview->angle / 2.0);
 	view.width = camview->ratio * view.height;
-
 	cam->origin = campos->origin;
 	cam->horizontal = multi(u, view.width);
 	cam->vertical = multi(v, view.height);
@@ -39,7 +51,8 @@ void	init_camera(t_camera *cam, const t_campos *campos, const t_camview *camview
 	cam->lowerleft = minus(cam->origin, cam->lowerleft);
 }
 
-void	make_camera(t_caminfo *caminfo, const t_campos *campos, const t_camview *camview)
+void	make_camera(t_caminfo *caminfo, \
+					const t_campos *campos, const t_camview *camview)
 {
 	if (caminfo->camlist)
 	{

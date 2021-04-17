@@ -61,7 +61,7 @@ int			get_idlen(char *s, char *delimiters);
 **		view
 */
 int			mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
-void		set_mlx_resolution(char *s, t_info *info, int *is_error);
+void		set_mlx_resolution(char *s, t_info *info);
 void		set_ambient(char *s, int *is_error);
 void		set_camera(char *s, t_info *info, int *is_error);
 void		set_light(char *s, int *is_error);

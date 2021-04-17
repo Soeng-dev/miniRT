@@ -12,7 +12,7 @@
 
 #include "../minirt.h"
 
-void	init_ray(t_ray *ray, t_vector pos, t_vector dir)
+void		init_ray(t_ray *ray, t_vector pos, t_vector dir)
 {
 	ray->pos = pos;
 	ray->dir = dir;
@@ -21,6 +21,7 @@ void	init_ray(t_ray *ray, t_vector pos, t_vector dir)
 t_ray		get_ray(t_vector pos, t_vector dir)
 {
 	t_ray	ray;
+
 	ray.pos = pos;
 	ray.dir = dir;
 	return (ray);
@@ -32,7 +33,7 @@ t_vector	raypos_at_t(t_ray ray, double t)
 	return (ray.pos);
 }
 
-void	raycast(const t_ray *ray, t_hit_record *hitted)
+void		raycast(const t_ray *ray, t_hit_record *hitted)
 {
 	hitted->time = NOT_HIT;
 	record_hitted(g_figures[PLANE], hit_plane, ray, hitted);
@@ -66,5 +67,3 @@ t_vector	ray_color(const t_ray *ray, int depth)
 		color = get_vector(1, 1, 1);
 	return (color);
 }
-
-

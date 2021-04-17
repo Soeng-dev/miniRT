@@ -1,32 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   material_reflect.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/04 21:29:17 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/16 12:48:22 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minirt.h"
 
 void		init_material(t_material *material, t_vector color, double fuzz, \
-												int (*scatter)(const t_ray*, void *, t_ray *))
-{
-	material->albedo = color;
-	material->scatter = scatter;
-	if (fuzz > 1)
-		material->fuzz = 1;
-	else
-		material->fuzz = fuzz;
-}
-
-t_material	*get_material(t_vector color, double fuzz, \
 							int (*scatter)(const t_ray*, void *, t_ray *))
 {
-	t_material	*material;
-
-	material = (t_material *)malloc(sizeof(t_material));
-	if (!material)
-		return NULL;
 	material->albedo = color;
 	material->scatter = scatter;
 	if (fuzz > 1)
 		material->fuzz = 1;
 	else
 		material->fuzz = fuzz;
-	return (material);
 }
 
 t_vector	get_rand_in_unitsphere(void)
@@ -36,7 +30,6 @@ t_vector	get_rand_in_unitsphere(void)
 	ret.x = 2 * (((double)(rand() % 10000)) / 10000) - 1;
 	ret.y = 2 * (((double)(rand() % 10000)) / 10000) - 1;
 	ret.z = 2 * (((double)(rand() % 10000)) / 10000) - 1;
-
 	return (ret);
 }
 
@@ -64,20 +57,19 @@ int			lambertian(const t_ray *r_in, void *hitted_record, t_ray *scattered)
 	return (TRUE);
 }
 
-t_vector	get_reflected(const t_vector *v, const t_vector *n)
-{
-	return (minus(*v, multi(*n, 2 * dot(*v, *n))));
-}
-
 int			metal(const t_ray *r_in, void *hitted_record, t_ray *scattered)
 {
 	const t_hit_record	*hitted;
 	t_vector			dir;
+	t_vector			reflected;
 
 	hitted = (const t_hit_record *)hitted_record;
 	dir = get_rand_in_unitsphere();
 	dir = multi(dir, hitted->material->fuzz);
-	dir = add(get_reflected(&r_in->dir, &hitted->normal), dir);
+	reflected = minus(r_in->dir, \
+						multi(hitted->normal, \
+								2 * dot(r_in->dir, hitted->normal)));
+	dir = add(reflected, dir);
 	*scattered = get_ray(hitted->pos, dir);
 	return (dot(scattered->dir, hitted->normal) > 0);
 }

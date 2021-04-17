@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 16:17:17 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/15 19:55:33 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minirt.h"
 
@@ -6,7 +17,9 @@ int		time_is_valid(long double time)
 	return (T_MIN < time && time < T_MAX);
 }
 
-void	record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_ray *, t_hit_record *), const t_ray *ray, t_hit_record *hitted)
+void	record_hitted(t_list *same_kind_figures, \
+					void (*hit)(void *figure, const t_ray *, t_hit_record *), \
+					const t_ray *ray, t_hit_record *hitted)
 {
 	t_hit_record	new_hitted;
 
@@ -23,7 +36,7 @@ void	record_hitted(t_list *same_kind_figures, void (*hit)(void *figure, const t_
 	return ;
 }
 
-void		init_hit_record(t_hit_record *hitted)
+void	init_hit_record(t_hit_record *hitted)
 {
 	ft_memset(hitted, 0, sizeof(t_hit_record));
 	hitted->time = NOT_HIT;

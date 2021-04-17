@@ -1,7 +1,7 @@
 NAME = miniRT
 
 CC = gcc
-#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 EXT_LIB = -lmlx -framework OpenGL -framework AppKit ./libft/libft.a ./libmlx.dylib
 

@@ -32,7 +32,7 @@ static void	diverge_command(char *s, t_info *info, \
 
 	idlen = get_idlen(s, " \t\n\v\f\r");
 	if (!ft_strncmp("R", s, idlen))
-		set_mlx_resolution(s + idlen, info, is_error);
+		set_mlx_resolution(s + idlen, info);
 	else if (!ft_strncmp("A", s, idlen))
 		set_ambient(s + idlen, is_error);
 	else if (!ft_strncmp("c", s, idlen))
@@ -52,7 +52,7 @@ static void	diverge_command(char *s, t_info *info, \
 	else if (!ft_strncmp("change", s, idlen))
 		change(info, is_error, quit_cmdmode);
 	else
-		is_error = TRUE;
+		*is_error = TRUE;
 }
 
 int			check_command(char *s, t_info *info)

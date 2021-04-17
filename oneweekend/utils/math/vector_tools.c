@@ -43,10 +43,11 @@ void			prt_vector(char *pre, t_vector target, char *post)
 {
 	char	blank;
 
-	blank = 0;
+	blank = '\0';
 	if (!pre)
 		pre = &blank;
 	if (!post)
 		post = &blank;
+	printf("%s%f %f %f%s\n", pre, target.x, target.y, target.z, post);
 	return ;
 }
