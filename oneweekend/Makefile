@@ -41,8 +41,8 @@ SRC = ./utils/mymlx_utils.c						\
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
-
-$(NAME) : $(OBJ) libft
+##### if this works, try to use cp in mlx_mms var(cp ./libmlx.dylib ../)
+$(NAME) : $(OBJ) libft mlx_mms
 		$(CC) $(CFLAGS) $(EXT_LIB) $(OBJ) -o $(NAME)
 
 RM = rm -rf
