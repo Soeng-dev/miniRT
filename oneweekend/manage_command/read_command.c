@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_command.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 16:07:37 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/16 12:55:42 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minirt.h"
 
-double	read_dbl(char **s)
+double		read_dbl(char **s)
 {
 	double	intiger;
 	double	small;
@@ -20,7 +31,7 @@ double	read_dbl(char **s)
 	pass_charset(s, "0123456789");
 	if (**s == '.' && *(*s + 1))
 	{
-		while(ft_isdigit(*(++(*s))))
+		while (ft_isdigit(*(++(*s))))
 			small = (small / 10.0) + ((**s - '0') / 10.0);
 	}
 	if (is_positive)
@@ -41,7 +52,7 @@ t_vector	read_vector(char **s)
 	return (v);
 }
 
-void	set_fuzz_scatter(char *s, t_material *mat, int *is_error)
+void		set_fuzz_scatter(char *s, t_material *mat, int *is_error)
 {
 	char	*trimmed;
 
@@ -64,7 +75,7 @@ void	set_fuzz_scatter(char *s, t_material *mat, int *is_error)
 	return ;
 }
 
-int		read_target_type(char *cmd)
+int			read_target_type(char *cmd)
 {
 	int		type;
 
@@ -92,7 +103,7 @@ int		read_target_type(char *cmd)
 	return (type);
 }
 
-void	read_stdin_command(char **cmd, int *is_error, int *quit_cmdmode)
+void		read_stdin_command(char **cmd, int *is_error, int *quit_cmdmode)
 {
 	printf("quit for stop command mode\n");
 	if (get_next_line(STDIN, cmd) == ERROR)

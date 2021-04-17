@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_view.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 16:07:37 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/16 12:55:42 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "manage_command.h"
 
@@ -26,14 +37,14 @@ void	set_ambient(char *s, int *is_error)
 	t_vector	ambient;
 
 	if (!vector_is_same(g_light_data.ambient, \
-						get_vector (0, 0, 0)))
+						get_vector(0, 0, 0)))
 		return ;
 	bright = read_dbl(&s);
 	if (bright < 0)
 		return (set_errflag(is_error));
 	ambient = divide(read_vector(&s), 255.0);
 	if (ambient.x < 0 || ambient.y < 0 || ambient.z < 0)
-		return (set_errflag(is_error));	
+		return (set_errflag(is_error));
 	ambient = multi(ambient, bright);
 	g_light_data.ambient = ambient;
 	return ;

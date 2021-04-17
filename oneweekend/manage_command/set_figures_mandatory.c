@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_figure_mandatory.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 16:07:37 by soekim            #+#    #+#             */
+/*   Updated: 2021/03/16 12:55:42 by soekim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "manage_command.h"
 
@@ -28,12 +39,12 @@ void	set_plane(char *s, int *is_error)
 	p = read_vector(&s);
 	normal = normalize(read_vector(&s));
 	mat.albedo = divide(read_vector(&s), 255.0);
-	if (! is_valid_vector(mat.albedo, 0, 1.0))
+	if (!is_valid_vector(mat.albedo, 0, 1.0))
 		return (set_errflag(is_error));
 	set_fuzz_scatter(s, &mat, is_error);
 	if (*is_error)
 		return ;
-	make_plane(p, normal,& mat);
+	make_plane(p, normal, &mat);
 	return ;
 }
 
@@ -86,7 +97,8 @@ void	set_cylinder(char *s, int *is_error)
 	r = read_dbl(&s) / 2.0;
 	height = read_dbl(&s);
 	bottom.material.albedo = divide(read_vector(&s), 255);
-	if (!is_valid_vector(bottom.material.albedo, 0, 1.0) || r <= 0 || height <= 0)
+	if (!is_valid_vector(bottom.material.albedo, 0, 1.0) \
+		|| r <= 0 || height <= 0)
 		return (set_errflag(is_error));
 	set_fuzz_scatter(s, &bottom.material, is_error);
 	if (*is_error)
