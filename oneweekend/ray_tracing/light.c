@@ -57,7 +57,9 @@ void	color_by_light(t_vector *color, const t_hit_record *hitted, \
 	light_dir = minus(light->pos, hitted->pos);
 	init_ray(&hitted_to_light, hitted->pos, light_dir);
 	raycast(&hitted_to_light, &blocked);
-	if (blocked.time == NOT_HIT)
+	if (blocked.time == NOT_HIT || \
+		distance(light->pos, hitted->pos) \
+			<= distance(blocked.pos, hitted->pos))
 	{
 		spot_bright = 1 + light->bright * \
 							absol(dot(normalize(light_dir), hitted->normal));

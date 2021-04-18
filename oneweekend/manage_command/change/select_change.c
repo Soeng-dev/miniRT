@@ -51,8 +51,6 @@ static void	select_fignum(t_info *info, int figtype, \
 	cmd = NULL;
 	fignum = 1;
 	same_kind = g_figures[figtype];
-	printf("%d\n", figtype);
-	printf("%p\n%p\n", same_kind, g_figures[figtype]);
 	while (same_kind)
 	{
 		printf("%d. position : %f %f %f\n", fignum++, same_kind->pos->x, \

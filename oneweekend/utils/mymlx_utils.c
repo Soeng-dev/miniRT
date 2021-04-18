@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../minirt.h"
-#define SAMPLES_PER_PIXEL	100
-#define RT_MAX_DEPTH		10
+#define SAMPLES_PER_PIXEL	1
+#define RT_MAX_DEPTH		5
 
 int		get_color(t_vector colorvec, double gamma)
 {

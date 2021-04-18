@@ -55,6 +55,8 @@ static void	read_rtfile(char *path, t_info *info)
 				free(line);
 				exit_program(info);
 			}
+			free(line);
+			line = NULL;
 		}
 		free(line);
 	}
