@@ -71,7 +71,7 @@ void	change_square(t_square *sq, char *cmd, int *is_error)
 	else
 		*is_error = TRUE;
 	if (*is_error)
-		return (free(cmd));
+		return ;
 	init_square(sq, &pl, 2 * sq->half_size);
 	return ;
 }
@@ -98,6 +98,8 @@ void	change_cylinder(t_cylinder *cyl, char *cmd, int *is_error)
 		change_length(&cyl->height, cmd + idlen, is_error);
 	else
 		*is_error = TRUE;
+	if (*is_error)
+		return ;
 	init_cylinder(cyl, &changed, cyl->r, cyl->height);
 	return ;
 }

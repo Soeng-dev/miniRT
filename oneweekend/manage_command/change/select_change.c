@@ -120,6 +120,7 @@ static void	select_targetnum(t_info *info, int type, \
 		change_camera(info->caminfo.camlist, tgnum, is_error, quit_cmdmode);
 	else if (type == LIGHT)
 		change_light(tgnum, is_error, quit_cmdmode);
+	return ;
 }
 
 void		change(t_info *info, int *is_error, int *quit_cmdmode)
@@ -147,4 +148,5 @@ void		change(t_info *info, int *is_error, int *quit_cmdmode)
 		select_targetnum(info, type, is_error, quit_cmdmode);
 	if (*is_error || *quit_cmdmode)
 		return ;
+	return ;
 }
