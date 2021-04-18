@@ -12,10 +12,11 @@
 
 #include "minirt.h"
 
-int		open_rtfile(char *name)
+static int	open_rtfile(char *name)
 {
 	char		*extension;
 	int			fd;
+
 	extension = name;
 	while (*extension)
 		++extension;
@@ -35,7 +36,7 @@ int		open_rtfile(char *name)
 	}
 }
 
-void	read_rtfile(char *path, t_info *info)
+static void	read_rtfile(char *path, t_info *info)
 {
 	int			rtfile;
 	char		*line;
@@ -49,48 +50,78 @@ void	read_rtfile(char *path, t_info *info)
 		while (get_next_line(rtfile, &line) > 0)
 		{
 			if (check_command(line, info) == CMD_ERROR)
+			{
 				info->err_exit = TRUE;
+				free(line);
+				exit_program(info);
+			}
 		}
 		free(line);
 	}
 	return ;
 }
 
-int		main(int argc, char *argv[])
+static void	setup_mlx(t_info *info)
 {
-	t_info		info;
+	t_mlx_vars	*mlx_vars;
+	t_screen	*scr;
+	t_img_data	*img_data;
 
-	if (argc < 2)
-		return (0);
+	scr = &info->setup.scr;
+	mlx_vars = &info->setup.mlx_vars;
+	mlx_vars->mlx = mlx_init();
+	mlx_vars->win = \
+	mlx_new_window(mlx_vars->mlx, \
+					(int)scr->width, (int)scr->height, "miniRT");
+	img_data = &info->setup.img_data;
+	img_data->img = \
+	mlx_new_image(mlx_vars->mlx, (int)scr->width, (int)scr->height);
+	img_data->addr = \
+	mlx_get_data_addr(img_data->img, &img_data->bpp, \
+					&img_data->linelen, &img_data->endian);
+	mlx_hook(mlx_vars->win, MLX_KEY_PRESS, 0, key_check, info);
+	mlx_hook(mlx_vars->win, MLX_RED_CROSS, 0, \
+			(int (*)())exit_program, &info);
+	return ;
+}
+
+int			save_scene(char *path, t_info *info)
+{
+	t_bh	bh;
+
+	set_bmpheader(&bh, &info->setup.scr);
+	if (path)
+		save_bmp(&info->setup.img_data, &info->setup.scr, bh, path);
+	else
+		save_bmp(&info->setup.img_data, &info->setup.scr, \
+				bh, "./scenes/saved_scene.bmp");
+	free_allocated(info);
+	return (0);
+}
+
+int			main(int argc, char *argv[])
+{
+	t_info	info;
+
 	ft_memset(&info, 0, sizeof(t_info));
 	read_rtfile(argv[1], &info);
-	if (info.err_exit)
-		exit_program(&info);
-
-	//init mlx_vars and img_data
-	info.setup.mlx_vars.mlx = mlx_init();
- 	info.setup.mlx_vars.win = mlx_new_window(info.setup.mlx_vars.mlx, (int)info.setup.scr.width, (int)info.setup.scr.height, "miniRT");
- 	info.setup.img_data.img = mlx_new_image(info.setup.mlx_vars.mlx, (int)info.setup.scr.width, (int)info.setup.scr.height);
- 	info.setup.img_data.addr = mlx_get_data_addr(info.setup.img_data.img, &info.setup.img_data.bpp, &info.setup.img_data.linelen, &info.setup.img_data.endian);
-
-	//hook
-	mlx_hook(info.setup.mlx_vars.win, MLX_KEY_PRESS, 0, key_check, &info);
-	mlx_hook(info.setup.mlx_vars.win, MLX_RED_CROSS, 0, (int (*)())exit_program, &info);
-
-	render_img(&info.setup.img_data, &info.setup.scr, info.caminfo.curr_camnode->cam);
-
-	if (argc == 3)
+	setup_mlx(&info);
+	if (argc < 2 || argc > 4)
+		return (0);
+	else if (argc >= 3)
 	{
-		if (!ft_strcmp(argv[2], "--save"))
-		{
-			t_bh	bh;
-
-			set_bmpheader(&bh, &info.setup.scr);
-			save_bmp(&info.setup.img_data, &info.setup.scr, bh, "./scenes/saved_scene.bmp");
-			free_allocated(&info);
+		if (ft_strcmp(argv[2], "--save") != 0)
 			return (0);
-		}
 	}
-	mlx_put_image_to_window(info.setup.mlx_vars.mlx, info.setup.mlx_vars.win, info.setup.img_data.img, 0, 0);
+	render_img(&info.setup.img_data, &info.setup.scr, \
+				info.caminfo.curr_camnode->cam);
+	if (argc == 3)
+		return (save_scene(NULL, &info));
+	else if (argc == 4)
+		return (save_scene(argv[3], &info));
+	mlx_put_image_to_window(info.setup.mlx_vars.mlx, info.setup.mlx_vars.win, \
+							info.setup.img_data.img, 0, 0);
 	mlx_loop(info.setup.mlx_vars.mlx);
+	free_allocated(&info);
+	return (0);
 }

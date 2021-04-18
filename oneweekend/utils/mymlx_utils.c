@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../minirt.h"
+#define SAMPLES_PER_PIXEL	100
+#define RT_MAX_DEPTH		10
 
 int		get_color(t_vector colorvec, double gamma)
 {
@@ -80,7 +82,7 @@ void	render_img(const t_img_data *img, const t_screen *scr, \
 	curr.y = scr->height - 1;
 	while (--curr.y >= 0)
 	{
-		printf("left	%.1f%%\n", (100.0 * curr.y) / scr->height);
+		printf("left	%.2f%%\n", (100.0 * curr.y) / scr->height);
 		curr.x = -1.0;
 		while (++curr.x < scr->width)
 		{
@@ -111,7 +113,7 @@ void	anti_alias(t_vector *color, const t_camera *cam, \
 		init_ray(&ray, cam->origin, \
 				minus(add(cam->lowerleft, offset), \
 						cam->origin));
-		*color = add(*color, ray_color(&ray, 20));
+		*color = add(*color, ray_color(&ray, RT_MAX_DEPTH));
 	}
 	*color = divide(*color, SAMPLES_PER_PIXEL);
 	return ;

@@ -23,7 +23,6 @@ struct	s_list
 	t_vector		*pos;
 	struct s_list	*next;
 };
-
 typedef struct s_list	t_list;
 
 void	*ft_calloc(size_t count, size_t size);

@@ -1,9 +1,12 @@
 NAME = miniRT
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
-EXT_LIB = -lmlx -framework OpenGL -framework AppKit ./libft/libft.a ./libmlx.dylib
+EXT_STLIB = -lmlx -framework OpenGL -framework AppKit ./libft/libft.a 
+EXT_DYLIB = ./libmlx.dylib
+EXT_DYLIB_PATH = ./mlx_mms/
+EXT_LIB = $(EXT_STLIB) $(EXT_DYLIB_PATH)$(EXT_DYLIB)
 
 SRC = ./utils/mymlx_utils.c						\
 	  ./utils/bmp_tools.c						\
@@ -41,25 +44,29 @@ SRC = ./utils/mymlx_utils.c						\
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
-##### if this works, try to use cp in mlx_mms var(cp ./libmlx.dylib ../)
-$(NAME) : $(OBJ) libft mlx_mms
+
+$(NAME) : $(OBJ) all_libft all_mlx_mms
+		cp $(EXT_DYLIB_PATH)$(EXT_DYLIB) ./
 		$(CC) $(CFLAGS) $(EXT_LIB) $(OBJ) -o $(NAME)
 
-RM = rm -rf
+
+RM = rm -f
 
 clean : clean_libft clean_mlx_mms
 	$(RM) $(OBJ)
 	
-fclean : clean fclean_libft
+fclean : clean fclean_libft fclean_mlx_mms
 	$(RM) $(NAME)
+	$(RM) $(EXT_DYLIB)
 
 re: fclean all
+
 
 
 ############### External library make command #################
 
 # libft
-libft :
+all_libft :
 		$(MAKE) -C ./libft all bonus
 
 clean_libft : 
@@ -68,11 +75,16 @@ clean_libft :
 fclean_libft : 
 		$(MAKE) -C ./libft fclean
 
+
 # minilibx_mms compile
-mlx_mms :
+all_mlx_mms :
 		$(MAKE) -C ./mlx_mms all
 
 clean_mlx_mms : 
 		$(MAKE) -C ./mlx_mms clean
+
+fclean_mlx_mms :
+		$(MAKE) -C ./mlx_mms fclean
+
 
 .PHONY: all clean fclean re libft mlx_mms 

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_tracing.h                                      :+:      :+:    :+:   */
+/*   ray_tracing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soekim <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,7 +15,7 @@
 
 # define NOT_HIT	DBL_MAX
 # define T_MAX		DBL_MAX
-# define T_MIN		0.001
+# define T_MIN		0.00001
 
 # define PLANE 		0
 # define SPHERE 	1
@@ -35,79 +35,7 @@
 # include "../utils/math/myvector.h"
 # include "camera.h"
 # include "light.h"
-
-struct	s_ray
-{
-	t_vector	pos;
-	t_vector	dir;
-};
-typedef struct s_ray		t_ray;
-
-struct	s_material
-{
-	t_vector	albedo;
-	double		fuzz;
-	int			(*scatter)(const t_ray*, void *, t_ray *);
-};
-typedef struct s_material	t_material;
-
-struct	s_hit_record
-{
-	t_vector	pos;
-	t_vector	normal;
-	double		time;
-	int			is_front_face;
-	t_material	*material;
-};
-typedef struct s_hit_record	t_hit_record;
-
-struct	s_sphere
-{
-	t_vector	ctr;
-	double		r;
-	t_material	material;
-};
-typedef struct s_sphere		t_sphere;
-
-struct	s_plane
-{
-	t_vector	p;
-	t_vector	normal;
-	t_material	material;
-};
-typedef struct s_plane		t_plane;
-
-struct	s_square
-{
-	t_vector	ctr;
-	t_vector	normal;
-	t_vector	u;
-	t_vector	v;
-	double		half_size;
-	t_material	material;
-};
-typedef struct s_square		t_square;
-
-struct	s_cylinder
-{
-	double		r;
-	double		height;
-	t_plane		bottom;
-	t_plane		top;
-	t_vector	normal;
-	t_material	material;
-};
-typedef struct s_cylinder	t_cylinder;
-
-struct	s_triangle
-{
-	t_vector	p;
-	t_vector	edge1;
-	t_vector	edge2;
-	t_vector	normal;
-	t_material	material;
-};
-typedef struct s_triangle	t_triangle;
+# include "ray_tracing_vars.h"
 
 /*
 **		global vars used in ray tracing
