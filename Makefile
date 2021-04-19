@@ -45,7 +45,7 @@ OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
-$(NAME) : $(OBJ) all_libft all_mlx_mms
+$(NAME) : $(OBJ) make_libft make_mlx_mms
 		cp $(EXT_DYLIB_PATH)$(EXT_DYLIB) ./
 		$(CC) $(CFLAGS) $(EXT_LIB) $(OBJ) -o $(NAME)
 
@@ -66,7 +66,7 @@ re: fclean all
 ############### External library make command #################
 
 # libft
-all_libft :
+make_libft :
 		$(MAKE) -C ./libft all bonus
 
 clean_libft : 
@@ -77,7 +77,7 @@ fclean_libft :
 
 
 # minilibx_mms compile
-all_mlx_mms :
+make_mlx_mms :
 		$(MAKE) -C ./mlx_mms all
 
 clean_mlx_mms : 

@@ -77,30 +77,29 @@ void		set_fuzz_scatter(char *s, t_material *mat, int *is_error)
 
 int			read_target_type(char *cmd)
 {
-	int		type;
-
 	if (!cmd)
 		return (CMD_ERROR);
 	if (!ft_strcmp(cmd, "plane") || !ft_strcmp(cmd, "pl"))
-		type = PLANE;
+		return (PLANE);
 	else if (!ft_strcmp(cmd, "sphere") || !ft_strcmp(cmd, "sp"))
-		type = SPHERE;
+		return (SPHERE);
 	else if (!ft_strcmp(cmd, "cylinder") || !ft_strcmp(cmd, "cyl"))
-		type = CYLINDER;
+		return (CYLINDER);
 	else if (!ft_strcmp(cmd, "square") || !ft_strcmp(cmd, "sq"))
-		type = SQUARE;
+		return (SQUARE);
 	else if (!ft_strcmp(cmd, "triangle") || !ft_strcmp(cmd, "tr"))
-		type = TRIANGLE;
+		return (TRIANGLE);
 	else if (!ft_strcmp(cmd, "camera") || !ft_strcmp(cmd, "cam"))
-		type = CAMERA;
+		return (CAMERA);
 	else if (!ft_strcmp(cmd, "light") || !ft_strcmp(cmd, "l"))
-		type = LIGHT;
+		return (LIGHT);
+	else if (!ft_strcmp(cmd, "filter"))
+		return (FILTER);
 	else
 	{
 		printf("Wrong input\n");
-		type = CMD_ERROR;
+		return (CMD_ERROR);
 	}
-	return (type);
 }
 
 void		read_stdin_command(char **cmd, int *is_error, int *quit_cmdmode)

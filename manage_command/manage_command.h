@@ -62,7 +62,7 @@ int			get_idlen(char *s, char *delimiters);
 */
 int			mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
 void		set_mlx_resolution(char *s, t_info *info);
-void		set_ambient(char *s, int *is_error);
+void		set_ambient(char *s, t_info *info, int *is_error);
 void		set_camera(char *s, t_info *info, int *is_error);
 void		set_light(char *s, int *is_error);
 
@@ -109,5 +109,6 @@ void		change_light(int lightnum, int *is_error, int *quit_cmdmode);
 void		change_camera(t_camlist *camlist, int camnum, \
 							int *is_error, int *quit_cmdmode);
 void		rotate_camera(t_camlist *camlist, char *cmd, int *is_error);
+void		change_filter(int *is_error, int *quit_cmdmode);
 
 #endif

@@ -69,3 +69,16 @@ void	change_light(int lightnum, int *is_error, int *quit_cmdmode)
 	free(cmd);
 	return ;
 }
+
+void	change_filter(int *is_error, int *quit_cmdmode)
+{
+	char	*cmd;
+
+	printf("Enter filter value\n");
+	cmd = NULL;
+	read_stdin_command(&cmd, is_error, quit_cmdmode);
+	if (*is_error || *quit_cmdmode)
+		return ;
+	g_light_data.filter = divide(read_vector(&cmd), 255.0);
+	return ;
+}

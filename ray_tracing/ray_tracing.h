@@ -26,6 +26,7 @@
 
 # define LIGHT	6
 # define CAMERA	7
+# define FILTER 8
 
 # define TRUE	1
 # define FALSE	0

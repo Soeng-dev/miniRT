@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../minirt.h"
-#define SAMPLES_PER_PIXEL	1
-#define RT_MAX_DEPTH		5
+#define SAMPLES_PER_PIXEL	50
+#define RT_MAX_DEPTH		20
 
 int		get_color(t_vector colorvec, double gamma)
 {
@@ -55,7 +55,8 @@ int		key_check(int key, t_info *info)
 		free(s);
 		if (cmd_result == CMD_ERROR)
 			printf("Error\n");
-		if (cmd_result == CMD_QUIT || cmd_result == CMD_ERROR)
+		if (cmd_result == CMD_QUIT || cmd_result == CMD_ERROR \
+			|| cmd_result == CMD_COMMENT || cmd_result == CMD_NONE)
 			return (0);
 	}
 	else if (key == KEY_LEFT && info->caminfo.curr_camnode->prev)
@@ -88,6 +89,7 @@ void	render_img(const t_img_data *img, const t_screen *scr, \
 		{
 			ft_memset(&color, 0, sizeof(t_vector));
 			anti_alias(&color, cam, scr, &curr);
+			color = multi_corresponds(g_light_data.filter, color);
 			*(unsigned int *)pixel = get_color(color, 2);
 			pixel += (img->bpp / 8);
 		}

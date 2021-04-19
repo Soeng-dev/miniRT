@@ -25,6 +25,7 @@ struct	s_lightdata
 {
 	t_light		*light_arr;
 	t_vector	ambient;
+	t_vector	filter;
 	int			count;
 };
 typedef struct s_lightdata	t_lightdata;

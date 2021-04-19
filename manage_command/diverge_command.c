@@ -34,7 +34,7 @@ static void	diverge_command(char *s, t_info *info, \
 	if (!ft_strncmp("R", s, idlen))
 		set_mlx_resolution(s + idlen, info);
 	else if (!ft_strncmp("A", s, idlen))
-		set_ambient(s + idlen, is_error);
+		set_ambient(s + idlen, info, is_error);
 	else if (!ft_strncmp("c", s, idlen))
 		set_camera(s + idlen, info, is_error);
 	else if (!ft_strncmp("l", s, idlen))
@@ -68,6 +68,8 @@ int			check_command(char *s, t_info *info)
 	is_error = FALSE;
 	quit_cmdmode = 0;
 	diverge_command(s, info, &is_error, &quit_cmdmode);
+	if (info->err_exit)
+		exit_program(info);
 	if (is_error)
 		return (CMD_ERROR);
 	else if (quit_cmdmode == TRUE)

@@ -146,7 +146,7 @@ void		change(t_info *info, int *is_error, int *quit_cmdmode)
 		select_fignum(info, type, is_error, quit_cmdmode);
 	else if (type == LIGHT || type == CAMERA)
 		select_targetnum(info, type, is_error, quit_cmdmode);
-	if (*is_error || *quit_cmdmode)
-		return ;
+	else if (type == FILTER)
+		change_filter(is_error, quit_cmdmode);
 	return ;
 }

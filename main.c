@@ -63,12 +63,13 @@ static void	read_rtfile(char *path, t_info *info)
 	return ;
 }
 
-static void	setup_mlx(t_info *info)
+static void	setup(char *path, t_info *info)
 {
 	t_mlx_vars	*mlx_vars;
 	t_screen	*scr;
 	t_img_data	*img_data;
 
+	read_rtfile(path, info);
 	scr = &info->setup.scr;
 	mlx_vars = &info->setup.mlx_vars;
 	mlx_vars->mlx = mlx_init();
@@ -96,8 +97,8 @@ int			save_scene(char *path, t_info *info)
 		save_bmp(&info->setup.img_data, &info->setup.scr, bh, path);
 	else
 		save_bmp(&info->setup.img_data, &info->setup.scr, \
-				bh, "./scenes/saved_scene.bmp");
-	free_allocated(info);
+				bh, "./save/saved_scene.bmp");
+	printf("scene saved\n");
 	return (0);
 }
 
@@ -106,11 +107,10 @@ int			main(int argc, char *argv[])
 	t_info	info;
 
 	ft_memset(&info, 0, sizeof(t_info));
-	read_rtfile(argv[1], &info);
-	setup_mlx(&info);
 	if (argc < 2 || argc > 4)
 		return (0);
-	else if (argc >= 3)
+	setup(argv[1], &info);
+	if (argc >= 3)
 	{
 		if (ft_strcmp(argv[2], "--save") != 0)
 			return (0);
@@ -121,9 +121,12 @@ int			main(int argc, char *argv[])
 		return (save_scene(NULL, &info));
 	else if (argc == 4)
 		return (save_scene(argv[3], &info));
-	mlx_put_image_to_window(info.setup.mlx_vars.mlx, info.setup.mlx_vars.win, \
-							info.setup.img_data.img, 0, 0);
-	mlx_loop(info.setup.mlx_vars.mlx);
+	else
+	{
+		mlx_put_image_to_window(info.setup.mlx_vars.mlx, \
+				info.setup.mlx_vars.win, info.setup.img_data.img, 0, 0);
+		mlx_loop(info.setup.mlx_vars.mlx);
+	}
 	free_allocated(&info);
 	return (0);
 }

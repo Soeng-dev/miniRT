@@ -31,17 +31,22 @@ void	set_mlx_resolution(char *s, t_info *info)
 		printf("Invalid Resolution\n");
 		info->err_exit = TRUE;
 	}
+	init_vector(&g_light_data.filter, 1.0, 1.0, 1.0);
 	return ;
 }
 
-void	set_ambient(char *s, int *is_error)
+void	set_ambient(char *s, t_info *info, int *is_error)
 {
 	double		bright;
 	t_vector	ambient;
 
 	if (!vector_is_same(g_light_data.ambient, \
 						get_vector(0, 0, 0)))
+	{
+		printf("Multi declaration of Ambient\n");
+		info->err_exit = TRUE;
 		return ;
+	}
 	bright = read_dbl(&s);
 	if (bright < 0)
 		return (set_errflag(is_error));
