@@ -1,7 +1,7 @@
 NAME = miniRT
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 
 EXT_STLIB = -lmlx -framework OpenGL -framework AppKit ./libft/libft.a 
 EXT_DYLIB = ./libmlx.dylib
@@ -49,6 +49,7 @@ $(NAME) : $(OBJ) make_libft make_mlx_mms
 		cp $(EXT_DYLIB_PATH)$(EXT_DYLIB) ./
 		$(CC) $(CFLAGS) $(EXT_LIB) $(OBJ) -o $(NAME)
 
+bonus : all
 
 RM = rm -f
 

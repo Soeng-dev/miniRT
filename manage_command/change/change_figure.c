@@ -58,7 +58,10 @@ void	change_square(t_square *sq, char *cmd, int *is_error)
 	if (!ft_strncmp(cmd, "translate", idlen))
 		translate(&pl.p, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "rotate", idlen))
-		rotate(&pl.normal, cmd + idlen, is_error);
+	{
+		rotate_square(sq, &pl.normal, cmd + idlen, is_error);
+		return ;
+	}
 	else if (!ft_strncmp(cmd, "color", idlen))
 		change_color(&pl.material.albedo, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "material", idlen))
@@ -70,10 +73,8 @@ void	change_square(t_square *sq, char *cmd, int *is_error)
 	}
 	else
 		*is_error = TRUE;
-	if (*is_error)
-		return ;
-	init_square(sq, &pl, 2 * sq->half_size);
-	return ;
+	if (!(*is_error))
+		init_square(sq, &pl, 2 * sq->half_size);
 }
 
 void	change_cylinder(t_cylinder *cyl, char *cmd, int *is_error)

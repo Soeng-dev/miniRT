@@ -101,6 +101,8 @@ void		change_triangle(t_triangle *tr, char *cmd, int *is_error);
 */
 void		translate(t_vector *pos, char *cmd, int *is_error);
 void		rotate(t_vector *target, char *cmd, int *is_error);
+void		rotate_square(t_square *sq, t_vector *normal, \
+							char *cmd, int *is_error);
 
 /*
 **		change cam, light
