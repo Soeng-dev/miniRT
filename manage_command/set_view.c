@@ -63,9 +63,13 @@ void	set_camera(char *s, t_info *info, int *is_error)
 	t_campos	campos;
 	t_camview	camview;
 
-	campos.upward = get_vector(0, 1, 0);
 	campos.origin = read_vector(&s);
 	campos.dir = normalize(read_vector(&s));
+	if (vector_is_same(campos.dir, get_vector(0, 1, 0)) \
+		|| vector_is_same(campos.dir, get_vector(0, -1, 0)))
+		campos.upward = get_vector(0, 1, 0.1);
+	else
+		campos.upward = get_vector(0, 1, 0);
 	camview.angle = M_PI * (read_dbl(&s) / 180.0);
 	if (camview.angle >= M_PI || camview.angle <= 0)
 		return (set_errflag(is_error));
