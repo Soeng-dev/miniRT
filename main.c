@@ -60,6 +60,8 @@ static void	read_rtfile(char *path, t_info *info)
 		}
 		free(line);
 	}
+	if (!info->caminfo.camlist)
+		info->err_exit = TRUE;
 	return ;
 }
 
@@ -70,6 +72,8 @@ static void	setup(char *path, t_info *info)
 	t_img_data	*img_data;
 
 	read_rtfile(path, info);
+	if (info->err_exit == TRUE)
+		exit_program(info);
 	scr = &info->setup.scr;
 	mlx_vars = &info->setup.mlx_vars;
 	mlx_vars->mlx = mlx_init();
@@ -84,7 +88,7 @@ static void	setup(char *path, t_info *info)
 					&img_data->linelen, &img_data->endian);
 	mlx_hook(mlx_vars->win, MLX_KEY_PRESS, 0, key_check, info);
 	mlx_hook(mlx_vars->win, MLX_RED_CROSS, 0, \
-			(int (*)())exit_program, &info);
+			(int (*)())exit_program, info);
 	return ;
 }
 

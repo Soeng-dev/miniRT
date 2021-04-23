@@ -39,17 +39,17 @@ static void	diverge_command(char *s, t_info *info, \
 		set_camera(s + idlen, info, is_error);
 	else if (!ft_strncmp("l", s, idlen))
 		set_light(s + idlen, is_error);
-	else if (!ft_strncmp("sp", s, idlen))
+	else if (!ft_strncmp("sp", s, idlen) && idlen > 1)
 		set_sphere(s + idlen, is_error);
 	else if (!ft_strncmp("pl", s, idlen))
 		set_plane(s + idlen, is_error);
-	else if (!ft_strncmp("sq", s, idlen))
+	else if (!ft_strncmp("sq", s, idlen) && idlen > 1)
 		set_square(s + idlen, is_error);
-	else if (!ft_strncmp("cy", s, idlen))
+	else if (!ft_strncmp("cy", s, idlen) && idlen > 1)
 		set_cylinder(s + idlen, is_error);
 	else if (!ft_strncmp("tr", s, idlen))
 		set_triangle(s + idlen, is_error);
-	else if (!ft_strncmp("change", s, idlen))
+	else if (!ft_strncmp("change", s, idlen) && idlen > 1)
 		change(info, is_error, quit_cmdmode);
 	else
 		*is_error = TRUE;

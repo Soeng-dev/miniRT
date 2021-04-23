@@ -1,7 +1,7 @@
 NAME = miniRT
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 EXT_STLIB = -lmlx -framework OpenGL -framework AppKit ./libft/libft.a 
 EXT_DYLIB = ./libmlx.dylib
