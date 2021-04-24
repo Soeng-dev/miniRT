@@ -48,10 +48,13 @@ void	set_ambient(char *s, t_info *info, int *is_error)
 		return ;
 	}
 	bright = read_dbl(&s);
-	if (bright < 0)
+	if (bright <= 0 || bright > 1.0)
 		return (set_errflag(is_error));
 	ambient = divide(read_vector(&s), 255.0);
-	if (ambient.x < 0 || ambient.y < 0 || ambient.z < 0)
+	if (vector_is_same(ambient, get_vector(0, 0, 0)) \
+		|| ambient.x < 0 || ambient.x > 1.0 \
+		|| ambient.y < 0 || ambient.y > 1.0 \
+		|| ambient.z < 0 || ambient.z > 1.0)
 		return (set_errflag(is_error));
 	ambient = multi(ambient, bright);
 	g_light_data.ambient = ambient;
@@ -87,7 +90,9 @@ void	set_light(char *s, int *is_error)
 	pos = read_vector(&s);
 	bright = read_dbl(&s);
 	color = divide(read_vector(&s), 255.0);
-	if (bright < 0 || color.x < 0 || color.y < 0 || color.z < 0)
+	if (bright <= 0 || vector_is_same(color, get_vector(0, 0, 0)) \
+		|| color.x < 0 || color.x > 1.0 || color.y < 0 || color.y > 1.0 \
+		|| color.z < 0 || color.z > 1.0)
 		return (set_errflag(is_error));
 	make_light(pos, color, bright);
 }

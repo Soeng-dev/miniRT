@@ -62,13 +62,13 @@ void	color_by_light(t_vector *color, const t_hit_record *hitted, \
 			<= distance(blocked.pos, hitted->pos))
 	{
 		spot_bright = 1 + light->bright * \
-							absol(dot(normalize(light_dir), hitted->normal));
+							pow(absol(dot(normalize(light_dir), hitted->normal)), 20);
 		*color = add(light->color, get_vector(1, 1, 1));
 		*color = multi(*color, spot_bright);
 	}
 	else
 	{
-		spot_bright = 1.0 - light->bright;
+		spot_bright = 1.0 - 0.5 * light->bright;
 		*color = minus(get_vector(1, 1, 1), light->color);
 		*color = multi(*color, spot_bright);
 	}

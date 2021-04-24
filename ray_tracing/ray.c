@@ -51,7 +51,7 @@ t_vector	ray_color(const t_ray *ray, int depth)
 	t_ray			scattered;
 
 	if (depth <= 0)
-		return (get_vector(0, 0, 0));
+		return (get_vector(1, 1, 1));
 	init_hit_record(&hitted);
 	raycast(ray, &hitted);
 	if (hitted.time == NOT_HIT)
