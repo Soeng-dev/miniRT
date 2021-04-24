@@ -52,26 +52,33 @@ void	color_by_light(t_vector *color, const t_hit_record *hitted, \
 	t_vector		light_dir;
 	t_ray			hitted_to_light;
 	double			spot_bright;
+	double			coef;
 
 	init_hit_record(&blocked);
-	light_dir = minus(light->pos, hitted->pos);
+	light_dir = normalize(minus(light->pos, hitted->pos));
 	init_ray(&hitted_to_light, hitted->pos, light_dir);
 	raycast(&hitted_to_light, &blocked);
 	if (blocked.time == NOT_HIT || \
-		distance(light->pos, hitted->pos) \
-			<= distance(blocked.pos, hitted->pos))
-	{
-		spot_bright = 1.0 + light->bright * \
-							pow(absol(dot(normalize(light_dir), hitted->normal)), 10);
-		*color = add(light->color, get_vector(1, 1, 1));
-		*color = multi(*color, spot_bright);
-	}
+		distance(light->pos, hitted->pos) <= distance(blocked.pos, hitted->pos))
+		coef = 2 * light->bright * pow(absol(dot(light_dir, hitted->normal)), 10);
+
+//	{
+//		spot_bright = 1.0 + light->bright * \
+//							pow(absol(dot(light_dir, hitted->normal)), 10);
+//		*color = add(light->color, get_vector(1, 1, 1));
+//		*color = multi(*color, spot_bright);
+//	}
 	else
-	{
-		spot_bright = 1.0 - 0.5 * light->bright;
-		*color = minus(get_vector(1, 1, 1), light->color);
-		*color = multi(*color, spot_bright);
-	}
+		coef = -1.0 * absol(dot(blocked.normal, light_dir));
+
+//	{
+//		spot_bright = dot(blocked.normal, light_dir);
+//		*color = minus(get_vector(1, 1, 1), light->color);
+//		*color = multi(*color, spot_bright);
+//	}
+	*color = add(get_vector(1, 1, 1), multi(light->color, coef));
+	spot_bright = 1.0 + light->bright * coef;
+	*color = multi(*color, spot_bright);
 	return ;
 }
 
@@ -94,8 +101,8 @@ void	light_hitted(const t_hit_record *hitted, t_vector *color)
 		++light;
 	}
 	spot_color = divide(spot_color, g_light_data.count);
-	*color = add(get_vector(0.1, 0.1, 0.1), *color);
+	*color = add(get_vector(0.05, 0.05, 0.05), *color);
 	*color = multi_corresponds(spot_color, *color);
-	*color = minus(*color, get_vector(0.1, 0.1, 0.1));
+	*color = minus(*color, get_vector(0.05, 0.05, 0.05));
 	return ;
 }
