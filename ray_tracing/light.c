@@ -94,6 +94,8 @@ void	light_hitted(const t_hit_record *hitted, t_vector *color)
 		++light;
 	}
 	spot_color = divide(spot_color, g_light_data.count);
+//	*color = add(get_vector(1, 1, 1), *color);
 	*color = multi_corresponds(spot_color, *color);
+//	*color = minus(*color, get_vector(1, 1, 1));
 	return ;
 }
