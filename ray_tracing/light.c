@@ -59,26 +59,15 @@ void	color_by_light(t_vector *color, const t_hit_record *hitted, \
 	init_ray(&hitted_to_light, hitted->pos, light_dir);
 	raycast(&hitted_to_light, &blocked);
 	if (blocked.time == NOT_HIT || \
-		distance(light->pos, hitted->pos) <= distance(blocked.pos, hitted->pos))
-		coef = 2 * light->bright * pow(absol(dot(light_dir, hitted->normal)), 10);
-
-//	{
-//		spot_bright = 1.0 + light->bright * \
-//							pow(absol(dot(light_dir, hitted->normal)), 10);
-//		*color = add(light->color, get_vector(1, 1, 1));
-//		*color = multi(*color, spot_bright);
-//	}
+		distance(light->pos, hitted->pos) \
+		<= distance(blocked.pos, hitted->pos))
+		coef = sqrt(light->bright * pow(absol(dot(light_dir, hitted->normal)), 10));
 	else
 		coef = -1.0 * absol(dot(blocked.normal, light_dir));
-
-//	{
-//		spot_bright = dot(blocked.normal, light_dir);
-//		*color = minus(get_vector(1, 1, 1), light->color);
-//		*color = multi(*color, spot_bright);
-//	}
-	*color = add(get_vector(1, 1, 1), multi(light->color, coef));
 	spot_bright = 1.0 + light->bright * coef;
+	*color = add(get_vector(1, 1, 1), multi(light->color, coef));
 	*color = multi(*color, spot_bright);
+	*color = minus(*color, get_vector(0.1, 0.1, 0.1));
 	return ;
 }
 
