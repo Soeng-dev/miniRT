@@ -12,7 +12,7 @@
 
 #include "../minirt.h"
 
-double		read_dbl(char **s)
+double		read_dbl(char **s, int *is_error)
 {
 	double	intiger;
 	double	small;
@@ -21,56 +21,64 @@ double		read_dbl(char **s)
 	intiger = 0;
 	small = 0;
 	is_positive = TRUE;
-	pass_charset(s, " \t\n\v\f\r");
+	pass_charset(s, " \t\f");
 	intiger = (double)ft_atoi(*s);
 	if (**s == '-')
 	{
 		is_positive = FALSE;
 		++(*s);
 	}
+	else if (ft_isdigit(**s) == FALSE)
+		*is_error = TRUE;
 	pass_charset(s, "0123456789");
-	if (**s == '.' && *(*s + 1))
-	{
+	if (**s == '.' && ft_isdigit(*(*s + 1)))
 		while (ft_isdigit(*(++(*s))))
 			small = (small / 10.0) + ((**s - '0') / 10.0);
-	}
-	if (is_positive)
-		return (intiger + small);
-	else
-		return (intiger - small);
+	else if (**s == '.' && ft_isdigit(*(*s + 1)) != FALSE)
+		*is_error = TRUE;
+	if (!is_element(" \t\n,", **s) && **s != '\0')
+		*is_error = TRUE;
+	return ((is_positive) ? intiger + small : intiger - small);
 }
 
-t_vector	read_vector(char **s)
+t_vector	read_vector(char **s, int *is_error)
 {
 	t_vector	v;
 
-	v.x = read_dbl(s);
-	pass_charset(s, " \t\n\v\f\r,");
-	v.y = read_dbl(s);
-	pass_charset(s, " \t\n\v\f\r,");
-	v.z = read_dbl(s);
+	v.x = read_dbl(s, is_error);
+	pass_charset(s, " \t\f");
+	if (**s != ',')
+		*is_error = TRUE;
+	*s += 1;
+	v.y = read_dbl(s, is_error);
+	pass_charset(s, " \t\f");
+	if (**s != ',')
+		*is_error = TRUE;
+	*s += 1;
+	v.z = read_dbl(s, is_error);
 	return (v);
 }
 
 void		set_fuzz_scatter(char *s, t_material *mat, int *is_error)
 {
-	char	*trimmed;
+	int		idlen;
 
 	mat->fuzz = 0;
 	mat->scatter = lambertian;
-	pass_charset(&s, " \t\n\v\f\r");
+	pass_charset(&s, " \t\f");
+	idlen = get_idlen(s, " \t\f");
 	if (!(*s))
 		return ;
-	trimmed = ft_strtrim(s, " \t\n\v\f\r");
-	if (!ft_strcmp(trimmed, "metal"))
+	if (!ft_strncmp(s, "metal", idlen) && idlen > 0)
 		mat->scatter = metal;
-	else if (ft_strcmp(trimmed, "lambertian") != 0)
+	else if (ft_strncmp(s, "lambertian", idlen))
 		*is_error = TRUE;
-	pass_charset(&s, trimmed);
-	free(trimmed);
-	if (*s)
-		mat->fuzz = read_dbl(&s);
-	if (mat->fuzz < 0)
+	while (ft_isalpha(*s))
+		s++;
+	if (*s != '\0')
+		mat->fuzz = read_dbl(&s, is_error);
+	pass_charset(&s, " \t\f");
+	if (mat->fuzz < 0 || *s != '\0')
 		*is_error = TRUE;
 	return ;
 }

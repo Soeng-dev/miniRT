@@ -19,7 +19,7 @@ void	change_color(t_vector *target, char *cmd, int *is_error)
 	pass_charset(&cmd, " \t\n\v\f\r");
 	if (!(*cmd))
 		return (set_errflag(is_error));
-	color = divide(read_vector(&cmd), 255);
+	color = divide(read_vector(&cmd, is_error), 255);
 	if (!is_valid_vector(color, 0, 1))
 		return (set_errflag(is_error));
 	else
@@ -49,7 +49,7 @@ void	change_length(double *target, char *cmd, int *is_error)
 	pass_charset(&cmd, " \t\n\v\f\r");
 	if (!(*cmd))
 		return (set_errflag(is_error));
-	input = read_dbl(&cmd);
+	input = read_dbl(&cmd, is_error);
 	if (input <= 0)
 		return (set_errflag(is_error));
 	*target = input;

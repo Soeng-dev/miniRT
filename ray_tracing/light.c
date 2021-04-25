@@ -60,7 +60,8 @@ void	color_by_light(t_vector *color, const t_hit_record *hitted, \
 	if (blocked.time == NOT_HIT || \
 		distance(light->pos, hitted->pos) \
 		<= distance(blocked.pos, hitted->pos))
-		coef = sqrt(light->bright * pow(absol(dot(light_dir, hitted->normal)), 10));
+		coef = sqrt(light->bright * \
+					pow(absol(dot(light_dir, hitted->normal)), 10));
 	else if (blocked.object == hitted->object)
 		coef = -1.0 * absol(dot(blocked.normal, light_dir));
 	else

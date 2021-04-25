@@ -79,6 +79,6 @@ void	change_filter(int *is_error, int *quit_cmdmode)
 	read_stdin_command(&cmd, is_error, quit_cmdmode);
 	if (*is_error || *quit_cmdmode)
 		return ;
-	g_light_data.filter = divide(read_vector(&cmd), 255.0);
+	g_light_data.filter = divide(read_vector(&cmd, is_error), 255.0);
 	return ;
 }
