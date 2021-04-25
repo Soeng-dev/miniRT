@@ -43,7 +43,7 @@ void	rotate(t_vector *target, char *cmd, int *is_error)
 	return ;
 }
 
-void	rotate_square(t_square *sq, t_vector *normal, char *cmd, int *is_error)
+void	rotate_square(t_square *sq, char *cmd, int *is_error)
 {
 	t_vector	axis;
 	char		*temp;
@@ -53,16 +53,13 @@ void	rotate_square(t_square *sq, t_vector *normal, char *cmd, int *is_error)
 	if (!(*temp))
 		return (set_errflag(is_error));
 	axis = normalize(read_vector(&temp, is_error));
-	*normal = normalize(*normal);
-	if ((vector_is_same(axis, get_vector(0, 0, 1)) \
-				|| vector_is_same(axis, get_vector(0, 0, -1))) \
-	&& (vector_is_same(*normal, get_vector(0, 0, 1)) \
-				|| vector_is_same(*normal, get_vector(0, 0, -1))))
+	sq->normal = normalize(sq->normal);
+	if (absol(dot(sq->normal, axis))  == 1.0)
 	{
 		rotate(&sq->u, cmd, is_error);
 		rotate(&sq->v, cmd, is_error);
 	}
 	else
-		rotate(normal, cmd, is_error);
+		rotate(&sq->normal, cmd, is_error);
 	return ;
 }

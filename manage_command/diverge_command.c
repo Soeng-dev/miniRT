@@ -26,7 +26,7 @@ int			get_idlen(char *s, char *delimiters)
 }
 
 static void	diverge_command(char *s, t_info *info, \
-							int *is_error, int *quit_cmdmode)
+							int *is_error)
 {
 	int		idlen;
 
@@ -49,8 +49,6 @@ static void	diverge_command(char *s, t_info *info, \
 		set_cylinder(s + idlen, is_error);
 	else if (!ft_strncmp("tr", s, idlen))
 		set_triangle(s + idlen, is_error);
-	else if (!ft_strncmp("change", s, idlen) && idlen > 1)
-		change(info, is_error, quit_cmdmode);
 	else
 		*is_error = TRUE;
 }
@@ -67,14 +65,14 @@ int			check_command(char *s, t_info *info)
 		return (CMD_COMMENT);
 	is_error = FALSE;
 	quit_cmdmode = 0;
-	diverge_command(s, info, &is_error, &quit_cmdmode);
+	if (!ft_strcmp("change", s))
+		change(info, &is_error, &quit_cmdmode);
+	else
+		diverge_command(s, info, &is_error);
 	if (info->err_exit)
 		exit_program(info);
 	if (is_error)
-	{
-		printf("error line :%s\n", s);
 		return (CMD_ERROR);
-	}
 	else if (quit_cmdmode == TRUE)
 		return (CMD_QUIT);
 	else

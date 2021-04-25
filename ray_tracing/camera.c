@@ -15,9 +15,9 @@
 void	init_campos(t_campos *campos, t_vector origin, \
 					t_vector dir, t_vector upward)
 {
-	campos->dir = dir;
-	campos->origin = origin;
-	campos->upward = upward;
+	campos->dir = normalize(dir);
+	campos->origin = normalize(origin);
+	campos->upward = normalize(upward);
 }
 
 void	init_camview(t_camview *camview, double angle, \
@@ -38,7 +38,7 @@ void	init_camera(t_camera *cam, const t_campos *campos, \
 
 	w = multi(campos->dir, -1);
 	u = normalize(cross(campos->upward, w));
-	v = cross(w, u);
+	v = normalize(cross(w, u));
 	view.height = 2.0 * camview->focallen * tan(camview->angle / 2.0);
 	view.width = camview->ratio * view.height;
 	cam->origin = campos->origin;

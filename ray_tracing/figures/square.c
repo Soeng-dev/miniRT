@@ -14,20 +14,18 @@
 
 void	init_square(t_square *sq, const t_plane *pl, const double side_size)
 {
-	double		p;
-	double		t;
-	t_vector	omega;
+	t_vector	temp;
 
 	sq->ctr = pl->p;
-	sq->normal = normalize(pl->normal);
 	sq->half_size = side_size / 2.0;
 	sq->material = pl->material;
-	p = asin(sq->normal.x);
-	t = asin(sq->normal.y / (-cos(p)));
-	init_vector(&omega, 0, cos(t), sin(t));
-	sq->u = rotate_vector(get_vector(1, 0, 0), omega, p);
-	sq->v = rotate_vector(get_vector(0, 1, 0), get_vector(1, 0, 0), t);
-	sq->v = rotate_vector(sq->v, omega, p);
+	sq->normal = normalize(pl->normal);
+	if (absol(dot(sq->normal, get_vector(1, 0, 0))) > 0.9)
+		init_vector(&temp, 1, 1, 0);
+	else
+		init_vector(&temp, 1, 0, 0);
+	sq->u = cross(temp, sq->normal);
+	sq->v = cross(sq->u, sq->normal);
 	return ;
 }
 
@@ -81,10 +79,13 @@ void	hit_square(void *square, const t_ray *ray, t_hit_record *hitted)
 		{
 			hitted->time = time;
 			hitted->pos = pos;
-			hitted->normal = sq->normal;
 			hitted->time = time;
 			hitted->is_front_face = TRUE;
 			hitted->material = &sq->material;
+			if (dot(ray->dir, sq->normal) < 0)
+				hitted->normal = sq->normal;
+			else
+				hitted->normal = multi(sq->normal, -1.0);
 		}
 	}
 	return ;

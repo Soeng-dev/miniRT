@@ -59,7 +59,7 @@ void	change_square(t_square *sq, char *cmd, int *is_error)
 		translate(&pl.p, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "rotate", idlen))
 	{
-		rotate_square(sq, &pl.normal, cmd + idlen, is_error);
+		rotate_square(sq, cmd + idlen, is_error);
 		return ;
 	}
 	else if (!ft_strncmp(cmd, "color", idlen))
