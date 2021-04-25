@@ -51,30 +51,28 @@ void	change_sphere(t_sphere *sp, char *cmd, int *is_error)
 void	change_square(t_square *sq, char *cmd, int *is_error)
 {
 	int			idlen;
-	t_plane		pl;
+	t_square	temp;
 
-	init_plane(&pl, sq->ctr, sq->normal, &sq->material);
+	temp = *sq;
 	idlen = get_idlen(cmd, " \t\n\v\f\r");
 	if (!ft_strncmp(cmd, "translate", idlen))
-		translate(&pl.p, cmd + idlen, is_error);
+		translate(&temp.ctr, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "rotate", idlen))
-	{
-		rotate_square(sq, cmd + idlen, is_error);
-		return ;
-	}
+		rotate_square(&temp, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "color", idlen))
-		change_color(&pl.material.albedo, cmd + idlen, is_error);
+		change_color(&temp.material.albedo, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "material", idlen))
-		change_material(&pl.material, cmd + idlen, is_error);
+		change_material(&temp.material, cmd + idlen, is_error);
 	else if (!ft_strncmp(cmd, "side_size", idlen))
 	{
-		change_length(&sq->half_size, cmd + idlen, is_error);
-		sq->half_size /= 2.0;
+		change_length(&temp.half_size, cmd + idlen, is_error);
+		temp.half_size /= 2.0;
 	}
 	else
 		*is_error = TRUE;
 	if (!(*is_error))
-		init_square(sq, &pl, 2 * sq->half_size);
+		*sq = temp;
+	return ;
 }
 
 void	change_cylinder(t_cylinder *cyl, char *cmd, int *is_error)

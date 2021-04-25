@@ -45,21 +45,14 @@ void	rotate(t_vector *target, char *cmd, int *is_error)
 
 void	rotate_square(t_square *sq, char *cmd, int *is_error)
 {
-	t_vector	axis;
 	char		*temp;
 
 	temp = cmd;
 	pass_charset(&temp, " \t\n\v\f\r");
 	if (!(*temp))
 		return (set_errflag(is_error));
-	axis = normalize(read_vector(&temp, is_error));
-	sq->normal = normalize(sq->normal);
-	if (absol(dot(sq->normal, axis))  == 1.0)
-	{
-		rotate(&sq->u, cmd, is_error);
-		rotate(&sq->v, cmd, is_error);
-	}
-	else
-		rotate(&sq->normal, cmd, is_error);
+	rotate(&sq->normal, cmd, is_error);
+	rotate(&sq->u, cmd, is_error);
+	rotate(&sq->v, cmd, is_error);
 	return ;
 }
