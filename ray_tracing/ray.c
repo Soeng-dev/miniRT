@@ -35,7 +35,7 @@ t_vector	raypos_at_t(t_ray ray, double t)
 
 void		raycast(const t_ray *ray, t_hit_record *hitted)
 {
-	hitted->time = NOT_HIT;
+	init_hit_record(hitted);
 	record_hitted(g_figures[PLANE], hit_plane, ray, hitted);
 	record_hitted(g_figures[TRIANGLE], hit_triangle, ray, hitted);
 	record_hitted(g_figures[SPHERE], hit_sphere, ray, hitted);
@@ -52,7 +52,6 @@ t_vector	ray_color(const t_ray *ray, int depth)
 
 	if (depth <= 0)
 		return (get_vector(1, 1, 1));
-	init_hit_record(&hitted);
 	raycast(ray, &hitted);
 	if (hitted.time == NOT_HIT)
 		color = g_light_data.ambient;

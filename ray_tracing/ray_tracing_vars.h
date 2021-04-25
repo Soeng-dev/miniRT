@@ -35,6 +35,7 @@ struct	s_hit_record
 	double		time;
 	int			is_front_face;
 	t_material	*material;
+	void		*object;
 };
 typedef struct s_hit_record	t_hit_record;
 

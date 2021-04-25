@@ -54,7 +54,6 @@ void	color_by_light(t_vector *color, const t_hit_record *hitted, \
 	double			spot_bright;
 	double			coef;
 
-	init_hit_record(&blocked);
 	light_dir = normalize(minus(light->pos, hitted->pos));
 	init_ray(&hitted_to_light, hitted->pos, light_dir);
 	raycast(&hitted_to_light, &blocked);
@@ -62,8 +61,10 @@ void	color_by_light(t_vector *color, const t_hit_record *hitted, \
 		distance(light->pos, hitted->pos) \
 		<= distance(blocked.pos, hitted->pos))
 		coef = sqrt(light->bright * pow(absol(dot(light_dir, hitted->normal)), 10));
-	else
+	else if (blocked.object == hitted->object)
 		coef = -1.0 * absol(dot(blocked.normal, light_dir));
+	else
+		coef = -1.0;
 	spot_bright = 1.0 + light->bright * coef;
 	*color = add(get_vector(1, 1, 1), multi(light->color, coef));
 	*color = multi(*color, spot_bright);

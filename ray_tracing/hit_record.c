@@ -30,7 +30,10 @@ void	record_hitted(t_list *same_kind_figures, \
 		init_hit_record(&new_hitted);
 		hit(same_kind_figures->content, ray, &new_hitted);
 		if (new_hitted.time < hitted->time)
+		{
 			*hitted = new_hitted;
+			hitted->object = same_kind_figures->content;
+		}
 		same_kind_figures = same_kind_figures->next;
 	}
 	return ;
