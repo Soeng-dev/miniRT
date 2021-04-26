@@ -49,3 +49,29 @@ int		check_front_face(const t_ray *ray, const t_vector *outward_normal)
 {
 	return (dot(ray->dir, *outward_normal) < 0);
 }
+
+void	set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, \
+							const t_ray *ray, double time)
+{
+	double			h;
+	t_vector		pos;
+	t_vector		outward_normal;
+
+	pos = raypos_at_t(*ray, time);
+	h = dot(minus(pos, cyl->bottom.p), cyl->normal) \
+		/ dot(cyl->normal, cyl->normal);
+	if (0 < h && h < cyl->height)
+	{
+		hitted->pos = pos;
+		outward_normal = normalize(\
+								minus(pos, add(cyl->bottom.p, \
+												multi(cyl->normal, h))));
+		hitted->time = time;
+		hitted->material = (t_material *)&cyl->material;
+		hitted->is_front_face = check_front_face(ray, &outward_normal);
+		if (hitted->is_front_face)
+			hitted->normal = outward_normal;
+		else
+			hitted->normal = multi(outward_normal, -1.0);
+	}
+}

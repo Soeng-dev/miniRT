@@ -63,6 +63,8 @@ void		record_hitted(t_list *same_kind_figures, \
 									t_hit_record *), \
 						const t_ray *ray, t_hit_record *hitted);
 int			check_front_face(const t_ray *ray, const t_vector *outward_normal);
+void		set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, \
+							const t_ray *ray, double time);
 
 /*
 **		material

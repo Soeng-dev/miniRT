@@ -58,31 +58,24 @@ void		hit_circle(const t_plane *pl, double r, \
 	}
 }
 
-void		set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, \
-							const t_ray *ray, double time)
+void		check_cyl_hitted(const t_cylinder *cyl, const t_ray *ray, \
+							t_hit_record *hitted, double side_hit_time)
 {
-	double			h;
-	t_vector		pos;
-	t_vector		outward_normal;
+	t_hit_record	check_top;
+	t_hit_record	check_bottom;
 
-	pos = raypos_at_t(*ray, time);
-	h = dot(minus(pos, cyl->bottom.p), cyl->normal) \
-		/ dot(cyl->normal, cyl->normal);
-
-	if (0 < h && h < cyl->height)
-	{
-		hitted->pos = pos;
-		outward_normal = normalize(\
-								minus(pos, add(cyl->bottom.p, \
-												multi(cyl->normal, h))));
-		hitted->time = time;
-		hitted->material = (t_material *)&cyl->material;
-		hitted->is_front_face = check_front_face(ray, &outward_normal);
-		if (hitted->is_front_face)
-			hitted->normal = outward_normal;
-		else
-			hitted->normal = multi(outward_normal, -1.0);
-	}
+	hit_circle(&cyl->top, cyl->r, ray, &check_top);
+	hit_circle(&cyl->bottom, cyl->r, ray, &check_bottom);
+	if (check_top.time < check_bottom.time)
+		*hitted = check_top;
+	else
+		*hitted = check_bottom;
+	if (hitted->time <= side_hit_time)
+		return ;
+	else if (side_hit_time < hitted->time)
+		set_cyl_hitrec(hitted, cyl, ray, side_hit_time);
+	else if (side_hit_time == NOT_HIT)
+		return ;
 }
 
 void		hit_cylinder(void *cylinder, const t_ray *ray, t_hit_record *hitted)
@@ -91,8 +84,6 @@ void		hit_cylinder(void *cylinder, const t_ray *ray, t_hit_record *hitted)
 	double				eqcoef[3];
 	t_vector			delp;
 	const t_cylinder	*cyl;
-	t_hit_record	check_top;
-	t_hit_record	check_bottom;
 
 	cyl = (const t_cylinder *)cylinder;
 	delp = minus(ray->pos, cyl->bottom.p);
@@ -110,17 +101,6 @@ void		hit_cylinder(void *cylinder, const t_ray *ray, t_hit_record *hitted)
 										dot(delp, cyl->normal)))) \
 				- cyl->r * cyl->r;
 	time = get_valid_2nd_eqsol(eqcoef, NOT_HIT, time_is_valid);
-	hit_circle(&cyl->top, cyl->r, ray, &check_top);
-	hit_circle(&cyl->bottom, cyl->r, ray, &check_bottom);
-	if (check_top.time < check_bottom.time)
-		*hitted = check_top;
-	else
-		*hitted = check_bottom;
-	if (hitted->time <= time)
-		return;
-	else if (time < hitted->time)
-		set_cyl_hitrec(hitted, cyl, ray, time);
-	else if (time == NOT_HIT)
-		return ;
+	check_cyl_hitted(cyl, ray, hitted, time);
 	return ;
 }
