@@ -32,11 +32,9 @@ double		read_dbl(char **s, int *is_error)
 		*is_error = TRUE;
 	pass_charset(s, "0123456789");
 	if (**s == '.' && ft_isdigit(*(*s + 1)))
-		while (ft_isdigit(*(++(*s))))
-			small = (small / 10.0) + ((**s - '0') / 10.0);
-	else if (**s == '.' && ft_isdigit(*(*s + 1)) != FALSE)
-		*is_error = TRUE;
-	if (!is_element(" \t\n,", **s) && **s != '\0')
+		small = ft_atoi(++(*s)) / pow(10.0, count_charset(s, "0123456789"));
+	else if ((**s == '.' && ft_isdigit(*(*s + 1)) != FALSE) \
+			|| (!is_element(" \t\n,", **s) && **s != '\0'))
 		*is_error = TRUE;
 	return ((is_positive) ? intiger + small : intiger - small);
 }

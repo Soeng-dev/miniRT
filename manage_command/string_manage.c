@@ -55,3 +55,16 @@ void	pass_charset(char **str, const char *set)
 	}
 	return ;
 }
+
+int		count_charset(char **str, const char *set)
+{
+	int		count;
+
+	count = 0;
+	while (is_element(set, **str))
+	{
+		(*str)++;
+		count++;
+	}
+	return (count);
+}

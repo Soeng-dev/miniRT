@@ -82,7 +82,6 @@ void		hit_triangle(void *triangle, const t_ray *ray, t_hit_record *hitted)
 				hitted->normal = tr->normal;
 			else
 				hitted->normal = multi(tr->normal, -1.0);
-
 		}
 	}
 	return ;

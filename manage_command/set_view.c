@@ -73,7 +73,10 @@ void	set_camera(char *s, t_info *info, int *is_error)
 	t_camview	camview;
 
 	campos.origin = read_vector(&s, is_error);
-	campos.dir = normalize(read_vector(&s, is_error));
+	campos.dir = read_vector(&s, is_error);
+	if (absol(dot(campos.dir, campos.dir) - 1.0) > 0.1)
+		return (set_errflag(is_error));
+	campos.dir = normalize(campos.dir);
 	if (absol(dot(campos.dir, get_vector(0, 1, 0))) > 0.9)
 		campos.upward = get_vector(0, 1, 1);
 	else

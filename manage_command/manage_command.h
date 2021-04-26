@@ -40,6 +40,7 @@ void		free_allocated(t_info *info);
 int			ft_strcmp(char *s1, char *s2);
 int			is_element(const char *set, char c);
 void		pass_charset(char **str, const char *set);
+int			count_charset(char **str, const char *set);
 
 /*
 **		read

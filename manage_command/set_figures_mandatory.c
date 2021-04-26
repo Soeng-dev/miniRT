@@ -37,7 +37,10 @@ void	set_plane(char *s, int *is_error)
 	t_material	mat;
 
 	p = read_vector(&s, is_error);
-	normal = normalize(read_vector(&s, is_error));
+	normal = read_vector(&s, is_error);
+	if (absol(dot(normal, normal) - 1.0) > 0.1)
+		return (set_errflag(is_error));
+	normal = normalize(normal);
 	mat.albedo = divide(read_vector(&s, is_error), 255.0);
 	if (!is_valid_vector(mat.albedo, 0, 1.0))
 		return (set_errflag(is_error));
@@ -54,7 +57,10 @@ void	set_square(char *s, int *is_error)
 	double	side_size;
 
 	pl.p = read_vector(&s, is_error);
-	pl.normal = normalize(read_vector(&s, is_error));
+	pl.normal = read_vector(&s, is_error);
+	if (absol(dot(pl.normal, pl.normal) - 1.0) > 0.1)
+		return (set_errflag(is_error));
+	pl.normal = normalize(pl.normal);
 	side_size = read_dbl(&s, is_error);
 	pl.material.albedo = divide(read_vector(&s, is_error), 255);
 	if (!is_valid_vector(pl.material.albedo, 0, 1.0) || side_size <= 0)
@@ -93,7 +99,10 @@ void	set_cylinder(char *s, int *is_error)
 	double		height;
 
 	bottom.p = read_vector(&s, is_error);
-	bottom.normal = normalize(read_vector(&s, is_error));
+	bottom.normal = read_vector(&s, is_error);
+	if (absol(dot(bottom.normal, bottom.normal) - 1.0) > 0.1)
+		return (set_errflag(is_error));
+	bottom.normal = normalize(bottom.normal);
 	r = read_dbl(&s, is_error) / 2.0;
 	height = read_dbl(&s, is_error);
 	bottom.material.albedo = divide(read_vector(&s, is_error), 255);

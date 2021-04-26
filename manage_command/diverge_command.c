@@ -51,6 +51,8 @@ static void	diverge_command(char *s, t_info *info, \
 		set_triangle(s + idlen, is_error);
 	else
 		*is_error = TRUE;
+	if (*is_error)
+		printf("Error line :%s\n", s);
 }
 
 int			check_command(char *s, t_info *info)

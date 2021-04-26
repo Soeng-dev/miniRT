@@ -65,7 +65,7 @@ void	color_by_light(t_vector *color, const t_hit_record *hitted, \
 	else if (blocked.object == hitted->object)
 		coef = -1.0 * absol(dot(blocked.normal, light_dir));
 	else
-		coef = -1.0;
+		coef = -0.7;
 	spot_bright = 1.0 + light->bright * coef;
 	*color = add(get_vector(1, 1, 1), multi(light->color, coef));
 	*color = multi(*color, spot_bright);
