@@ -105,7 +105,7 @@ void	set_cylinder(char *s, int *is_error)
 	bottom.normal = normalize(bottom.normal);
 	r = read_dbl(&s, is_error) / 2.0;
 	height = read_dbl(&s, is_error);
-	bottom.material.albedo = divide(read_vector(&s, is_error), 255);
+	bottom.material.albedo = divide(read_vector(&s, is_error), 255.0);
 	if (!is_valid_vector(bottom.material.albedo, 0, 1.0) \
 		|| r <= 0 || height <= 0)
 		return (set_errflag(is_error));

@@ -45,6 +45,7 @@ void		make_cylinder(const t_plane *bottom, \
 void		hit_circle(const t_plane *pl, double r, \
 						const t_ray *ray, t_hit_record *hitted)
 {
+	init_hit_record(hitted);
 	if (check_plane_hitpos(pl, ray, hitted))
 	{
 		if (distance(hitted->pos, pl->p) < r)
@@ -55,19 +56,19 @@ void		hit_circle(const t_plane *pl, double r, \
 			init_vector(&hitted->pos, 0, 0, 0);
 		}
 	}
-	return ;
 }
 
 void		set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, \
 							const t_ray *ray, double time)
 {
-	double		h;
-	t_vector	pos;
-	t_vector	outward_normal;
+	double			h;
+	t_vector		pos;
+	t_vector		outward_normal;
 
 	pos = raypos_at_t(*ray, time);
 	h = dot(minus(pos, cyl->bottom.p), cyl->normal) \
 		/ dot(cyl->normal, cyl->normal);
+
 	if (0 < h && h < cyl->height)
 	{
 		hitted->pos = pos;
@@ -82,10 +83,6 @@ void		set_cyl_hitrec(t_hit_record *hitted, const t_cylinder *cyl, \
 		else
 			hitted->normal = multi(outward_normal, -1.0);
 	}
-	else if (h > cyl->height)
-		hit_circle(&cyl->top, cyl->r, ray, hitted);
-	else
-		hit_circle(&cyl->bottom, cyl->r, ray, hitted);
 }
 
 void		hit_cylinder(void *cylinder, const t_ray *ray, t_hit_record *hitted)
@@ -94,6 +91,8 @@ void		hit_cylinder(void *cylinder, const t_ray *ray, t_hit_record *hitted)
 	double				eqcoef[3];
 	t_vector			delp;
 	const t_cylinder	*cyl;
+	t_hit_record	check_top;
+	t_hit_record	check_bottom;
 
 	cyl = (const t_cylinder *)cylinder;
 	delp = minus(ray->pos, cyl->bottom.p);
@@ -111,8 +110,17 @@ void		hit_cylinder(void *cylinder, const t_ray *ray, t_hit_record *hitted)
 										dot(delp, cyl->normal)))) \
 				- cyl->r * cyl->r;
 	time = get_valid_2nd_eqsol(eqcoef, NOT_HIT, time_is_valid);
-	if (time == NOT_HIT)
+	hit_circle(&cyl->top, cyl->r, ray, &check_top);
+	hit_circle(&cyl->bottom, cyl->r, ray, &check_bottom);
+	if (check_top.time < check_bottom.time)
+		*hitted = check_top;
+	else
+		*hitted = check_bottom;
+	if (hitted->time <= time)
+		return;
+	else if (time < hitted->time)
+		set_cyl_hitrec(hitted, cyl, ray, time);
+	else if (time == NOT_HIT)
 		return ;
-	set_cyl_hitrec(hitted, cyl, ray, time);
 	return ;
 }
