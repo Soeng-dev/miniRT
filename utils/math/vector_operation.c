@@ -31,7 +31,8 @@ t_vector		normalize(t_vector v)
 {
 	double	norm;
 
-	norm = sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2));
+	norm = sqrt(powl((long double)v.x, 2)	\
+			+ powl((long double)v.y, 2) + powl((long double)v.z, 2));
 	v.x /= norm;
 	v.y /= norm;
 	v.z /= norm;

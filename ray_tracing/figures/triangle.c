@@ -17,7 +17,7 @@ void		init_triangle(t_triangle *tr, t_vector *points, t_material *mat)
 	tr->p = points[0];
 	tr->edge1 = minus(points[1], points[0]);
 	tr->edge2 = minus(points[2], points[0]);
-	tr->normal = cross(tr->edge1, tr->edge2);
+	tr->normal = normalize(cross(tr->edge1, tr->edge2));
 	tr->material = *mat;
 	return ;
 }
@@ -50,9 +50,12 @@ static int	pos_in_triangle(const t_vector *pos, const t_triangle *tr)
 	t_vector	delp;
 
 	delp = minus(*pos, tr->p);
-	alpha = (delp.x * tr->edge2.y - delp.y - tr->edge2.x)		\
-			/ (tr->edge1.x * tr->edge2.y - tr->edge1.y * tr->edge2.x);
-	beta = (delp.x - alpha * tr->edge1.x) / tr->edge2.x;
+	alpha = dot(tr->edge1, delp) * dot(tr->edge2, tr->edge2)				\
+			- dot(tr->edge2, delp) * dot(tr->edge1, tr->edge2);
+	alpha /= (dot(tr->edge1, tr->edge1) * dot(tr->edge2, tr->edge2)		\
+				- pow(dot(tr->edge1, tr->edge2), 2));
+	beta = (dot(tr->edge2, delp) - alpha * dot(tr->edge1, tr->edge2))	\
+			/ dot(tr->edge2, tr->edge2);
 	if (0 < alpha && 0 < beta && alpha + beta < 1)
 		return (TRUE);
 	return (FALSE);
